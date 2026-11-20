@@ -17,6 +17,10 @@ on:
         description: Release even if the content equals the latest release
         type: boolean
         default: false
+      dry_run:
+        description: Build and sign, but do not publish
+        type: boolean
+        default: false
   schedule:
     - cron: "17 3 * * 1"
 
@@ -116,6 +120,10 @@ jobs:
           assets=(out/manifest.cbor out/shard-*.cbor out/bank-*.zdb out/REPORT.md)
           [ -f out/manifest.cose ] && assets+=(out/manifest.cose)
           [ "${#assets[@]}" -le 1000 ] || { echo "::error::${#assets[@]} assets exceed the GitHub limit"; exit 1; }
+          if [ "${{ inputs.dry_run }}" = true ]; then
+            echo "dry run: would publish $tag with ${#assets[@]} assets (signed: ${{ steps.sign.outputs.signed }})" | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
           flags=(--title "$tag" --notes-file notes.md --target "$GITHUB_SHA")
           if [ "${{ steps.sign.outputs.signed }}" = true ]; then flags+=(--latest); else flags+=(--prerelease --latest=false); fi
           gh release create "$tag" "${flags[@]}" "${assets[@]}"
