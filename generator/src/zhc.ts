@@ -102,6 +102,7 @@ export function loadZhc(root: string): Zhc {
                 return r;
             };
             (w as any).__zdefWrapped = true;
+            (w as any).__zdefOrig = f;
             if (named.has(f)) named.set(w, named.get(f));
             try {
                 obj[k] = w;
@@ -160,10 +161,11 @@ export function loadZhc(root: string): Zhc {
     session.post('Debugger.enable', () => {});
     const rel = (p: string) => {
         const i = p.indexOf('zigbee-herdsman-converters/');
-        return i >= 0 ? p.slice(i + 'zigbee-herdsman-converters/'.length) : p;
+        return i >= 0 ? p.slice(i + 'zigbee-herdsman-converters/'.length) : path.relative(root, p);
     };
     const fnLocation = (f: Function): string | undefined => {
         if (typeof f !== 'function') return undefined;
+        while ((f as any).__zdefOrig) f = (f as any).__zdefOrig; // location of the zhc function, not of our wrapper
         (globalThis as any).__zdefProbe = f;
         let loc: any;
         session.post('Runtime.evaluate', {expression: 'globalThis.__zdefProbe'}, (_e: any, r: any) => {
