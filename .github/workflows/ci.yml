@@ -1,9 +1,11 @@
 name: ci
 
 # Regenerates the definitions from the pinned zigbee-herdsman-converters,
-# checks that the committed output matches, validates them against the zdef
-# JSON Schema (the hub's when it exists), compiles them and builds the
-# (unsigned) catalog: banks, shards, manifest. Never signs.
+# checks that the committed output matches, validates them against the hub's
+# zdef JSON Schema, compiles them with the Rust zdefc of faronov/zigbee-rs-hub
+# (repository variable ZDEFC_GIT_REF, a hub commit) and builds the unsigned
+# catalog: banks, shards, manifest. The catalog test signs a copy with a
+# throwaway key; the real key is only used by the release workflow.
 on:
   push:
     branches: [main]
@@ -40,16 +42,30 @@ jobs:
             echo "::error::definitions/generated or coverage/ differ from the generator output; run 'npm run generate' and commit"
             exit 1
           fi
+      - name: zdefc version
+        run: |
+          if [ -z "${{ vars.ZDEFC_GIT_REF }}" ]; then
+            echo "::error::set the repository variable ZDEFC_GIT_REF to a faronov/zigbee-rs-hub commit"
+            exit 1
+          fi
+      - name: Cache zdefc
+        id: zdefc-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo/bin/zdefc
+          key: zdefc-${{ runner.os }}-${{ vars.ZDEFC_GIT_REF }}
+      - name: Install zdefc
+        if: steps.zdefc-cache.outputs.cache-hit != 'true'
+        run: cargo install --locked --git https://github.com/faronov/zigbee-rs-hub --rev "${{ vars.ZDEFC_GIT_REF }}" zdefc
       - name: Schema
+        env:
+          HUB_SCHEMA_REF: ${{ vars.ZDEFC_GIT_REF }}
         run: |
           tools/fetch-hub-schema.sh
           python3 tools/validate.py
-      - name: Rust zdefc (optional, repository variable ZDEFC_GIT_REF)
-        if: vars.ZDEFC_GIT_REF != ''
-        run: cargo install --locked --git https://github.com/faronov/zigbee-rs-hub --rev "${{ vars.ZDEFC_GIT_REF }}" zdefc
-      - name: Catalog (unsigned)
+      - name: Catalog (unsigned) and end-to-end test
         run: |
-          python3 tools/catalog/build.py --out out ${{ vars.ZDEFC_GIT_REF != '' && '--compare' || '' }}
+          python3 tools/catalog/build.py --out out
           python3 tools/catalog/test_catalog.py out
           cat out/REPORT.md >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
@@ -58,6 +74,7 @@ jobs:
           path: |
             out/REPORT.md
             out/report.json
+            out/catalog.json
             out/manifest.cbor
             out/bank-*.zdb
           retention-days: 14

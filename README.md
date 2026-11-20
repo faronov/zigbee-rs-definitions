@@ -17,9 +17,13 @@ D3, D9, D12, D13, D18, D22).
 - **`coverage/COVERAGE.md`**: what the generator translates, per tier, and the
   ranked list of what it does not (the work list for templates and codecs).
 - **`catalog.yaml`**, **`tools/catalog/`**: banks for 4 MB and 8 MB hubs, the 256
-  on-demand shards and the signed manifest ([format](docs/catalog-format.md)).
-- **`schema/`**: provisional JSON Schema of the zdef v1 source format; CI uses
-  the hub's `schema/` instead as soon as it exists.
+  on-demand shards and the signed manifest ([format](docs/catalog-format.md)),
+  written by the Rust `zdefc` of zigbee-rs-hub; `build.py` only decides what
+  goes into which bank.
+- **`keys/`**: the public half of the catalog signing key (the hub firmware
+  embeds the same key).
+- **`schema/`**: provisional JSON Schema of the zdef v1 source format; CI
+  validates with the hub's `schema/zdef-v1.schema.json` at `ZDEFC_GIT_REF`.
 
 ## Coverage (zhc 26.130.0)
 
@@ -35,21 +39,22 @@ See [`coverage/COVERAGE.md`](coverage/COVERAGE.md) for the full report.
 
 ## Build locally
 
-Node 22 (zhc's engine range), Python 3.11+.
+Node 22 (zhc's engine range), Python 3.11+, Rust (for `zdefc`).
 
 ```sh
 npm ci && pip install -r tools/requirements.txt
+cargo install --locked --git https://github.com/faronov/zigbee-rs-hub --rev <ZDEFC_GIT_REF> zdefc
 npm test                                   # generator golden tests
 npm run generate                           # definitions/generated/, coverage/
 tools/fetch-hub-schema.sh && python3 tools/validate.py
-python3 tools/catalog/build.py --out out   # banks, shards, manifest; out/REPORT.md
-python3 tools/catalog/test_catalog.py out  # format round trips
+python3 tools/catalog/build.py --out out   # plan -> zdefc catalog build; out/REPORT.md
+python3 tools/catalog/test_catalog.py out  # sign a copy with a throwaway key, zdefc catalog verify
 ```
 
 `build.py --assume-templates` projects the banks as if the hub implemented every
-vendor template; `--compiler zdefc` (or `auto` with `zdefc` on `PATH`) uses the
-Rust compiler, `--compare` reports where it differs from the Python one
-([why they can differ](tools/zdefc_py/README.md)).
+vendor template. `ZDEFC=/path/to/zdefc` selects another compiler binary.
+`ZDEFC_GIT_REF` is a repository variable (a zigbee-rs-hub commit); CI and
+releases install that `zdefc` and fetch the schema at the same commit.
 
 ## Overrides
 
@@ -74,34 +79,50 @@ entities:
 
 - [`ci.yml`](.github/workflows/ci.yml) (push, pull request): golden tests,
   regeneration from the pinned zhc (fails if the committed output is stale),
-  schema validation, compilation, unsigned catalog build and format tests; the
+  schema validation, unsigned catalog build with `zdefc` and an end-to-end
+  test (a copy signed with a throwaway key passes `zdefc catalog verify`); the
   catalog report is in the job summary.
 - [`release.yml`](.github/workflows/release.yml) (weekly and on demand): the same
   build, then signing and a GitHub Release `catalog-YYYY.MM.DD[.n]` with
   `manifest.cbor`, `manifest.cose`, `shard-00.cbor` ... `shard-ff.cbor`,
-  `bank-4m.zdb`, `bank-8m.zdb` and `REPORT.md` (261 assets; GitHub allows 1 000).
-  Nothing is published when the content equals the latest release. Hubs fetch
+  `bank-4m.zdb`, `bank-8m.zdb`, `REPORT.md` and `catalog.json` (262 assets;
+  GitHub allows 1 000). Nothing is published when the definitions (content
+  digest) and the bank membership equal the latest release. Hubs fetch
   `https://github.com/faronov/zigbee-rs-definitions/releases/latest/download/<asset>`.
 
 ## Signing key
 
-The release workflow signs the manifest and the bank headers with an Ed25519
-key from the repository secret **`ZDEF_SIGNING_KEY`**. No key is created or
-stored by this repository. Without the secret, releases are built and published
-as **unsigned pre-releases** (no `manifest.cose`; `releases/latest` keeps
-pointing at the last signed catalog), and the workflow says so.
+The release workflow signs the bank headers and the manifest with the Ed25519
+key in the repository secret **`ZDEF_SIGNING_KEY`**, an unencrypted PKCS#8 PEM
+as `openssl genpkey -algorithm ed25519` writes it (`zdefc` also accepts the
+64-hex-digit seed form). It then runs `zdefc catalog verify` against
+[`keys/zdef-catalog-ed25519.pub.pem`](keys/zdef-catalog-ed25519.pub.pem), the
+key the hub firmware embeds (slot 0; slot 1 is reserved for a rotation), so a
+release signed with any other key fails. No private key is created or stored by
+this repository. Without the secret, releases are built and published as
+**unsigned pre-releases** (no `manifest.cose`; `releases/latest` keeps pointing
+at the last signed catalog), and the workflow says so.
 
-Create the key once, set the secret and print the public key for the hub
-firmware (OpenSSL 3, logged-in `gh`):
+Current key (created 2026-11-20): public key
+`ff931767df347a7bccd14b69602d4eb7841ef8503f771248b717f4554f63c6a2`, key ID
+`66f64ac1cbfc9e27` (first 8 bytes of the SHA-256 of the raw public key; COSE
+`kid`). Print both from either half of a key, exactly as the hub expects them:
 
 ```sh
-openssl genpkey -algorithm ed25519 -out zdef-signing.pem && gh secret set ZDEF_SIGNING_KEY -R faronov/zigbee-rs-definitions < zdef-signing.pem && openssl pkey -in zdef-signing.pem -pubout -outform DER | tail -c 32 | xxd -p -c 32
+zdefc bank pubkey --key zdef-signing.pem                         # private key (PEM or hex seed)
+zdefc bank pubkey --pubkey keys/zdef-catalog-ed25519.pub.pem     # public key (PEM or hex)
 ```
 
-The printed 32-byte hex value is the public key the hub embeds (its key ID is
-the first 8 bytes of its SHA-256, shown in every signed release). Keep
-`zdef-signing.pem` offline (or delete it: a lost key is replaced by a rotation,
-spec 9.3), never commit it.
+Creating a key (once, OpenSSL 3, logged-in `gh`):
+
+```sh
+openssl genpkey -algorithm ed25519 -out zdef-signing.pem
+gh secret set ZDEF_SIGNING_KEY -R faronov/zigbee-rs-definitions < zdef-signing.pem
+openssl pkey -in zdef-signing.pem -pubout -out keys/zdef-catalog-ed25519.pub.pem
+```
+
+Keep `zdef-signing.pem` offline (or delete it: a lost key is replaced by a
+rotation, spec 9.3), never commit it.
 
 ## License
 

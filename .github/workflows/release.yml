@@ -1,11 +1,14 @@
 name: release
 
-# Builds the catalog from the committed definitions, signs the manifest and the
-# bank headers with the Ed25519 key in the secret ZDEF_SIGNING_KEY, and
-# publishes a GitHub Release "catalog-YYYY.MM.DD[.n]" with the manifest, the
-# 256 shards and the two banks (docs/catalog-format.md). Without the secret
-# the release is a pre-release without manifest.cose, so
-# releases/latest/download/... never serves an unsigned catalog.
+# Builds the catalog from the committed definitions with the Rust zdefc
+# (repository variable ZDEFC_GIT_REF), signs the bank headers and the
+# manifest with the Ed25519 key in the secret ZDEF_SIGNING_KEY (PKCS#8 PEM,
+# `zdefc catalog sign`), verifies the result against the public key the hub
+# firmware embeds (keys/zdef-catalog-ed25519.pub.pem) and publishes a GitHub
+# Release "catalog-YYYY.MM.DD[.n]" with the manifest, the 256 shards and the
+# two banks (docs/catalog-format.md). Without the secret the release is a
+# pre-release without manifest.cose, so releases/latest/download/... never
+# serves an unsigned catalog.
 on:
   workflow_dispatch:
     inputs:
@@ -54,7 +57,24 @@ jobs:
         run: |
           npm run generate
           git diff --quiet -- definitions/generated coverage || { echo "::error::committed definitions are stale; run npm run generate"; exit 1; }
+      - name: zdefc version
+        run: |
+          if [ -z "${{ vars.ZDEFC_GIT_REF }}" ]; then
+            echo "::error::set the repository variable ZDEFC_GIT_REF to a faronov/zigbee-rs-hub commit"
+            exit 1
+          fi
+      - name: Cache zdefc
+        id: zdefc-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo/bin/zdefc
+          key: zdefc-${{ runner.os }}-${{ vars.ZDEFC_GIT_REF }}
+      - name: Install zdefc
+        if: steps.zdefc-cache.outputs.cache-hit != 'true'
+        run: cargo install --locked --git https://github.com/faronov/zigbee-rs-hub --rev "${{ vars.ZDEFC_GIT_REF }}" zdefc
       - name: Schema
+        env:
+          HUB_SCHEMA_REF: ${{ vars.ZDEFC_GIT_REF }}
         run: |
           tools/fetch-hub-schema.sh
           python3 tools/validate.py
@@ -89,8 +109,9 @@ jobs:
         id: changed
         run: |
           changed=true
-          if [ "${{ inputs.force }}" != "true" ] && gh release download --pattern manifest.cbor --dir prev >/dev/null 2>&1; then
-            changed="$(python3 -c 'import cbor2,sys; a=cbor2.loads(open("prev/manifest.cbor","rb").read()); b=cbor2.loads(open("out/manifest.cbor","rb").read()); print(str(a.get(8)!=b.get(8)).lower())')"
+          if [ "${{ inputs.force }}" != "true" ] && gh release download --pattern catalog.json --dir prev >/dev/null 2>&1; then
+            # same definitions (content digest) and same bank membership = nothing to release
+            changed="$(python3 -c 'import json; a=json.load(open("prev/catalog.json")); b=json.load(open("out/catalog.json")); f=lambda c: (c["content"], [(x["name"], x["included"]) for x in c["banks"]]); print(str(f(a)!=f(b)).lower())')"
           fi
           echo "changed=$changed" >> "$GITHUB_OUTPUT"
           [ "$changed" = true ] || echo "::notice::catalog content equals the latest release; nothing to publish"
@@ -100,8 +121,17 @@ jobs:
         env:
           ZDEF_SIGNING_KEY: ${{ secrets.ZDEF_SIGNING_KEY }}
         run: |
-          python3 tools/catalog/sign.py out
-          if [ -f out/manifest.cose ]; then echo "signed=true" >> "$GITHUB_OUTPUT"; else echo "signed=false" >> "$GITHUB_OUTPUT"; fi
+          if [ -z "$ZDEF_SIGNING_KEY" ]; then
+            echo "::warning::no ZDEF_SIGNING_KEY secret: publishing an unsigned pre-release"
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # the secret is an Ed25519 PKCS#8 PEM (openssl genpkey -algorithm ed25519); zdefc reads it from the environment
+          zdefc catalog sign out
+          zdefc bank pubkey > out/signing-key.txt
+          # the key must be the one the hub firmware trusts
+          zdefc catalog verify out --pubkey keys/zdef-catalog-ed25519.pub.pem
+          echo "signed=true" >> "$GITHUB_OUTPUT"
       - name: Publish
         if: steps.changed.outputs.changed == 'true'
         run: |
@@ -110,14 +140,14 @@ jobs:
             echo "Catalog built from zigbee-herdsman-converters $(node -p 'require("./package.json").dependencies["zigbee-herdsman-converters"]') at ${GITHUB_SHA}."
             echo
             if [ "${{ steps.sign.outputs.signed }}" = true ]; then
-              echo "Signed: manifest.cose, key ID $(head -1 out/signing-key.pub | cut -d' ' -f2)."
+              echo "Signed: manifest.cose, key ID $(sed -n 's/^kid //p' out/signing-key.txt)."
             else
               echo "**Unsigned pre-release** (no ZDEF_SIGNING_KEY secret): hubs will not install it."
             fi
             echo
             cat out/REPORT.md
           } > notes.md
-          assets=(out/manifest.cbor out/shard-*.cbor out/bank-*.zdb out/REPORT.md)
+          assets=(out/manifest.cbor out/shard-*.cbor out/bank-*.zdb out/REPORT.md out/catalog.json)
           [ -f out/manifest.cose ] && assets+=(out/manifest.cose)
           [ "${#assets[@]}" -le 1000 ] || { echo "::error::${#assets[@]} assets exceed the GitHub limit"; exit 1; }
           if [ "${{ inputs.dry_run }}" = true ]; then
