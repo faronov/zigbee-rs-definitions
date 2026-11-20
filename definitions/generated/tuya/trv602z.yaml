@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:12741
 zdef: 1
 id: tuya/trv602z
-revision: 1
+revision: 2
 vendor: Tuya
 model: TRV602Z
 description: Thermostatic radiator valve.
@@ -72,37 +72,37 @@ entities:
     platform: text
     category: config
     tuya: [102, raw]
-    codec: {tuya_schedule_day: {day: 1, variant: trv602z}}
+    codec: {tuya_schedule_day: {day: 1, transitions: 6, variant: trv602z}}
   - key: schedule_tuesday
     platform: text
     category: config
     tuya: [103, raw]
-    codec: {tuya_schedule_day: {day: 2, variant: trv602z}}
+    codec: {tuya_schedule_day: {day: 2, transitions: 6, variant: trv602z}}
   - key: schedule_wednesday
     platform: text
     category: config
     tuya: [104, raw]
-    codec: {tuya_schedule_day: {day: 3, variant: trv602z}}
+    codec: {tuya_schedule_day: {day: 3, transitions: 6, variant: trv602z}}
   - key: schedule_thursday
     platform: text
     category: config
     tuya: [105, raw]
-    codec: {tuya_schedule_day: {day: 4, variant: trv602z}}
+    codec: {tuya_schedule_day: {day: 4, transitions: 6, variant: trv602z}}
   - key: schedule_friday
     platform: text
     category: config
     tuya: [106, raw]
-    codec: {tuya_schedule_day: {day: 5, variant: trv602z}}
+    codec: {tuya_schedule_day: {day: 5, transitions: 6, variant: trv602z}}
   - key: schedule_saturday
     platform: text
     category: config
     tuya: [107, raw]
-    codec: {tuya_schedule_day: {day: 6, variant: trv602z}}
+    codec: {tuya_schedule_day: {day: 6, transitions: 6, variant: trv602z}}
   - key: schedule_sunday
     platform: text
     category: config
     tuya: [108, raw]
-    codec: {tuya_schedule_day: {day: 7, variant: trv602z}}
+    codec: {tuya_schedule_day: {day: 7, transitions: 6, variant: trv602z}}
   - key: motor_thrust
     platform: select
     category: config

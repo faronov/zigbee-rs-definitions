@@ -3,7 +3,7 @@
 # Source: src/devices/salus_controls.ts:100
 zdef: 1
 id: salus-controls/kl08rf
-revision: 1
+revision: 2
 vendor: Salus Controls
 model: KL08RF
 description: iT600 8-zone wiring centre
@@ -11,6 +11,6 @@ source: zhc devices/salus_controls.ts
 match:
   - manufacturer: Computime
     endpoints: {8: {profile: 0x0104}}
-    logical_type: Router
+    logical_type: router
 device: {power: mains, ota: true}
 x-partial: true

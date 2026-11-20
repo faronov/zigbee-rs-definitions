@@ -3,7 +3,7 @@
 # Source: src/devices/shinasystem.ts
 zdef: 1
 id: shinasystem/csm-300zb
-revision: 1
+revision: 2
 vendor: ShinaSystem
 model: CSM-300ZB
 description: SiHAS multipurpose sensor
@@ -13,7 +13,7 @@ match:
   - {model: CSM-300Z, app_version: {min: 2, max: 2}}
   - {model: CSM-300Z, app_version: {min: 3, max: 3}}
   - {model: CSM-300Z, app_version: {min: 4, max: 4}}
-device: {battery: {curve: "3V_2100"}}
+device: {battery: "3V_2100"}
 configure:
   - report: {cluster: 0x000C, attr: 0x0055, type: f32, report: [1, 600, 0]}
   - bind: {clusters: [0x000C]}

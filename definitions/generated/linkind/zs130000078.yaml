@@ -3,13 +3,13 @@
 # Source: src/devices/linkind.ts:55
 zdef: 1
 id: linkind/zs130000078
-revision: 1
+revision: 2
 vendor: Linkind
 model: ZS130000078
 description: Security keypad battery
 source: zhc devices/linkind.ts
 match: [{model: ZB-KeypadGeneric-D0002}]
-device: {battery: {curve: "3V_2100"}}
+device: {battery: "3V_2100"}
 configure:
   - bind: {clusters: [0x0000]}
 entities:

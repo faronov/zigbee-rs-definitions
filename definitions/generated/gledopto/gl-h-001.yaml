@@ -3,7 +3,7 @@
 # Source: src/devices/gledopto.ts:338
 zdef: 1
 id: gledopto/gl-h-001
-revision: 1
+revision: 2
 vendor: Gledopto
 model: GL-H-001
 description: Zigbee RF Hub
@@ -15,8 +15,7 @@ match:
       11:
         device_id: 0x0210
         in: [0x0000, 0x0003, 0x0004, 0x0005, 0x0006, 0x0008, 0x0300]
-        out: []
         profile: 0xC05E
       13: {device_id: 0x0210, in: [0x1000], out: [0x1000], profile: 0xC05E}
-    logical_type: Router
+    logical_type: router
 generic: {exclude: [power_on_behavior]}

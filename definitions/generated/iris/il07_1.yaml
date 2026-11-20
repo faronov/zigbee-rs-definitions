@@ -3,13 +3,13 @@
 # Source: src/devices/iris.ts:140
 zdef: 1
 id: iris/il07_1
-revision: 1
+revision: 2
 vendor: Iris
 model: iL07_1
 description: Motion Sensor
 source: zhc devices/iris.ts
 match: [{model: "1117-S"}]
-device: {battery: {curve: "3V_2100"}}
+device: {battery: "3V_2100"}
 generic:
   patch: {battery_voltage: {enabled: true}}
 entities:

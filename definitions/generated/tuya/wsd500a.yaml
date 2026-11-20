@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts
 zdef: 1
 id: tuya/wsd500a
-revision: 1
+revision: 2
 vendor: Tuya
 model: WSD500A
 description: Temperature & humidity sensor
@@ -21,6 +21,6 @@ match:
         - _TZ3000_bjawzodf
 white_label:
   - {vendor: Tuya, model: TH02Z, manufacturer: [_TZ3000_fllyghyj, _TZ3000_saiqcn0y]}
-device: {battery: {curve: "3V_1500_2800"}}
+device: {battery: "3V_1500_2800"}
 tuya: {magic_packet: true}
 x-partial: true

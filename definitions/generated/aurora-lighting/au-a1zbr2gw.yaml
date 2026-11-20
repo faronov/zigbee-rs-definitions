@@ -3,12 +3,12 @@
 # Source: src/devices/aurora_lighting.ts
 zdef: 1
 id: aurora-lighting/au-a1zbr2gw
-revision: 1
+revision: 2
 vendor: Aurora Lighting
 model: AU-A1ZBR2GW
 description: AOne two gang wireless battery rotary dimmer
 source: zhc devices/aurora_lighting.ts
 match: [{model: "2GBatteryDimmer50AU"}]
-device: {battery: {curve: "3V_2100"}}
+device: {battery: "3V_2100"}
 endpoints: {1: right, 2: left}
 x-partial: true

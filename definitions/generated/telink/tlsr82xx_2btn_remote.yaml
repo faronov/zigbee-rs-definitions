@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts
 zdef: 1
 id: telink/tlsr82xx_2btn_remote
-revision: 1
+revision: 2
 vendor: Telink
 model: TLSR82xx_2btn_remote
 description: "2 button remote"
@@ -18,5 +18,5 @@ match:
         in: [0x0000, 0x0003, 0x0001, 0x0006]
         out: [0x0004, 0x0005, 0x1000]
         profile: 0x0104
-      2: {device_id: 0x0000, in: [0x0000, 0x0003, 0x0006], out: [], profile: 0x0104}
+      2: {device_id: 0x0000, in: [0x0000, 0x0003, 0x0006], profile: 0x0104}
 x-partial: true

@@ -3,13 +3,13 @@
 # Source: src/devices/niko.ts
 zdef: 1
 id: niko/552-80401
-revision: 1
+revision: 2
 vendor: Niko
 model: "552-80401"
 description: Wireless motion sensor
 source: zhc devices/niko.ts
 match: [{model: "Connectable motion sensor,Zigbee"}]
-device: {battery: {curve: "3V_2100"}, ota: true}
+device: {battery: "3V_2100", ota: true}
 entities:
   - key: occupancy
     platform: binary_sensor

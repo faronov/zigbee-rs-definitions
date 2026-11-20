@@ -3,13 +3,13 @@
 # Source: src/devices/smartthings.ts:39
 zdef: 1
 id: smartthings/3321-s
-revision: 1
+revision: 2
 vendor: SmartThings
 model: "3321-S"
 description: Multi Sensor (2015 model)
 source: zhc devices/smartthings.ts
 match: [{model: "3321-S"}]
-device: {battery: {curve: "3V_2100"}}
+device: {battery: "3V_2100"}
 configure:
   - report: {cluster: 0xFC02, attr: 0x0010, type: map8, mfr: 0x104E, report: [10, 60, 1]}
   - report: {cluster: 0xFC02, attr: 0x0012, type: i16, mfr: 0x104E, report: [10, 60, 1]}

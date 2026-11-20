@@ -13,7 +13,7 @@ Generated from zigbee-herdsman-converters **26.130.0** (4664 definitions). Regen
 | Fully translated without templates (A + B) | 2282 | 48.9 % |
 
 - Partial definitions whose only gap is an expose without a translated converter: 71.
-- Canonical YAML written: 3917 KiB in 4664 files.
+- Canonical YAML written: 3916 KiB in 4664 files.
 - Coordinator/adapter definitions (excluded from the popularity ranking): 13.
 
 ## Vendor templates used by tier C

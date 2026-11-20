@@ -3,13 +3,13 @@
 # Source: src/devices/smartthings.ts
 zdef: 1
 id: smartthings/sts-irm-250
-revision: 1
+revision: 2
 vendor: SmartThings
 model: STS-IRM-250
 description: Motion sensor (2016 model)
 source: zhc devices/smartthings.ts
 match: [{model: motionv4}]
-device: {battery: {curve: "3V_1500_2800"}}
+device: {battery: "3V_1500_2800"}
 entities:
   - key: occupancy
     platform: binary_sensor

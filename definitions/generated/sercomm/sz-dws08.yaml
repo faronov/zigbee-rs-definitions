@@ -3,14 +3,14 @@
 # Source: src/devices/sercomm.ts
 zdef: 1
 id: sercomm/sz-dws08
-revision: 1
+revision: 2
 vendor: Sercomm
 model: SZ-DWS08
 description: Magnetic door & window contact sensor
 source: zhc devices/sercomm.ts
 match:
   - model: {any: [SZ-DWS08N, SZ-DWS08, SZ-DWS08N-CZ3]}
-device: {battery: {curve: "3V_2100"}}
+device: {battery: "3V_2100"}
 entities:
   - key: contact
     platform: binary_sensor

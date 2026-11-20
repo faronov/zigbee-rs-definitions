@@ -3,14 +3,14 @@
 # Source: src/devices/digi.ts
 zdef: 1
 id: digi/xbee
-revision: 1
+revision: 2
 vendor: Digi
 model: XBee
 description: Router
 source: zhc devices/digi.ts
 match:
   - endpoints:
-      230: {device_id: 0x0001, in: [], out: [], profile: 0xC105}
-      232: {device_id: 0x0001, in: [], out: [], profile: 0xC105}
-    logical_type: Router
+      230: {device_id: 0x0001, profile: 0xC105}
+      232: {device_id: 0x0001, profile: 0xC105}
+    logical_type: router
     mfr_code: 0x101E

@@ -3,10 +3,10 @@
 # Source: src/devices/heatit.ts:10
 zdef: 1
 id: heatit/1444420
-revision: 1
+revision: 2
 vendor: Heatit
 model: "1444420"
 description: Zig Dim 250W
 source: zhc devices/heatit.ts
-match: [{model: Dimmer-Switch-ZB3.0, manufacturer: Heatit Controls AB, logical_type: Router}]
+match: [{model: Dimmer-Switch-ZB3.0, manufacturer: Heatit Controls AB, logical_type: router}]
 generic: {exclude: [power_on_behavior]}

@@ -3,12 +3,12 @@
 # Source: src/devices/heatzy.ts:90
 zdef: 1
 id: heatzy/micro-duo
-revision: 1
+revision: 2
 vendor: Heatzy
 model: micro-duo
 description: "Pilot wire controller with relay, energy metering and Bluetooth OTA"
 source: zhc devices/heatzy.ts
-match: [{model: micro-duo, manufacturer: Heatzy, logical_type: Router}]
+match: [{model: micro-duo, manufacturer: Heatzy, logical_type: router}]
 device: {ota: true}
 generic: {exclude: [current, frequency, power_factor, power_on_behavior, voltage]}
 endpoints: {1: pilot_wire, 10: relay, 11: ble_ota}

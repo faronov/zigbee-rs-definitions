@@ -3,11 +3,11 @@
 # Source: src/devices/shinasystem.ts
 zdef: 1
 id: shinasystem/sbm300zb3
-revision: 1
+revision: 2
 vendor: ShinaSystem
 model: SBM300ZB3
 description: SiHAS remote control 3 button
 source: zhc devices/shinasystem.ts
 match: [{model: SBM300ZB3}]
-device: {battery: {curve: "3V_2100"}, ota: true}
+device: {battery: "3V_2100", ota: true}
 x-partial: true

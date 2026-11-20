@@ -3,10 +3,10 @@
 # Source: src/devices/third_reality.ts
 zdef: 1
 id: third-reality/3rss008z
-revision: 1
+revision: 2
 vendor: Third Reality
 model: "3RSS008Z"
 description: RealitySwitch Plus
 source: zhc devices/third_reality.ts
 match: [{model: "3RSS008Z"}]
-device: {battery: {curve: "3V_2100"}}
+device: {battery: "3V_2100"}

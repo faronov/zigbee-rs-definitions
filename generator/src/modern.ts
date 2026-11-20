@@ -229,8 +229,11 @@ const battery: ExtTranslator = (ctx, call, ext) => {
     ctx.claim(ext.exposes);
 };
 
+/** Named battery curves of zdef (`device.battery`, a closed set). */
+export const BATTERY_CURVES = ['3V_2100', '3V_1500_2800', 'CR2032'];
+
 export function setBatteryCurve(ctx: Ctx, v: any) {
-    if (typeof v === 'string') ctx.device.battery = {curve: v};
+    if (typeof v === 'string' && BATTERY_CURVES.includes(v)) ctx.device.battery = v;
     else if (v && typeof v === 'object' && typeof v.min === 'number' && typeof v.max === 'number') {
         ctx.device.battery = {voltage_to_percent: [v.min, v.max]};
     } else untr(`battery voltageToPercentage ${JSON.stringify(v)}`);

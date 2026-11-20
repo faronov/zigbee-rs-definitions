@@ -3,14 +3,14 @@
 # Source: src/devices/sercomm.ts
 zdef: 1
 id: sercomm/al-pir02
-revision: 1
+revision: 2
 vendor: Sercomm
 model: AL-PIR02
 description: PIR motion sensor
 source: zhc devices/sercomm.ts
 match:
   - model: {any: [SZ-PIR02_SF, SZ-PIR02]}
-device: {battery: {curve: "3V_2100"}}
+device: {battery: "3V_2100"}
 entities:
   - key: occupancy
     platform: binary_sensor

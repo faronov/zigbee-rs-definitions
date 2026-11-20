@@ -3,10 +3,10 @@
 # Source: src/devices/hive.ts
 zdef: 1
 id: hive/slt2
-revision: 1
+revision: 2
 vendor: Hive
 model: SLT2
 description: Heating thermostat remote control
 source: zhc devices/hive.ts
 match: [{model: SLT2}]
-device: {battery: {curve: "3V_2100"}}
+device: {battery: "3V_2100"}

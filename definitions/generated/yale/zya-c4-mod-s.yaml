@@ -3,7 +3,7 @@
 # Source: src/devices/yale.ts:202
 zdef: 1
 id: yale/zya-c4-mod-s
-revision: 1
+revision: 2
 vendor: Yale
 model: ZYA-C4-MOD-S
 description: Control4 module for Yale KeyFree/Keyless/Doorman/Assure/nexTouch locks
@@ -12,13 +12,9 @@ match:
   - manufacturer: Yale
     power: battery
     endpoints:
-      1:
-        device_id: 0x000A
-        in: [0x0000, 0x0009, 0x000A, 0x0101, 0xFC00, 0x0001]
-        out: []
-        profile: 0x0104
-      196: {device_id: 0x000A, in: [0x0001], out: [], profile: 0x0104}
-    logical_type: EndDevice
+      1: {device_id: 0x000A, in: [0x0000, 0x0009, 0x000A, 0x0101, 0xFC00, 0x0001], profile: 0x0104}
+      196: {device_id: 0x000A, in: [0x0001], profile: 0x0104}
+    logical_type: end_device
     mfr_code: 0xAAAA
 configure:
   - read: {cluster: 0xFC00, attrs: [0x0012, 0x0013, 0x0014, 0x0015, 0x0017]}

@@ -3,10 +3,10 @@
 # Source: src/devices/iris.ts
 zdef: 1
 id: iris/3460-l
-revision: 1
+revision: 2
 vendor: Iris
 model: "3460-L"
 description: Smart button
 source: zhc devices/iris.ts
 match: [{model: "3460-L"}]
-device: {battery: {curve: "3V_1500_2800"}}
+device: {battery: "3V_1500_2800"}

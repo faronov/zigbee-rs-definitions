@@ -3,13 +3,13 @@
 # Source: src/devices/universal_electronics_inc.ts:43
 zdef: 1
 id: universal-electronics-inc/xhs2-ue
-revision: 1
+revision: 2
 vendor: Universal Electronics Inc
 model: XHS2-UE
 description: Magnetic door & window contact sensor
 source: zhc devices/universal_electronics_inc.ts
 match: [{model: URC4460BC0-X-R}]
-device: {battery: {curve: "3V_2100"}}
+device: {battery: "3V_2100"}
 entities:
   - key: contact
     platform: binary_sensor

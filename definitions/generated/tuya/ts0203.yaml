@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts
 zdef: 1
 id: tuya/ts0203
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0203
 description: Door/window sensor
@@ -51,7 +51,7 @@ white_label:
   - {vendor: Woox, model: R7047, manufacturer: [_TZ3000_timx9ivq]}
   - {vendor: Wing, model: WZDA1, manufacturer: [_TZ3000_rid8lzvo]}
   - {vendor: Mowe, model: MW811D, manufacturer: [_TZ3000_0lvv1d5b]}
-device: {battery: {curve: "3V_1500_2800"}}
+device: {battery: "3V_1500_2800"}
 entities:
   - key: contact
     platform: binary_sensor
