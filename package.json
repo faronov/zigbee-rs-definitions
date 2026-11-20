@@ -15,8 +15,8 @@
   "scripts": {
     "build": "tsc -p .",
     "generate": "npm run build && node build/src/main.js",
-    "test": "npm run build && node --test build/test/",
-    "golden:update": "npm run build && GOLDEN_UPDATE=1 node --test build/test/",
+    "test": "npm run build && node --test build/test/golden.test.js",
+    "golden:update": "npm run build && GOLDEN_UPDATE=1 node --test build/test/golden.test.js",
     "catalog": "python3 tools/catalog/build.py"
   }
 }
