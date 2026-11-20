@@ -36,6 +36,7 @@ jobs:
           npm run generate
           if ! git diff --quiet -- definitions/generated coverage || [ -n "$(git status --porcelain -- definitions/generated)" ]; then
             git status --short -- definitions/generated coverage | head -50
+            git diff --word-diff=porcelain -- definitions/generated coverage | grep -E '^[-+][^-+]' | head -40 | cut -c1-400
             echo "::error::definitions/generated or coverage/ differ from the generator output; run 'npm run generate' and commit"
             exit 1
           fi
