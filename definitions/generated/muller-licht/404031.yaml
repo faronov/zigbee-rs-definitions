@@ -3,7 +3,7 @@
 # Source: src/devices/muller_licht.ts:14
 zdef: 1
 id: muller-licht/404031
-revision: 1
+revision: 2
 vendor: Müller Licht
 model: "404031"
 description: Tint Armaro
@@ -19,5 +19,5 @@ match:
         out: [0x0019]
         profile: 0xC05E
       242: {device_id: 0x0066, in: [0x0021], out: [0x0021], profile: 0xA1E0}
-    logical_type: Router
+    logical_type: router
     mfr_code: 0x121B

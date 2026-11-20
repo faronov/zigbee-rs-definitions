@@ -3,7 +3,7 @@
 # Source: src/devices/awox.ts
 zdef: 1
 id: awox/33952
-revision: 1
+revision: 2
 vendor: AwoX
 model: "33952"
 description: Remote controller
@@ -20,5 +20,5 @@ match:
         out: [0x0000, 0x0003, 0x0004, 0x0005, 0x0006, 0x0008, 0x0300, 0x1000]
         profile: 0x0104
       3: {device_id: 0x0800, in: [0xFF50, 0xFF51], out: [0xFF50, 0xFF51], profile: 0x128F}
-    logical_type: EndDevice
+    logical_type: end_device
 x-partial: true

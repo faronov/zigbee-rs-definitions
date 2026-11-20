@@ -3,13 +3,13 @@
 # Source: src/devices/hobeian.ts
 zdef: 1
 id: hobeian/zg-102za
-revision: 1
+revision: 2
 vendor: HOBEIAN
 model: ZG-102ZA
 description: Door/window sensor
 source: zhc devices/hobeian.ts
 match: [{model: ZG-102Z}]
-device: {battery: {curve: "3V_1500_2800"}}
+device: {battery: "3V_1500_2800"}
 entities:
   - key: contact
     platform: binary_sensor

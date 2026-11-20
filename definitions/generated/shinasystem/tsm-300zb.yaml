@@ -3,10 +3,10 @@
 # Source: src/devices/shinasystem.ts
 zdef: 1
 id: shinasystem/tsm-300zb
-revision: 1
+revision: 2
 vendor: ShinaSystem
 model: TSM-300ZB
 description: SiHAS temperature/humidity sensor
 source: zhc devices/shinasystem.ts
 match: [{model: TSM-300Z}]
-device: {battery: {curve: "3V_2100"}, ota: true}
+device: {battery: "3V_2100", ota: true}

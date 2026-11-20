@@ -3,13 +3,13 @@
 # Source: src/devices/keen_home.ts:34
 zdef: 1
 id: keen-home/rs-thp-mp-1.0
-revision: 1
+revision: 2
 vendor: Keen Home
 model: RS-THP-MP-1.0
 description: Temperature Sensor
 source: zhc devices/keen_home.ts
 match: [{model: RS-THP-MP-1.0}]
-device: {power: battery, battery: {curve: "3V_2100"}}
+device: {power: battery, battery: "3V_2100"}
 templates:
   - name: lumi
     params:

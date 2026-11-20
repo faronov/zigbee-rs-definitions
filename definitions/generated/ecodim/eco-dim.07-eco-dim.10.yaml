@@ -3,14 +3,14 @@
 # Source: src/devices/ecodim.ts:86
 zdef: 1
 id: ecodim/eco-dim.07-eco-dim.10
-revision: 1
+revision: 2
 vendor: EcoDim
 model: Eco-Dim.07/Eco-Dim.10
 description: Zigbee LED dimmer
 source: zhc devices/ecodim.ts
 match:
   - model: {any: [eco-dim07-zigbee, eco-dim07-Pro-zigbee, eco-dim10-zigbee]}
-  - {model: Dimmer-Switch-ZB3.0, logical_type: Router, mfr_code: 0x126A}
+  - {model: Dimmer-Switch-ZB3.0, logical_type: router, mfr_code: 0x126A}
   - model: EcoDim-Zigbee 3.0
     manufacturer: EcoDim BV
     endpoints:
@@ -19,8 +19,8 @@ match:
         in: [0x0000, 0x0003, 0x0004, 0x0005, 0x0006, 0x0008, 0x0B05, 0x1000]
         out: [0x0019]
         profile: 0x0104
-      242: {device_id: 0x0061, in: [], out: [0x0021], profile: 0xA1E0}
-    logical_type: Router
+      242: {device_id: 0x0061, out: [0x0021], profile: 0xA1E0}
+    logical_type: router
   - model: EcoDim-Zigbee 3.0
     manufacturer: EcoDim BV
     endpoints:
@@ -29,8 +29,8 @@ match:
         in: [0x0000, 0x0003, 0x0004, 0x0005, 0x0006, 0x0008, 0x1000]
         out: [0x0019]
         profile: 0x0104
-      242: {device_id: 0x0061, in: [], out: [0x0021], profile: 0xA1E0}
-    logical_type: Router
+      242: {device_id: 0x0061, out: [0x0021], profile: 0xA1E0}
+    logical_type: router
   - model: EcoDim-Zigbee 3.0
     manufacturer: EcoDim BV
     endpoints:
@@ -39,7 +39,7 @@ match:
         in: [0x0000, 0x0003, 0x0004, 0x0005, 0x0006, 0x0008, 0x0B05, 0x1000]
         out: [0x0019]
         profile: 0x0104
-      242: {device_id: 0x0061, in: [], out: [0x0021], profile: 0xA1E0}
-      67: {in: [], out: []}
-    logical_type: Router
+      242: {device_id: 0x0061, out: [0x0021], profile: 0xA1E0}
+      67: {}
+    logical_type: router
 device: {ota: true}

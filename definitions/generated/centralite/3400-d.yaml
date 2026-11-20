@@ -3,12 +3,12 @@
 # Source: src/devices/centralite.ts:275
 zdef: 1
 id: centralite/3400-d
-revision: 1
+revision: 2
 vendor: Centralite
 model: "3400-D"
 description: "3-Series security keypad"
 source: zhc devices/centralite.ts
 match:
   - model: {any: ["3400-D", "3400"]}
-device: {battery: {curve: "3V_2100"}}
+device: {battery: "3V_2100"}
 x-partial: true

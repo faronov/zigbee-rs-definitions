@@ -3,7 +3,7 @@
 # Source: src/devices/awox.ts:305
 zdef: 1
 id: awox/33943-33944-33946
-revision: 1
+revision: 2
 vendor: AwoX
 model: "33943/33944/33946"
 description: LED RGB & brightness
@@ -18,9 +18,9 @@ match:
         in: [0x0000, 0x0003, 0x0004, 0x0005, 0x0006, 0x0008, 0x0300, 0x1000, 0xFC57, 0x000A]
         out: [0x0006]
         profile: 0x0104
-      242: {device_id: 0x0061, in: [], out: [0x0021], profile: 0xA1E0}
+      242: {device_id: 0x0061, out: [0x0021], profile: 0xA1E0}
       3: {device_id: 0x010D, in: [0xFF50, 0xFF51], out: [0xFF50, 0xFF51], profile: 0x128F}
-    logical_type: Router
+    logical_type: router
   - model: TLSR82xx
     manufacturer: AwoX
     endpoints:
@@ -29,9 +29,9 @@ match:
         in: [0x0000, 0x0003, 0x0004, 0x0005, 0x0006, 0x0008, 0x0300, 0x1000, 0xFC57, 0x000A]
         out: [0x0006]
         profile: 0x0104
-      242: {device_id: 0x0061, in: [], out: [0x0021], profile: 0xA1E0}
+      242: {device_id: 0x0061, out: [0x0021], profile: 0xA1E0}
       3: {device_id: 0x010D, in: [0xFF50, 0xFF51, 0x0004], out: [0xFF50, 0xFF51], profile: 0x128F}
-    logical_type: Router
+    logical_type: router
   - model: TLSR82xx
     manufacturer: AwoX
     endpoints:
@@ -41,7 +41,7 @@ match:
         out: [0x0006, 0x0019]
         profile: 0x0104
       3: {device_id: 0x0102, in: [0xFF50, 0xFF51], out: [0xFF50, 0xFF51], profile: 0xC000}
-    logical_type: Router
+    logical_type: router
   - model: TLSR82xx
     manufacturer: AwoX
     endpoints:
@@ -50,9 +50,9 @@ match:
         in: [0x0000, 0x0003, 0x0004, 0x0005, 0x0006, 0x0008, 0x0300, 0x1000, 0xFC57]
         out: [0x0006]
         profile: 0x0104
-      242: {device_id: 0x0061, in: [], out: [0x0021], profile: 0xA1E0}
+      242: {device_id: 0x0061, out: [0x0021], profile: 0xA1E0}
       3: {device_id: 0x010D, in: [0xFF50, 0xFF51], out: [0xFF50, 0xFF51], profile: 0x128F}
-    logical_type: Router
+    logical_type: router
   - model: TLSR82xx
     manufacturer: AwoX
     endpoints:
@@ -62,7 +62,7 @@ match:
         out: [0x0006]
         profile: 0x0104
       3: {device_id: 0x010D, in: [0xFF50, 0xFF51], out: [0xFF50, 0xFF51], profile: 0x128F}
-    logical_type: Router
+    logical_type: router
 generic:
   patch:
     light:

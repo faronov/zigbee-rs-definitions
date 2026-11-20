@@ -3,7 +3,7 @@
 # Source: src/devices/nue_3a.ts:316
 zdef: 1
 id: nue-3a/nue-auwzo2
-revision: 1
+revision: 2
 vendor: Nue / 3A
 model: NUE-AUWZO2
 description: Smart Zigbee double power point
@@ -22,5 +22,5 @@ match:
         in: [0x0000, 0x0004, 0x0003, 0x0006, 0x0005, 0x1000, 0x0008]
         out: [0x0000]
         profile: 0xC05E
-    logical_type: Router
+    logical_type: router
 endpoints: {1: left, 2: right}

@@ -3,13 +3,13 @@
 # Source: src/devices/hive.ts:161
 zdef: 1
 id: hive/keypad001
-revision: 1
+revision: 2
 vendor: Hive
 model: KEYPAD001
 description: Alarm security keypad
 source: zhc devices/hive.ts
 match: [{model: KEYPAD001}]
-device: {battery: {curve: "3V_2100"}}
+device: {battery: "3V_2100"}
 entities:
   - key: occupancy
     platform: binary_sensor

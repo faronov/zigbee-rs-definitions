@@ -3,7 +3,7 @@
 # Source: src/devices/sonoff.ts
 zdef: 1
 id: sonoff/snzb-02
-revision: 1
+revision: 2
 vendor: SONOFF
 model: SNZB-02
 description: Temperature and humidity sensor
@@ -18,7 +18,7 @@ match:
         in: [0x0000, 0x0003, 0x0402, 0x0405, 0x0001]
         out: [0x0003]
         profile: 0x0104
-    logical_type: EndDevice
+    logical_type: end_device
   - model: "66666"
     manufacturer: eWeLink
     endpoints:
@@ -27,7 +27,7 @@ match:
         in: [0x0000, 0x0003, 0x0402, 0x0405, 0x0001]
         out: [0x0003]
         profile: 0x0104
-    logical_type: EndDevice
+    logical_type: end_device
   - model: DS01
     manufacturer: eWeLink
     endpoints:
@@ -36,8 +36,8 @@ match:
         in: [0x0000, 0x0003, 0x0402, 0x0405, 0x0001]
         out: [0x0003]
         profile: 0x0104
-    logical_type: EndDevice
-  - {model: TH01, manufacturer: Zbeacon, logical_type: EndDevice}
+    logical_type: end_device
+  - {model: TH01, manufacturer: Zbeacon, logical_type: end_device}
 white_label:
   - {vendor: eWeLink, model: RHK08}
   - {vendor: eWeLink, model: SNZB-02_eWeLink, manufacturer: [eWeLink]}

@@ -3,11 +3,11 @@
 # Source: src/devices/shinasystem.ts
 zdef: 1
 id: shinasystem/dms-300zb
-revision: 1
+revision: 2
 vendor: ShinaSystem
 model: DMS-300ZB
 description: SiHAS dual motion sensor
 source: zhc devices/shinasystem.ts
 match: [{model: DMS-300Z}]
-device: {battery: {curve: "3V_2100"}, ota: true}
+device: {battery: "3V_2100", ota: true}
 x-partial: true

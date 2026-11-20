@@ -3,13 +3,13 @@
 # Source: src/devices/leedarson.ts
 zdef: 1
 id: leedarson/ldhd2azw
-revision: 1
+revision: 2
 vendor: Leedarson
 model: LDHD2AZW
 description: Magnetic door & window contact sensor
 source: zhc devices/leedarson.ts
 match: [{model: LDHD2AZW}]
-device: {battery: {curve: "3V_2100"}}
+device: {battery: "3V_2100"}
 entities:
   - key: contact
     platform: binary_sensor

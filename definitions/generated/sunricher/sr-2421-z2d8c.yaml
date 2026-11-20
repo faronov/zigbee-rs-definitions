@@ -3,11 +3,11 @@
 # Source: src/devices/sunricher.ts
 zdef: 1
 id: sunricher/sr-2421-z2d8c
-revision: 1
+revision: 2
 vendor: Sunricher
 model: SR-2421-Z2D8C
 description: Zigbee to DALI controller
 source: zhc devices/sunricher.ts
 match:
-  - {model: Light, manufacturer: Sunricher, logical_type: Router, mfr_code: 0x1224, x-priority: 1}
+  - {model: Light, manufacturer: Sunricher, logical_type: router, mfr_code: 0x1224, x-priority: 1}
 x-partial: true

@@ -3,14 +3,14 @@
 # Source: src/devices/iris.ts
 zdef: 1
 id: iris/3450-l
-revision: 1
+revision: 2
 vendor: Iris
 model: "3450-L"
 description: Smart fob
 source: zhc devices/iris.ts
 match:
   - model: {any: ["3450-L", "3450-L2", "3450-Geu"]}
-device: {battery: {curve: "3V_2100"}}
+device: {battery: "3V_2100"}
 configure:
   - {write: {cluster: 0x0020, attr: 0x0000, type: u32, value: 360}}
 x-partial: true

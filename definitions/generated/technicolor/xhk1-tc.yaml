@@ -3,13 +3,13 @@
 # Source: src/devices/technicolor.ts:49
 zdef: 1
 id: technicolor/xhk1-tc
-revision: 1
+revision: 2
 vendor: Technicolor
 model: XHK1-TC
 description: Xfinity security keypad
 source: zhc devices/technicolor.ts
 match: [{model: TKA105}]
-device: {battery: {curve: "3V_2100"}}
+device: {battery: "3V_2100"}
 configure:
   - bind: {clusters: [0x0000]}
 entities:

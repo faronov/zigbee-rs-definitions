@@ -3,13 +3,13 @@
 # Source: src/devices/streda.ts:128
 zdef: 1
 id: streda/bn0-t-03-pw
-revision: 1
+revision: 2
 vendor: STREDA
 model: BN0-T-03/PW
 description: "4-button wall switch"
 source: zhc devices/streda.ts
 match: [{model: BN0-T-03/PW}]
-device: {battery: {curve: "3V_2100"}, ota: true}
+device: {battery: "3V_2100", ota: true}
 generic:
   patch: {battery_voltage: {enabled: true}}
 endpoints: {3: button_1, 4: button_2}

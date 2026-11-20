@@ -3,13 +3,13 @@
 # Source: src/devices/develco.ts:996
 zdef: 1
 id: develco/wiszb-134
-revision: 1
+revision: 2
 vendor: Develco
 model: WISZB-134
 description: Window/door sensor
 source: zhc devices/develco.ts
 match: [{model: WISZB-134}]
-device: {battery: {curve: "3V_2100"}, ota: true}
+device: {battery: "3V_2100", ota: true}
 generic:
   patch: {battery_voltage: {enabled: true}, battery: {report: "off"}}
 entities:

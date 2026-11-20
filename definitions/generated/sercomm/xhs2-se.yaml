@@ -3,13 +3,13 @@
 # Source: src/devices/sercomm.ts:87
 zdef: 1
 id: sercomm/xhs2-se
-revision: 1
+revision: 2
 vendor: Sercomm
 model: XHS2-SE
 description: Magnetic door & window contact sensor
 source: zhc devices/sercomm.ts
 match: [{model: XHS2-SE}]
-device: {battery: {curve: "3V_2100"}}
+device: {battery: "3V_2100"}
 entities:
   - key: contact
     platform: binary_sensor

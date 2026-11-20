@@ -3,7 +3,7 @@
 # Source: src/devices/sonoff.ts:9085
 zdef: 1
 id: sonoff/snzb-04
-revision: 1
+revision: 2
 vendor: SONOFF
 model: SNZB-04
 description: Contact sensor
@@ -14,7 +14,7 @@ match:
     manufacturer: eWeLink
     endpoints:
       1: {device_id: 0x0402, in: [0x0000, 0x0003, 0x0500, 0x0001], out: [0x0003], profile: 0x0104}
-    logical_type: EndDevice
+    logical_type: end_device
   - model: {any: [DS01, SNZB-04, CK-TLSR8656-SS5-01(7003), TH01]}
     manufacturer: {any: [_TZ3000_n2egfsli, zbeacon, Zbeacon]}
 white_label:

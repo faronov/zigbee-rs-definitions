@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:14117
 zdef: 1
 id: smtonoff/zxb3-125
-revision: 1
+revision: 2
 vendor: SMTONOFF
 model: ZXB3-125
 description: Three-phase breaker
@@ -18,7 +18,7 @@ match:
         in: [0x0000, 0x0004, 0x0005, 0xEF00]
         out: [0x000A, 0x0019]
         profile: 0x0104
-      242: {device_id: 0x0061, in: [], out: [0x0021], profile: 0xA1E0}
+      242: {device_id: 0x0061, out: [0x0021], profile: 0xA1E0}
     hw_version: {min: 1, max: 1}
     x-priority: 1
 generic: {disable: true}

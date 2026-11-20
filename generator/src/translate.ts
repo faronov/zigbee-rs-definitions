@@ -1,7 +1,10 @@
 // Translation of one zhc definition into a zdef definition document.
 import type {Call, Zhc} from './zhc';
 import {Ctx, Untranslatable, slug} from './ctx';
-import {MODERN, type ExtTranslator} from './modern';
+import {BATTERY_CURVES, MODERN, type ExtTranslator} from './modern';
+
+/** zhc fingerprint `type` -> zdef match `logical_type`. */
+const LOGICAL_TYPES: Record<string, string> = {Coordinator: 'coordinator', Router: 'router', EndDevice: 'end_device'};
 import {TUYA_EXT, translateDpTable, tuyaOnEvent} from './tuya';
 import {VENDOR_EXT, VENDOR_NAMED, addFeature, claimForFamilies, familyOf} from './vendor';
 import {STD, STD_REASON, exposeClusters, fzClusters} from './named';
@@ -222,7 +225,7 @@ function translateMeta(ctx: Ctx, meta: any) {
         } else if (k === 'battery') {
             for (const [bk, bv] of Object.entries<any>(v || {})) {
                 if (bk === 'voltageToPercentage') {
-                    if (typeof bv === 'string') ctx.device.battery = {curve: bv};
+                    if (typeof bv === 'string' && BATTERY_CURVES.includes(bv)) ctx.device.battery = bv;
                     else if (bv && typeof bv === 'object' && typeof bv.min === 'number') ctx.device.battery = {voltage_to_percent: [bv.min, bv.max]};
                     else ctx.fail('meta.battery', `voltageToPercentage ${JSON.stringify(bv)}`);
                 } else if (bk === 'dontDividePercentage') {
@@ -278,11 +281,16 @@ function matchClauses(d: any): {match: any[]; names: Set<string>; partial?: stri
                     const x: any = {};
                     if (ep.profileID !== undefined) x.profile = ep.profileID;
                     if (ep.deviceID !== undefined) x.device_id = ep.deviceID;
-                    if (ep.inputClusters) x.in = ep.inputClusters;
-                    if (ep.outputClusters) x.out = ep.outputClusters;
+                    // an empty list is no constraint in zdef (subset match): omit it
+                    if (ep.inputClusters?.length) x.in = ep.inputClusters;
+                    if (ep.outputClusters?.length) x.out = ep.outputClusters;
                     c.endpoints[ep.ID] = x;
                 }
-            } else if (k === 'type') c.logical_type = v;
+            } else if (k === 'type') {
+                const lt = LOGICAL_TYPES[v];
+                if (lt) c.logical_type = lt;
+                else partial = `fingerprint type ${v}`;
+            }
             else partial = `fingerprint field ${k}`;
         }
         if (partial) continue;

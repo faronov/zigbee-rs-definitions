@@ -3,13 +3,13 @@
 # Source: src/devices/universal_electronics_inc.ts:122
 zdef: 1
 id: universal-electronics-inc/uehk2az0
-revision: 1
+revision: 2
 vendor: Universal Electronics Inc
 model: UEHK2AZ0
 description: Xfinity security keypad
 source: zhc devices/universal_electronics_inc.ts
 match: [{model: H34450BA00-00007}]
-device: {battery: {curve: "3V_2100"}}
+device: {battery: "3V_2100"}
 configure:
   - bind: {clusters: [0x0000]}
 entities:

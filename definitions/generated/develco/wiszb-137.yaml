@@ -3,13 +3,13 @@
 # Source: src/devices/develco.ts:1021
 zdef: 1
 id: develco/wiszb-137
-revision: 1
+revision: 2
 vendor: Develco
 model: WISZB-137
 description: Vibration sensor
 source: zhc devices/develco.ts
 match: [{model: WISZB-137}]
-device: {battery: {curve: "3V_2100"}}
+device: {battery: "3V_2100"}
 generic:
   patch: {battery_voltage: {enabled: true}, battery: {report: "off"}}
 entities:

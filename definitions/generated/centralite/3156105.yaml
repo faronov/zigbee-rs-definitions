@@ -3,13 +3,13 @@
 # Source: src/devices/centralite.ts
 zdef: 1
 id: centralite/3156105
-revision: 1
+revision: 2
 vendor: Centralite
 model: "3156105"
 description: HA thermostat
 source: zhc devices/centralite.ts
 match: [{model: "3156105"}]
-device: {battery: {curve: "3V_1500_2800"}}
+device: {battery: "3V_1500_2800"}
 configure:
   - report: {cluster: 0x0201, attr: 0x0023, type: enum8, report: [0, 3600, 0]}
 x-partial: true

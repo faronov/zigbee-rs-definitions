@@ -291,7 +291,7 @@ const FACTORY_VC: Record<string, Factory> = {
         if (opts.maxTemperature !== undefined && opts.maxTemperature !== 35) p.max = opts.maxTemperature;
         return {type: 'raw', codec: {tuya_schedule_week: p}};
     },
-    'vcf.thermostatScheduleDayMultiDP_TRV602Z_WithDayNumber': ([day]) => ({type: 'raw', codec: {tuya_schedule_day: {day, variant: 'trv602z'}}}),
+    'vcf.thermostatScheduleDayMultiDP_TRV602Z_WithDayNumber': ([day]) => ({type: 'raw', codec: {tuya_schedule_day: {day, transitions: 6, variant: 'trv602z'}}}),
     'vcf.phaseVariant2WithPhase': ([phase]) => ({type: 'raw', multi: PHASE.phaseVariant2WithPhase(phase).map((p) => ({key: p.key, fields: {from: p.expr}}))}),
     'vcf.thermostatSystemModeAndPresetMap': ([{fromMap = {}, toMap = {}} = {}], info) => {
         const field = info.key === 'preset' ? 'preset' : info.key === 'system_mode' ? 'systemMode' : info.key === 'running_mode' ? 'deviceMode' : untr(`mode/preset map for ${info.key}`);

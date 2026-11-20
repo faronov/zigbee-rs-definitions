@@ -3,13 +3,13 @@
 # Source: src/devices/iris.ts
 zdef: 1
 id: iris/3320-l
-revision: 1
+revision: 2
 vendor: Iris
 model: "3320-L"
 description: Contact and temperature sensor
 source: zhc devices/iris.ts
 match: [{model: "3320-L"}]
-device: {battery: {curve: "3V_2100"}}
+device: {battery: "3V_2100"}
 entities:
   - key: contact
     platform: binary_sensor
