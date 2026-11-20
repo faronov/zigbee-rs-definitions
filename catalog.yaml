@@ -1,0 +1,17 @@
+# Catalog build configuration (tools/catalog/build.py).
+#
+# Bank budgets follow docs/device-support.md 16.1/16.2 of faronov/zigbee-rs-hub
+# (D3, D10, D20): 4 MB boards 2 x 256 KiB, 8 MB boards 2 x 576 KiB; local
+# definition areas 64 / 128 KiB. Banks hold fully translated definitions only
+# (D12), ordered by popularity (D18).
+banks:
+  4m: {size: 262144}
+  8m: {size: 589824}
+local:
+  4m: 65536
+  8m: 131072
+# Vendor templates (C tier) the released hub firmware implements. Definitions
+# that need a template not listed here are not put into banks (a hub without
+# the template would skip them, spec 8.5); they are still in the shards.
+# Add a name here when the hub release that implements it is out.
+templates_available: []

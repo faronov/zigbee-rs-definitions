@@ -1,0 +1,122 @@
+name: release
+
+# Builds the catalog from the committed definitions, signs the manifest and the
+# bank headers with the Ed25519 key in the secret ZDEF_SIGNING_KEY, and
+# publishes a GitHub Release "catalog-YYYY.MM.DD[.n]" with the manifest, the
+# 256 shards and the two banks (docs/catalog-format.md). Without the secret
+# the release is a pre-release without manifest.cose, so
+# releases/latest/download/... never serves an unsigned catalog.
+on:
+  workflow_dispatch:
+    inputs:
+      refresh_popularity:
+        description: Refresh the issue-mention popularity (about 500 GitHub API requests on a cold cache)
+        type: boolean
+        default: false
+      force:
+        description: Release even if the content equals the latest release
+        type: boolean
+        default: false
+  schedule:
+    - cron: "17 3 * * 1"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tools/requirements.txt
+      - run: pip install -r tools/requirements.txt
+      - run: npm ci
+      - run: npm test
+      - name: Regenerate and check
+        run: |
+          npm run generate
+          git diff --quiet -- definitions/generated coverage || { echo "::error::committed definitions are stale; run npm run generate"; exit 1; }
+      - name: Schema
+        run: |
+          tools/fetch-hub-schema.sh
+          python3 tools/validate.py
+      - name: Popularity cache
+        if: inputs.refresh_popularity
+        uses: actions/cache@v4
+        with:
+          path: .cache/issues
+          key: issues-${{ github.run_id }}
+          restore-keys: issues-
+      - name: Refresh popularity
+        if: inputs.refresh_popularity
+        run: python3 tools/popularity.py --cache .cache/issues
+      - name: Version
+        id: version
+        run: |
+          day="$(date -u +%Y.%m.%d)"
+          serial=0
+          tag="catalog-${day}"
+          while gh release view "$tag" >/dev/null 2>&1; do
+            serial=$((serial + 1))
+            tag="catalog-${day}.${serial}"
+          done
+          echo "day=$day" >> "$GITHUB_OUTPUT"
+          echo "serial=$serial" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+      - name: Build
+        run: |
+          python3 tools/catalog/build.py --out out --date "${{ steps.version.outputs.day }}" --serial "${{ steps.version.outputs.serial }}"
+          python3 tools/catalog/test_catalog.py out
+      - name: Anything new?
+        id: changed
+        run: |
+          changed=true
+          if [ "${{ inputs.force }}" != "true" ] && gh release download --pattern manifest.cbor --dir prev >/dev/null 2>&1; then
+            changed="$(python3 -c 'import cbor2,sys; a=cbor2.loads(open("prev/manifest.cbor","rb").read()); b=cbor2.loads(open("out/manifest.cbor","rb").read()); print(str(a.get(8)!=b.get(8)).lower())')"
+          fi
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+          [ "$changed" = true ] || echo "::notice::catalog content equals the latest release; nothing to publish"
+      - name: Sign
+        if: steps.changed.outputs.changed == 'true'
+        id: sign
+        env:
+          ZDEF_SIGNING_KEY: ${{ secrets.ZDEF_SIGNING_KEY }}
+        run: |
+          python3 tools/catalog/sign.py out
+          if [ -f out/manifest.cose ]; then echo "signed=true" >> "$GITHUB_OUTPUT"; else echo "signed=false" >> "$GITHUB_OUTPUT"; fi
+      - name: Publish
+        if: steps.changed.outputs.changed == 'true'
+        run: |
+          tag="${{ steps.version.outputs.tag }}"
+          {
+            echo "Catalog built from zigbee-herdsman-converters $(node -p 'require("./package.json").dependencies["zigbee-herdsman-converters"]') at ${GITHUB_SHA}."
+            echo
+            if [ "${{ steps.sign.outputs.signed }}" = true ]; then
+              echo "Signed: manifest.cose, key ID $(head -1 out/signing-key.pub | cut -d' ' -f2)."
+            else
+              echo "**Unsigned pre-release** (no ZDEF_SIGNING_KEY secret): hubs will not install it."
+            fi
+            echo
+            cat out/REPORT.md
+          } > notes.md
+          assets=(out/manifest.cbor out/shard-*.cbor out/bank-*.zdb out/REPORT.md)
+          [ -f out/manifest.cose ] && assets+=(out/manifest.cose)
+          [ "${#assets[@]}" -le 1000 ] || { echo "::error::${#assets[@]} assets exceed the GitHub limit"; exit 1; }
+          flags=(--title "$tag" --notes-file notes.md --target "$GITHUB_SHA")
+          if [ "${{ steps.sign.outputs.signed }}" = true ]; then flags+=(--latest); else flags+=(--prerelease --latest=false); fi
+          gh release create "$tag" "${flags[@]}" "${assets[@]}"
+          echo "published $tag with ${#assets[@]} assets" >> "$GITHUB_STEP_SUMMARY"

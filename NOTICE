@@ -1,0 +1,48 @@
+NOTICE
+
+zigbee-rs-definitions is MIT licensed (see LICENSE).
+
+definitions/generated/ and the device facts in coverage/ are derived from
+zigbee-herdsman-converters (https://github.com/Koenkk/zigbee-herdsman-converters),
+version pinned in package.json, by the generator in generator/. Every
+generated file names its origin (`source: zhc devices/<file>.ts` and a header
+comment with the zhc version and source line). zigbee-herdsman-converters is
+distributed under the following license:
+
+----------------------------------------------------------------------------
+MIT License
+
+Copyright (c) 2018 Koen Kanters
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+----------------------------------------------------------------------------
+
+The generator also reads cluster definitions of zigbee-herdsman
+(https://github.com/Koenkk/zigbee-herdsman, MIT, Copyright (c) 2018 Koen
+Kanters) at build time; nothing of it is copied into this repository.
+
+definitions/handwritten/ contains the example definitions of
+faronov/zigbee-rs-hub (docs/device-support.md, definitions/examples/),
+MIT/Apache-2.0, Copyright (c) 2026 The zigbee-rs-hub contributors.
+
+tools/zdefc_py/ is derived from faronov/zigbee-rs-hub tools/zdefc-proto
+(MIT/Apache-2.0, Copyright (c) 2026 The zigbee-rs-hub contributors).
+
+popularity/popularity.json holds counts of GitHub issues that mention a
+device model; no issue text is stored in this repository.

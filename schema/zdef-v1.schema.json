@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/faronov/zigbee-rs-definitions/schema/zdef-v1.schema.json",
+  "title": "zdef v1 device definition (provisional)",
+  "description": "Provisional JSON Schema of the zdef v1 source format (docs/device-support.md section 6 of faronov/zigbee-rs-hub) as used by this repository. The authoritative schema will come from the hub's schema/ directory; CI uses that one when it exists.",
+  "type": "object",
+  "required": ["zdef", "id", "revision", "vendor", "model", "match"],
+  "properties": {
+    "zdef": {"const": 1},
+    "id": {"type": "string", "pattern": "^[a-z0-9._/-]{3,64}$"},
+    "revision": {"type": "integer", "minimum": 1},
+    "vendor": {"type": "string", "minLength": 1},
+    "model": {"type": "string", "minLength": 1},
+    "description": {"type": "string"},
+    "source": {"type": "string"},
+    "match": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/clause"}},
+    "white_label": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["vendor", "model"], "additionalProperties": false,
+        "properties": {"vendor": {"type": "string"}, "model": {"type": "string"}, "description": {"type": "string"},
+                       "manufacturer": {"type": "array", "items": {"type": "string"}}}
+      }
+    },
+    "requires": {"type": "array", "items": {"type": ["integer", "string"]}},
+    "priority": {"type": "integer"},
+    "device": {"$ref": "#/$defs/device"},
+    "generic": {"$ref": "#/$defs/generic"},
+    "endpoints": {"type": "object", "patternProperties": {"^[0-9]+$": {"type": "string"}}, "additionalProperties": false},
+    "self_description": {"enum": ["ignore", "under", "over"]},
+    "tuya": {"$ref": "#/$defs/tuya"},
+    "templates": {
+      "type": "array",
+      "items": {"type": "object", "required": ["name"], "additionalProperties": false,
+                "properties": {"name": {"type": "string", "pattern": "^[a-z0-9_]+$"}, "params": {"type": "object"}}}
+    },
+    "configure": {"type": "array", "items": {"$ref": "#/$defs/configureOp"}},
+    "ignore": {"type": "array", "items": {"type": "object", "required": ["cluster"],
+               "properties": {"ep": {"$ref": "#/$defs/u8"}, "cluster": {"$ref": "#/$defs/u16"}, "cmd": {"$ref": "#/$defs/u8"}}, "additionalProperties": false}},
+    "entities": {"type": "array", "items": {"$ref": "#/$defs/entity"}},
+    "gp": {"type": "object"},
+    "x-partial": {"const": true}
+  },
+  "patternProperties": {"^x-": {}},
+  "additionalProperties": false,
+  "$defs": {
+    "u8": {"type": "integer", "minimum": 0, "maximum": 255},
+    "u16": {"type": "integer", "minimum": 0, "maximum": 65535},
+    "expr": {"type": "string", "minLength": 1},
+    "nameMatch": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "object", "required": ["any"], "additionalProperties": false, "properties": {"any": {"type": "array", "minItems": 1, "items": {"type": "string"}}}},
+        {"type": "object", "required": ["prefix"], "additionalProperties": false, "properties": {"prefix": {"type": "string"}}}
+      ]
+    },
+    "range": {"type": "object", "additionalProperties": false, "properties": {"min": {"type": "integer"}, "max": {"type": "integer"}}},
+    "clause": {
+      "type": "object", "minProperties": 1, "additionalProperties": false,
+      "properties": {
+        "manufacturer": {"$ref": "#/$defs/nameMatch"},
+        "model": {"$ref": "#/$defs/nameMatch"},
+        "mfr_code": {"$ref": "#/$defs/u16"},
+        "app_version": {"$ref": "#/$defs/range"},
+        "stack_version": {"$ref": "#/$defs/range"},
+        "hw_version": {"$ref": "#/$defs/range"},
+        "sw_build": {"$ref": "#/$defs/nameMatch"},
+        "power": {"enum": ["mains", "battery"]},
+        "logical_type": {"enum": ["Coordinator", "Router", "EndDevice"]},
+        "endpoints": {
+          "type": "object",
+          "patternProperties": {"^[0-9]+$": {"type": "object", "additionalProperties": false, "properties": {
+            "profile": {"$ref": "#/$defs/u16"}, "device_id": {"$ref": "#/$defs/u16"},
+            "in": {"type": "array", "items": {"$ref": "#/$defs/u16"}}, "out": {"type": "array", "items": {"$ref": "#/$defs/u16"}}}}},
+          "additionalProperties": false
+        },
+        "gp": {"type": "object"},
+        "x-priority": {"type": "integer"}
+      }
+    },
+    "device": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "power": {"enum": ["mains", "battery", "energy_harvesting"]},
+        "sleepy": {"type": "boolean"},
+        "battery": {
+          "type": "object", "additionalProperties": false,
+          "properties": {"voltage_to_percent": {"type": "array", "items": {"type": "number"}, "minItems": 2, "maxItems": 2}, "curve": {"type": "string"}}
+        },
+        "checkin_s": {"type": "integer", "minimum": 0},
+        "availability": {"type": "object", "additionalProperties": false, "properties": {"timeout_s": {"type": "integer", "minimum": 0}}},
+        "ota": {"type": "boolean"}
+      }
+    },
+    "generic": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "disable": {"type": "boolean"},
+        "exclude": {"type": "array", "items": {"type": "string"}},
+        "only_endpoints": {"type": "array", "items": {"$ref": "#/$defs/u8"}},
+        "patch": {"type": "object", "additionalProperties": {"$ref": "#/$defs/entityFields"}}
+      }
+    },
+    "tuya": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "time_sync": {"enum": ["off", "1970", "2000", 1970, 2000]},
+        "force_time_sync_s": {"type": "integer", "minimum": 1},
+        "magic_packet": {"type": "boolean"},
+        "query": {"type": "array", "items": {"oneOf": [{"enum": ["configure", "announce"]},
+                  {"type": "object", "required": ["interval_s"], "additionalProperties": false, "properties": {"interval_s": {"type": "integer", "minimum": 1}}}]}},
+        "bind_basic": {"type": "boolean"},
+        "gateway_status": {"type": "boolean"},
+        "send": {"enum": ["dataRequest", "sendData"]},
+        "mcu_version": {"type": "boolean"},
+        "optimistic": {"type": "boolean"},
+        "dedup": {"type": "boolean"}
+      }
+    },
+    "zclType": {"enum": ["bool", "map8", "map16", "map24", "map32", "u8", "u16", "u24", "u32", "u40", "u48", "u56", "u64", "i8", "i16", "i24", "i32", "i40", "i48",
+                         "enum8", "enum16", "f32", "f64", "str", "ostr"]},
+    "zcl": {
+      "type": "object", "required": ["cluster", "attr"], "additionalProperties": false,
+      "properties": {"cluster": {"$ref": "#/$defs/u16"}, "attr": {"$ref": "#/$defs/u16"}, "type": {"$ref": "#/$defs/zclType"}, "mfr": {"$ref": "#/$defs/u16"}, "ep": {"$ref": "#/$defs/u8"}}
+    },
+    "tuyaDp": {"type": "array", "prefixItems": [{"$ref": "#/$defs/u8"}, {"enum": ["raw", "bool", "value", "string", "enum", "bitmap"]}], "minItems": 2, "maxItems": 2},
+    "cmd": {
+      "type": "object", "required": ["cluster", "id"], "additionalProperties": false,
+      "properties": {"ep": {"$ref": "#/$defs/u8"}, "cluster": {"$ref": "#/$defs/u16"}, "id": {"$ref": "#/$defs/u8"}, "mfr": {"$ref": "#/$defs/u16"}}
+    },
+    "report": {"oneOf": [{"const": "off"}, {"type": "array", "prefixItems": [{"type": "integer", "minimum": 0}, {"type": "integer", "minimum": 0}, {"type": "number", "minimum": 0}], "minItems": 3, "maxItems": 3}]},
+    "codec": {"oneOf": [{"type": "string"}, {"type": "object", "minProperties": 1, "maxProperties": 1}]},
+    "entityFields": {
+      "type": "object",
+      "properties": {
+        "key": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+        "platform": {"enum": ["sensor", "binary_sensor", "number", "select", "switch", "button", "text", "light", "cover", "climate", "lock", "fan", "event", "siren", "valve", "update"]},
+        "device_class": {"type": "string"},
+        "unit": {"type": "string"},
+        "state_class": {"enum": ["measurement", "total", "total_increasing", "measurement_angle"]},
+        "category": {"enum": ["config", "diagnostic"]},
+        "name": {"type": "string"},
+        "enabled": {"type": "boolean"},
+        "ep": {"$ref": "#/$defs/u8"},
+        "zcl": {"$ref": "#/$defs/zcl"},
+        "tuya": {"$ref": "#/$defs/tuyaDp"},
+        "struct": {"type": "object", "required": ["cluster", "attr", "codec"]},
+        "gp": {"type": "object"},
+        "hub": {"type": "object"},
+        "parts": {"type": "object", "additionalProperties": {"$ref": "#/$defs/entityFields"}},
+        "triggers": {"type": "array", "items": {"type": "object", "required": ["event"], "properties": {
+          "cmd": {"$ref": "#/$defs/cmd"}, "gp_cmd": {}, "tuya": {"$ref": "#/$defs/tuyaDp"}, "when": {"$ref": "#/$defs/expr"},
+          "event": {"$ref": "#/$defs/expr"}, "attrs": {"type": "object", "additionalProperties": {"$ref": "#/$defs/expr"}}}, "additionalProperties": false}},
+        "press": {"type": "object"},
+        "event_types": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "codec": {"$ref": "#/$defs/codec"},
+        "invalid": {"type": ["number", "string"]},
+        "map": {"type": "object", "additionalProperties": {"type": "string"}},
+        "value_on": {"type": ["number", "boolean", "string"]},
+        "value_off": {"type": ["number", "boolean", "string"]},
+        "from": {"$ref": "#/$defs/expr"},
+        "to": {"$ref": "#/$defs/expr"},
+        "mul": {"type": "number"},
+        "div": {"type": "number"},
+        "offset": {"type": "number"},
+        "precision": {"type": "integer", "minimum": 0, "maximum": 9},
+        "min": {"type": "number"},
+        "max": {"type": "number"},
+        "step": {"type": "number", "exclusiveMinimum": 0},
+        "mode": {"enum": ["auto", "box", "slider", "text", "password"]},
+        "access": {"type": "string", "pattern": "^r?w?p?$"},
+        "report": {"$ref": "#/$defs/report"},
+        "reset_after": {"$ref": "#/$defs/expr"},
+        "present_if": {"$ref": "#/$defs/expr"},
+        "attrs": {"type": "object"},
+        "invert": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "entity": {"allOf": [{"$ref": "#/$defs/entityFields"}, {"required": ["key", "platform"]}]},
+    "configureOp": {
+      "type": "object", "minProperties": 1, "maxProperties": 1,
+      "properties": {
+        "bind": {"type": "object", "required": ["clusters"], "additionalProperties": false, "properties": {"ep": {"$ref": "#/$defs/u8"}, "clusters": {"type": "array", "items": {"$ref": "#/$defs/u16"}}}},
+        "write": {"type": "object", "required": ["cluster", "attr", "type", "value"], "additionalProperties": false, "properties": {
+          "ep": {"$ref": "#/$defs/u8"}, "cluster": {"$ref": "#/$defs/u16"}, "attr": {"$ref": "#/$defs/u16"}, "type": {"$ref": "#/$defs/zclType"},
+          "value": {"type": ["number", "boolean", "string"]}, "mfr": {"$ref": "#/$defs/u16"}}},
+        "read": {"type": "object", "required": ["cluster", "attrs"], "additionalProperties": false, "properties": {
+          "ep": {"$ref": "#/$defs/u8"}, "cluster": {"$ref": "#/$defs/u16"}, "attrs": {"type": "array", "items": {"$ref": "#/$defs/u16"}}, "mfr": {"$ref": "#/$defs/u16"}}},
+        "report": {"type": "object", "required": ["cluster", "attr", "report"], "additionalProperties": false, "properties": {
+          "ep": {"$ref": "#/$defs/u8"}, "cluster": {"$ref": "#/$defs/u16"}, "attr": {"$ref": "#/$defs/u16"}, "type": {"$ref": "#/$defs/zclType"},
+          "mfr": {"$ref": "#/$defs/u16"}, "report": {"$ref": "#/$defs/report"}}},
+        "cmd": {"$ref": "#/$defs/cmd"},
+        "group": {"type": "object", "required": ["group"], "properties": {"ep": {"$ref": "#/$defs/u8"}, "group": {"$ref": "#/$defs/u16"}}, "additionalProperties": false},
+        "checkin": {"type": "object", "required": ["interval_qs"], "properties": {"ep": {"$ref": "#/$defs/u8"}, "interval_qs": {"type": "integer", "minimum": 0}}, "additionalProperties": false}
+      },
+      "additionalProperties": false
+    }
+  }
+}
