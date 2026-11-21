@@ -101,9 +101,28 @@ jobs:
           echo "day=$day" >> "$GITHUB_OUTPUT"
           echo "serial=$serial" >> "$GITHUB_OUTPUT"
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
+      - name: Web tools (zdefc WebAssembly for the hub's web UI)
+        id: webtools
+        run: |
+          # Only zdefc builds that know web bundles (faronov/zigbee-rs-hub#19 and later).
+          if ! zdefc --help 2>&1 | grep -q web-bundle; then
+            echo "::notice::zdefc at ZDEFC_GIT_REF has no web-bundle: release without web tools"
+            echo "args=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git clone --quiet https://github.com/faronov/zigbee-rs-hub hub
+          git -C hub checkout --quiet "${{ vars.ZDEFC_GIT_REF }}"
+          rustup target add wasm32-unknown-unknown
+          bindgen="$(sed -n '/^name = "wasm-bindgen"$/{n;s/^version = "\(.*\)"$/\1/p}' hub/Cargo.lock)"
+          cargo install --locked wasm-bindgen-cli --version "$bindgen"
+          (cd hub && cargo build --locked -p zdefc-wasm --profile wasm --target wasm32-unknown-unknown)
+          wasm-bindgen --target web --remove-name-section --remove-producers-section \
+            --out-dir webtools hub/target/wasm32-unknown-unknown/wasm/zdefc_wasm.wasm
+          zdefc web-bundle -o zdefc-web.zwb webtools/zdefc_wasm.js webtools/zdefc_wasm_bg.wasm
+          echo "args=--tools zdefc-web.zwb" >> "$GITHUB_OUTPUT"
       - name: Build
         run: |
-          python3 tools/catalog/build.py --out out --date "${{ steps.version.outputs.day }}" --serial "${{ steps.version.outputs.serial }}"
+          python3 tools/catalog/build.py --out out --date "${{ steps.version.outputs.day }}" --serial "${{ steps.version.outputs.serial }}" ${{ steps.webtools.outputs.args }}
           python3 tools/catalog/test_catalog.py out
       - name: Anything new?
         id: changed
@@ -148,6 +167,7 @@ jobs:
             cat out/REPORT.md
           } > notes.md
           assets=(out/manifest.cbor out/shard-*.cbor out/bank-*.zdb out/REPORT.md out/catalog.json)
+          [ -f out/zdefc-web.zwb ] && assets+=(out/zdefc-web.zwb)
           [ -f out/manifest.cose ] && assets+=(out/manifest.cose)
           [ "${#assets[@]}" -le 1000 ] || { echo "::error::${#assets[@]} assets exceed the GitHub limit"; exit 1; }
           if [ "${{ inputs.dry_run }}" = true ]; then
@@ -158,3 +178,15 @@ jobs:
           if [ "${{ steps.sign.outputs.signed }}" = true ]; then flags+=(--latest); else flags+=(--prerelease --latest=false); fi
           gh release create "$tag" "${flags[@]}" "${assets[@]}"
           echo "published $tag with ${#assets[@]} assets" >> "$GITHUB_STEP_SUMMARY"
+
+  pages:
+    # The hub downloads nothing: its web UI and the Home Assistant integration
+    # fetch the catalog from this mirror (GitHub Pages allows cross-origin
+    # reads, release assets do not) and upload it to the hub.
+    needs: release
+    if: ${{ !inputs.dry_run }}
+    uses: ./.github/workflows/pages.yml
+    permissions:
+      contents: read
+      pages: write
+      id-token: write

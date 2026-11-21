@@ -20,6 +20,10 @@ written by the Rust `zdefc` of faronov/zigbee-rs-hub (`ZDEFC`, default
 (docs/catalog-format.md). The output is unsigned; the release workflow signs
 it with `zdefc catalog sign`.
 
+--tools FILE...: other release assets listed in the manifest (key 64), copied
+into --out (the web tools bundle zdefc-web.zwb: the definition compiler the
+hub serves to its web UI).
+
 Outputs in --out: plan.json, src/ (merged sources), shard-00..ff.cbor,
 bank-4m.zdb, bank-8m.zdb, manifest.cbor, catalog.json, REPORT.md, report.json.
 """
@@ -152,6 +156,8 @@ def main(argv):
     ap.add_argument('--date', default=None, help='catalog date YYYY.MM.DD (default: today, UTC)')
     ap.add_argument('--serial', type=int, default=0)
     ap.add_argument('--generation', type=int, default=None)
+    ap.add_argument('--tools', nargs='*', default=[],
+                    help='other release assets listed in the manifest (key 64), e.g. zdefc-web.zwb')
     ap.add_argument('--assume-templates', action='store_true',
                     help='projection: treat every vendor template as implemented (sizes of the A+B+C banks)')
     args = ap.parse_args(argv)
@@ -227,6 +233,8 @@ def main(argv):
         'banks': [{'name': f'bank-{name}.zdb', 'max_size': b['size'], 'candidates': [srcs[did] for did in eligible]}
                   for name, b in cfg['banks'].items()],
     }
+    if args.tools:
+        plan['tools'] = [os.path.abspath(t) for t in args.tools]
     plan_path = os.path.join(out, 'plan.json')
     with open(plan_path, 'w', encoding='utf-8') as f:
         json.dump(plan, f, indent=1)
@@ -239,7 +247,7 @@ def main(argv):
     print(res.stdout.strip())
     cat = json.load(open(os.path.join(out, 'catalog.json'), encoding='utf-8'))
 
-    assets = 2 + SHARDS + len(cat['banks']) + 2     # manifest.cbor/.cose, shards, banks, REPORT.md, catalog.json
+    assets = 2 + SHARDS + len(cat['banks']) + 2 + len(args.tools)     # manifest.cbor/.cose, shards, banks, REPORT.md, catalog.json, tools
     if assets > ASSET_LIMIT:
         raise SystemExit(f'{assets} release assets exceed the GitHub limit of {ASSET_LIMIT}')
     version = f'catalog-{date_s}' + (f'.{args.serial}' if args.serial else '')

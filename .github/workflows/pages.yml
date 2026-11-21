@@ -1,0 +1,51 @@
+name: pages
+
+# Mirrors the latest signed catalog release to GitHub Pages:
+# https://faronov.github.io/zigbee-rs-definitions/latest/<asset>
+# (manifest.cose, bank-4m.zdb, bank-8m.zdb, shard-hh.cbor, zdefc-web.zwb,
+# catalog.json; release.json names the tag). The hub's web UI and the Home
+# Assistant integration read it (Pages answers cross-origin requests; release
+# asset downloads do not) and upload the files to the hub, which verifies
+# them against the signed manifest. Runs after every release and on demand.
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Latest signed release
+        run: |
+          tag="$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName -q .tagName)"
+          mkdir -p site/latest
+          gh release download "$tag" --repo "$GITHUB_REPOSITORY" --dir site/latest \
+            --pattern 'manifest.cose' --pattern 'bank-*.zdb' --pattern 'shard-*.cbor' \
+            --pattern 'zdefc-web.zwb' --pattern 'catalog.json' --pattern 'REPORT.md'
+          test -f site/latest/manifest.cose || { echo "::error::$tag has no manifest.cose (unsigned?)"; exit 1; }
+          printf '{"tag": "%s"}\n' "$tag" > site/latest/release.json
+          touch site/.nojekyll
+          {
+            echo '<!doctype html><meta charset="utf-8"><title>zigbee-rs definitions catalog</title>'
+            echo "<h1>zigbee-rs definitions catalog</h1><p>Mirror of <a href=\"https://github.com/$GITHUB_REPOSITORY/releases/tag/$tag\">$tag</a> for zigbee-rs-hub clients: <code>latest/manifest.cose</code>, banks, shards, web tools. Files are verified by the hub against the signed manifest.</p>"
+          } > site/index.html
+          ls site/latest | wc -l
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deploy
+        uses: actions/deploy-pages@v4
