@@ -33,10 +33,13 @@ key `"zdef-index-v1\0\0\0"`. Flags: 1 recheck, 2 fingerprint, 4 white label.
 
 **Banks** (`bank-4m.zdb` ≤ 256 KiB, `bank-8m.zdb` ≤ 576 KiB; fully translated
 definitions only, largest popularity prefix that fits): a 64-byte
-little-endian header (`ZDB1`, format 1, signature length, generation, catalog
+little-endian header (`ZDB1`, format 2, signature length, generation, catalog
 date and serial, block/definition/string/key counts, string section length,
 SHA-256 of the body), a detached COSE_Sign1 of the header (EdDSA), then the
-body: deflated shared-string table, index (12 B per key: u64 hash, u16 block,
+body: the shared-string table (format 2: u32 count, count + 1 u32 offsets
+into the text area, the UTF-8 text, read in place by hubs without PSRAM;
+format 1, until catalog-2026.11.20: u32 inflated length + raw deflate of a
+CBOR array of text strings), index (12 B per key: u64 hash, u16 block,
 u8 slot, u8 flags; sorted), block offset table and raw-deflate blocks of at
 most 4 KiB of `(u16 length, catalog-form definition)`. The catalog form drops
 `description` and replaces strings shared by two or more definitions with
