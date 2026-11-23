@@ -148,6 +148,25 @@ def identity_keys(doc):
     return keys
 
 
+def model_key(doc):
+    """A definition's model as compared for uniqueness (zhc's `model` is the
+    definition identity; names trimmed like the hub's matching)."""
+    return trim(doc.get('model', '')).casefold()
+
+
+def check_unique_models(sources):
+    seen = {}
+    dups = []
+    for src in sources:
+        k = model_key(src['doc'])
+        if k in seen:
+            dups.append(f"model {src['doc'].get('model')!r}: {seen[k]} and {rel(src['path'])}")
+        else:
+            seen[k] = rel(src['path'])
+    if dups:
+        sys.exit('duplicate definition models (a model identifies one definition):\n  ' + '\n  '.join(dups))
+
+
 # ---------------------------------------------------------------- main
 
 def main(argv):
@@ -174,16 +193,20 @@ def main(argv):
 
     gen, hand, overrides = load_sources()
 
-    # hand-written definitions replace generated ones with the same id or a shared identity
+    # hand-written definitions replace generated ones with the same id, the
+    # same model (the definition's identity, as in zhc) or a shared identity
     replaced = {}
     hand_keys = {i: identity_keys(h['doc']) for i, h in hand.items()}
+    hand_models = {model_key(h['doc']): i for i, h in hand.items()}
     for gid, g in list(gen.items()):
         gk = identity_keys(g['doc'])
-        for hid, hk in hand_keys.items():
-            if gid == hid or (gk & hk):
-                replaced[gid] = hid
-                del gen[gid]
-                break
+        hid = hand_models.get(model_key(g['doc']))
+        if hid is None:
+            hid = next((h for h, hk in hand_keys.items() if gid == h or (gk & hk)), None)
+        if hid is not None:
+            replaced[gid] = hid
+            del gen[gid]
+    check_unique_models(list(gen.values()) + list(hand.values()))
 
     out = args.out
     if os.path.exists(out):
