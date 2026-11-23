@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:14809
 zdef: 1
 id: tuya/ts0004
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0004
 description: Smart light switch - 4 gang with neutral wire
@@ -21,6 +21,7 @@ match:
         - _TZ3000_gexniqbq
         - _TZ3000_iymfxdis
         - _TZ3000_r9e2w7dn
+    x-white-label: true
 white_label:
   - {vendor: Tuya, model: DS-111, manufacturer: [_TZ3000_mdj7kra9]}
   - vendor: MHCOZY

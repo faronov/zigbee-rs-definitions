@@ -274,6 +274,7 @@ function matchClauses(d: any): {match: any[]; names: Set<string>; partial?: stri
             else if (k === 'stackVersion') c.stack_version = {min: v, max: v};
             else if (k === 'hardwareVersion') c.hw_version = {min: v, max: v};
             else if (k === 'softwareBuildID') c.sw_build = v;
+            else if (k === 'dateCode') c.date_code = v;
             else if (k === 'powerSource') c.power = /battery/i.test(v) ? 'battery' : 'mains';
             else if (k === 'priority') c.priority = v;
             else if (k === 'endpoints') {
@@ -314,6 +315,8 @@ function matchClauses(d: any): {match: any[]; names: Set<string>; partial?: stri
 function whiteLabels(d: any, names: Set<string>, match: any[]): any[] | undefined {
     const out: any[] = [];
     const extra: string[] = [];
+    // White-label names per model ID ('' = every model of the definition).
+    const extraBy = new Map<string, string[]>();
     // Model IDs the definition is found by (zhc looks white labels up only
     // after the definition was found by one of them).
     const known = new Set<string>([...(d.zigbeeModel || []), ...(Array.isArray(d.fingerprint) ? d.fingerprint.map((f: any) => f.modelID).filter(Boolean) : [])]);
@@ -337,7 +340,13 @@ function whiteLabels(d: any, names: Set<string>, match: any[]): any[] | undefine
         for (const [mid, mfr] of byModel) {
             if (!mid && !mfr.length) continue;
             const x: any = {...base};
-            for (const n of mfr) if (!names.has(n) && !extra.includes(n)) extra.push(n);
+            for (const n of mfr) {
+                if (names.has(n)) continue;
+                if (!extra.includes(n)) extra.push(n);
+                const l = extraBy.get(mid) || [];
+                if (!l.includes(n)) l.push(n);
+                extraBy.set(mid, l);
+            }
             if (mfr.length) x.manufacturer = mfr;
             if (mid) x.model_id = [mid];
             out.push(x);
@@ -345,10 +354,15 @@ function whiteLabels(d: any, names: Set<string>, match: any[]): any[] | undefine
     }
     if (extra.length) {
         // White-label names must be in the match name list (spec 8.4): add them
-        // under the definition's model IDs (zhc matches white labels the same way).
-        const models: string[] = [...new Set<string>([...(d.zigbeeModel || []), ...(Array.isArray(d.fingerprint) ? d.fingerprint.map((f: any) => f.modelID).filter(Boolean) : [])])];
-        const model = models.length === 1 ? models[0] : models.length ? {any: models} : String(d.model);
-        match.push({model, manufacturer: extra.length === 1 ? extra[0] : {any: extra}});
+        // under the white label's model ID, or every model of the definition.
+        // `x-white-label` scores the clause as if it had no manufacturer: in
+        // zhc white labels rename a definition, they do not select it.
+        const models: string[] = [...known];
+        const all = models.length === 1 ? models[0] : models.length ? {any: models} : String(d.model);
+        for (const [mid, mfrs] of extraBy) {
+            const manufacturer = mfrs.length === 1 ? mfrs[0] : {any: mfrs};
+            match.push({model: mid || all, manufacturer, 'x-white-label': true});
+        }
         for (const n of extra) names.add(n);
     }
     return out.length ? out : undefined;

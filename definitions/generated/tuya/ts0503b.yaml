@@ -3,14 +3,14 @@
 # Source: src/devices/tuya.ts:5672
 zdef: 1
 id: tuya/ts0503b
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0503B
 description: Zigbee RGB light
 source: zhc devices/tuya.ts
 match:
   - {model: TS0503B}
-  - {model: TS0503B, manufacturer: _TZ3210_778drfdt}
+  - {model: TS0503B, manufacturer: _TZ3210_778drfdt, x-white-label: true}
 white_label:
   - {vendor: BTF-Lighting, model: C03Z}
   - {vendor: MiBoxer, model: FUT037Z, manufacturer: [_TZ3210_778drfdt]}

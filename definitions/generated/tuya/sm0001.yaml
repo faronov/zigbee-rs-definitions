@@ -3,14 +3,14 @@
 # Source: src/devices/tuya.ts:5439
 zdef: 1
 id: tuya/sm0001
-revision: 1
+revision: 2
 vendor: Tuya
 model: SM0001
 description: Switch
 source: zhc devices/tuya.ts
 match:
   - {model: SM0001}
-  - {model: SM0001, manufacturer: _TZ3000_jcqs2mrv}
+  - {model: SM0001, manufacturer: _TZ3000_jcqs2mrv, x-white-label: true}
 white_label:
   - {vendor: Zemismart, model: ZM-H7, manufacturer: [_TZ3000_jcqs2mrv]}
 generic: {exclude: [power_on_behavior]}

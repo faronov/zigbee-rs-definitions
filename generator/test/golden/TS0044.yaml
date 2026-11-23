@@ -24,6 +24,7 @@ match:
         - _TZ3000_xwuveizv
         - _TZ3000_zgyzgdua
         - _TZ3000_1hypixdr
+    x-white-label: true
 white_label:
   - {vendor: Lonsonho, model: TS0044}
   - {vendor: Haozee, model: ESW-OZAA-EU}

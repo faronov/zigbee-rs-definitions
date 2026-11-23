@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts
 zdef: 1
 id: tuya/ts0210
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0210
 description: Vibration sensor
@@ -13,6 +13,7 @@ match:
   - model: TS0210
     manufacturer:
       any: [_TYZB01_821siati, _TZ3000_lzdjjfss, "'_TZ32101000000_5oy7cysk'", _TZ3210_kjafhwd2]
+    x-white-label: true
 white_label:
   - {vendor: Niceboy, model: ORBIS Vibration Sensor, manufacturer: [_TYZB01_821siati]}
   - {vendor: iHseno, model: _TZ3000_lzdjjfss, manufacturer: [_TZ3000_lzdjjfss]}

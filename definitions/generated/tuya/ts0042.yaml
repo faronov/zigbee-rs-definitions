@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:8736
 zdef: 1
 id: tuya/ts0042
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0042
 description: Wireless switch with 2 buttons
@@ -12,6 +12,7 @@ match:
   - {model: TS0042}
   - model: TS0042
     manufacturer: {any: [_TZ3000_dfgbtub0, _TZ3000_cllghx1k]}
+    x-white-label: true
 white_label:
   - {vendor: Smart9, model: S9TSZGB}
   - {vendor: Lonsonho, model: TS0042}

@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:8681
 zdef: 1
 id: tuya/ts0041
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0041
 description: Wireless switch with 1 button
@@ -20,6 +20,7 @@ match:
         - _TZ3000_6km7djcm
         - _TZ3000_4upl1fcj
         - _TZ3000_filhl5b7
+    x-white-label: true
 white_label:
   - {vendor: Smart9, model: S9TSZGB}
   - {vendor: Lonsonho, model: TS0041}

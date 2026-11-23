@@ -3,7 +3,7 @@
 # Source: src/devices/hobeian.ts:1452
 zdef: 1
 id: hobeian/zg-204zv
-revision: 2
+revision: 3
 vendor: HOBEIAN
 model: ZG-204ZV
 description: Millimeter wave motion detection
@@ -13,8 +13,7 @@ match:
   - model: TS0601
     manufacturer: {any: [_TZE200_uli8wasj, _TZE200_grgol3xp, _TZE200_rhgsbacq]}
   - {model: TS0202, manufacturer: _TZD200_vfh3tuo1}
-  - model: {any: [ZG-204ZV, AY204T, HS204ZV, TS0601, TS0202]}
-    manufacturer: AOYAN
+  - {model: AY204T, manufacturer: AOYAN, x-white-label: true}
 white_label:
   - {vendor: AOYAN, model: AY204T, manufacturer: [AOYAN], model_id: [AY204T]}
   - {vendor: HYSYIOT, model: HS204ZV, manufacturer: [_TZD200_vfh3tuo1]}

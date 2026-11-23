@@ -5,15 +5,15 @@ Generated from zigbee-herdsman-converters **26.130.0** (4664 definitions). Regen
 
 | Tier | Definitions | Share |
 |---|---:|---:|
-| A generic declarative (fully translated) | 1861 | 39.9 % |
+| A generic declarative (fully translated) | 1863 | 39.9 % |
 | B Tuya declarative (fully translated) | 421 | 9.0 % |
 | C vendor template (fully translated, needs a hub template) | 917 | 19.7 % |
-| P partial (some items untranslated; on demand only) | 1465 | 31.4 % |
-| **Fully translated (A + B + C)** | **3199** | **68.6 %** |
-| Fully translated without templates (A + B) | 2282 | 48.9 % |
+| P partial (some items untranslated; on demand only) | 1463 | 31.4 % |
+| **Fully translated (A + B + C)** | **3201** | **68.6 %** |
+| Fully translated without templates (A + B) | 2284 | 49.0 % |
 
 - Partial definitions whose only gap is an expose without a translated converter: 71.
-- Canonical YAML written: 3924 KiB in 4664 files.
+- Canonical YAML written: 3925 KiB in 4664 files.
 - Coordinator/adapter definitions (excluded from the popularity ranking): 13.
 
 ## Vendor templates used by tier C
@@ -52,10 +52,10 @@ translated if only this item is implemented. Locations are zhc source lines from
 | 19 | sunricher.extend.externalSwitchType | 19 | 0 | `src/devices/iluminize.ts:17`, `src/devices/iluminize.ts:24`, `src/devices/nordtronic.ts:51` |
 | 20 | tz.ballast_config | 19 | 0 | `src/converters/toZigbee.ts:892` |
 | 21 | tz.thermostat_clear_weekly_schedule | 19 | 0 | `src/converters/toZigbee.ts:1840` |
-| 22 | fingerprint | 18 | 4 |  |
-| 23 | m.numeric (argument … is code) | 18 | 0 | `src/devices/custom_devices_diy.ts:860`, `src/devices/custom_devices_diy.ts:881`, `src/devices/custom_devices_diy.ts:913` |
-| 24 | tz.thermostat_outdoor_temperature | 16 | 0 | `src/converters/toZigbee.ts:1817` |
-| 25 | tz.thermostat_programming_operation_mode | 16 | 0 | `src/converters/toZigbee.ts:1727` |
+| 22 | m.numeric (argument … is code) | 18 | 0 | `src/devices/custom_devices_diy.ts:860`, `src/devices/custom_devices_diy.ts:881`, `src/devices/custom_devices_diy.ts:913` |
+| 23 | tz.thermostat_outdoor_temperature | 16 | 0 | `src/converters/toZigbee.ts:1817` |
+| 24 | tz.thermostat_programming_operation_mode | 16 | 0 | `src/converters/toZigbee.ts:1727` |
+| 25 | fingerprint | 15 | 2 |  |
 | 26 | tuya.modernExtend.tuyaOnOff | 15 | 0 | `src/devices/tuya.ts:9494`, `src/devices/tuya.ts:9607`, `src/devices/tuya.ts:9650` |
 | 27 | sunricher.extend.minimumPWM | 14 | 0 | `src/devices/icasa.ts:22`, `src/devices/iluminize.ts:17`, `src/devices/iluminize.ts:24` |
 | 28 | fz.ias_occupancy_alarm_1_with_timeout | 13 | 0 | `src/converters/fromZigbee.ts:1289` |
@@ -145,7 +145,7 @@ translated if only this item is implemented. Locations are zhc source lines from
 | slacky_diy | 8 | 0 | 0 | 34 | 19.0 % |
 | shinasystem | 18 | 0 | 0 | 23 | 43.9 % |
 | orvibo | 19 | 0 | 0 | 21 | 47.5 % |
-| paulmann | 37 | 0 | 0 | 3 | 92.5 % |
+| paulmann | 38 | 0 | 0 | 2 | 95.0 % |
 | hobeian | 2 | 30 | 2 | 5 | 87.2 % |
 | third_reality | 31 | 0 | 0 | 6 | 83.8 % |
 | legrand | 1 | 0 | 0 | 35 | 2.8 % |
@@ -153,7 +153,7 @@ translated if only this item is implemented. Locations are zhc source lines from
 | nue_3a | 28 | 0 | 0 | 4 | 87.5 % |
 | hive | 20 | 0 | 0 | 11 | 64.5 % |
 | adurosmart | 17 | 0 | 0 | 13 | 56.7 % |
-| candeo | 15 | 0 | 0 | 15 | 50.0 % |
+| candeo | 16 | 0 | 0 | 14 | 53.3 % |
 | custom_devices_diy | 12 | 0 | 0 | 18 | 40.0 % |
 | develco | 9 | 0 | 0 | 21 | 30.0 % |
 | feibit | 28 | 0 | 0 | 2 | 93.3 % |

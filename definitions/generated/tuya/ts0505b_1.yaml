@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:5574
 zdef: 1
 id: tuya/ts0505b_1
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0505B_1
 description: Zigbee RGB+CCT light
@@ -74,6 +74,7 @@ match:
         - _TZ3210_b3kiq1i0
         - _TZ3210_o4vasvef
         - _TZ3210_8etggm4u
+    x-white-label: true
 white_label:
   - {vendor: Mercator Ikuü, model: SMD4106W-RGB-ZB}
   - {vendor: Tuya, model: A5C-21F7-01}

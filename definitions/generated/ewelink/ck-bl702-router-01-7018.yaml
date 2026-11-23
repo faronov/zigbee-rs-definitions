@@ -3,7 +3,7 @@
 # Source: src/devices/ewelink.ts
 zdef: 1
 id: ewelink/ck-bl702-router-01-7018
-revision: 1
+revision: 2
 vendor: eWeLink
 model: CK-BL702-ROUTER-01(7018)
 description: USB router
@@ -14,6 +14,7 @@ match:
     manufacturer: {any: [_TZ3000_hgm6k8ku, _TZ3000_piuensvr, _TZ3000_mmzmkkd4]}
   - model: {any: [CK-BL702-ROUTER-01(7018), HS807Z, TS0207]}
     manufacturer: {any: [HOBEIAN, COOLO, HS807Z]}
+    x-white-label: true
 white_label:
   - {vendor: HOBEIAN, model: ZG-807Z, manufacturer: [_TZ3000_piuensvr, _TZ3000_hgm6k8ku, HOBEIAN]}
   - {vendor: COOLO, model: ZG-807ZL, manufacturer: [_TZ3000_mmzmkkd4, COOLO]}

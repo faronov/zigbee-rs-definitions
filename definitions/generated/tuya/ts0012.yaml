@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:14538
 zdef: 1
 id: tuya/ts0012
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0012
 description: Smart light switch - 2 gang
@@ -12,6 +12,7 @@ match:
   - model: {any: [TS0012, ZG-302Z2]}
   - model: {any: [TS0012, ZG-302Z2]}
     manufacturer: _TZ3000_18ejxno0
+    x-white-label: true
 white_label:
   - {vendor: Vrey, model: VR-X712U-0013}
   - {vendor: TUYATEC, model: GDKES-02TZXD}

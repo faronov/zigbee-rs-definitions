@@ -3,14 +3,14 @@
 # Source: src/devices/tuya.ts:8759
 zdef: 1
 id: tuya/ts0043
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0043
 description: Wireless switch with 3 buttons
 source: zhc devices/tuya.ts
 match:
   - {model: TS0043}
-  - {model: TS0043, manufacturer: _TZ3000_1kmurvlx}
+  - {model: TS0043, manufacturer: _TZ3000_1kmurvlx, x-white-label: true}
 white_label:
   - {vendor: Smart9, model: S9TSZGB}
   - {vendor: Lonsonho, model: TS0043}

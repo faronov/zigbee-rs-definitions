@@ -3,14 +3,14 @@
 # Source: src/devices/tuya.ts
 zdef: 1
 id: tuya/ts0216
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0216
 description: Sound and flash siren
 source: zhc devices/tuya.ts
 match:
   - {model: TS0216}
-  - {model: TS0216, manufacturer: _TYZB01_sbpc1zrb}
+  - {model: TS0216, manufacturer: _TYZB01_sbpc1zrb, x-white-label: true}
 white_label:
   - {vendor: Hejhome, model: GKZ-SA141, manufacturer: [_TYZB01_sbpc1zrb]}
 templates:

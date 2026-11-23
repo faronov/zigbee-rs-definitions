@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:8431
 zdef: 1
 id: tuya/ts0502a
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0502A
 description: Light controller
@@ -19,6 +19,7 @@ match:
         - _TZ3000_rylaozuc
         - _TZ3000_5fkufhn1
         - _TZ3000_8uaoilu9
+    x-white-label: true
 white_label:
   - {vendor: Lidl, model: HG06492B/HG08130B, manufacturer: [_TZ3000_oborybow]}
   - {vendor: Lidl, model: HG06492A/HG08130A, manufacturer: [_TZ3000_el5kt5im]}

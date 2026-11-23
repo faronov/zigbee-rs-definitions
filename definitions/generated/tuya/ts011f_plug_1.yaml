@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:13294
 zdef: 1
 id: tuya/ts011f_plug_1
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS011F_plug_1
 description: Smart plug (with power monitoring)
@@ -54,6 +54,7 @@ match:
         - _TZ3000_amdymr7l
         - _TZ3000_zloso4jk
         - _TZ3210_w0qqde0g
+    x-white-label: true
 white_label:
   - {vendor: LELLKI, model: TS011F_plug}
   - {vendor: BlitzWolf, model: BW-SHP15}

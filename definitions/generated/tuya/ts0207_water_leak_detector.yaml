@@ -3,19 +3,21 @@
 # Source: src/devices/tuya.ts
 zdef: 1
 id: tuya/ts0207_water_leak_detector
-revision: 2
+revision: 3
 vendor: Tuya
 model: TS0207_water_leak_detector
 description: Water leak detector
 source: zhc devices/tuya.ts
 match:
   - model: {any: [TS0207, FNB54-WTS08ML1.0, AY222Z, HS222Z]}
+  - model: AY222Z
+    manufacturer: {any: [AOYAN, "AOYAN  "]}
+    x-white-label: true
+  - {model: HS222Z, manufacturer: HYSYIOT, x-white-label: true}
+  - {model: TS0207, manufacturer: HYSYIOT, x-white-label: true}
   - model: {any: [TS0207, FNB54-WTS08ML1.0, AY222Z, HS222Z]}
     manufacturer:
       any:
-        - AOYAN
-        - "AOYAN  "
-        - HYSYIOT
         - _TZ3000_kyb656no
         - _TZ3000_kstbkt6a
         - _TZ3000_k4ej3ww2
@@ -29,6 +31,7 @@ match:
         - _TZ3000_awvmkayh
         - _TZ3000_0s9gukzt
         - _TZ3000_syetgitm
+    x-white-label: true
 white_label:
   - {vendor: CR Smart Home, model: TS0207}
   - {vendor: AOYAN, model: AY222Z, manufacturer: [AOYAN, "AOYAN  "], model_id: [AY222Z]}
