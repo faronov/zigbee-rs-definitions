@@ -3,7 +3,7 @@
 # Source: src/devices/danfoss.ts:103
 zdef: 1
 id: danfoss/014g2461
-revision: 1
+revision: 2
 vendor: Danfoss
 model: "014G2461"
 description: Ally thermostat
@@ -12,8 +12,10 @@ match:
   - model: {any: [eTRV0100, eTRV0101, eTRV0103, TRV001, TRV003, eT093WRO, eT093WRG]}
 white_label:
   - {vendor: Danfoss, model: "014G2463"}
-  - {vendor: Hive, model: UK7004240}
-  - {vendor: Popp, model: "701721"}
+  - {vendor: Hive, model: UK7004240, model_id: [TRV001]}
+  - {vendor: Hive, model: UK7004240, model_id: [TRV003]}
+  - {vendor: Popp, model: "701721", model_id: [eT093WRO]}
+  - {vendor: Popp, model: "701721", model_id: [eT093WRG]}
 device: {ota: true}
 configure:
   - report: {cluster: 0x0B05, attr: 0x4000, type: map16, mfr: 0x1246, report: [0, 3600, 1]}

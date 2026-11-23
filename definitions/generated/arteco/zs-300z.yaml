@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:27559
 zdef: 1
 id: arteco/zs-300z
-revision: 1
+revision: 2
 vendor: Arteco
 model: ZS-300Z
 description: Soil moisture sensor
@@ -21,6 +21,7 @@ match:
 white_label:
   - {vendor: Arteco, model: ZS-302Z, manufacturer: [_TZE284_65gzcss7]}
   - {vendor: Arteco, model: ZS-304Z, manufacturer: [_TZE284_0ints6wl, _TZE284_yzr43ayq]}
+  - {vendor: Arteco, model: ZS-304Z, model_id: [ZS-304Z]}
 generic: {disable: true}
 tuya: {magic_packet: true}
 entities:

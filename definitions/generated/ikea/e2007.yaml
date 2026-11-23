@@ -3,13 +3,14 @@
 # Source: src/devices/ikea.ts:986
 zdef: 1
 id: ikea/e2007
-revision: 1
+revision: 2
 vendor: IKEA
 model: E2007
 description: STARKVIND air purifier
 source: zhc devices/ikea.ts
 match:
   - model: {any: [STARKVIND Air purifier, STARKVIND Air purifier table]}
-white_label: [{vendor: IKEA, model: E2006}]
+white_label:
+  - {vendor: IKEA, model: E2006, model_id: [STARKVIND Air purifier table]}
 device: {ota: true}
 x-partial: true

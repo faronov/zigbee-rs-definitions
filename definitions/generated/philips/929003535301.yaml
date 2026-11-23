@@ -3,17 +3,13 @@
 # Source: src/devices/philips.ts:4454
 zdef: 1
 id: philips/929003535301
-revision: 1
+revision: 2
 vendor: Philips
 model: "929003535301"
 description: Hue Festavia gradient light string 250 (1st-gen)
 source: zhc devices/philips.ts
 match:
   - model: {any: [LCX012, LCX015, LCX016, LCX017]}
-white_label:
-  - {vendor: Philips, model: "9290036744"}
-  - {vendor: Philips, model: "9290036745"}
-  - {vendor: Philips, model: "929003674601"}
 device: {ota: true}
 templates:
   - name: hue_light

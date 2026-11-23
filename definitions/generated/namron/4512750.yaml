@@ -3,12 +3,13 @@
 # Source: src/devices/namron.ts:2858
 zdef: 1
 id: namron/4512750
-revision: 1
+revision: 2
 vendor: Namron
 model: "4512750"
 description: Zigbee dimmer 2.0
 source: zhc devices/namron.ts
 match:
   - model: {any: ["4512750", "4512751"]}
-white_label: [{vendor: Namron, model: "4512751"}]
+white_label:
+  - {vendor: Namron, model: "4512751", model_id: ["4512751"]}
 device: {ota: true}

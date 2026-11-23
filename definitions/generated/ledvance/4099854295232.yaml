@@ -3,12 +3,13 @@
 # Source: src/devices/ledvance.ts:89
 zdef: 1
 id: ledvance/4099854295232
-revision: 1
+revision: 2
 vendor: LEDVANCE
 model: "4099854295232"
 description: "SMART+ Plug indoor EU with energy meter "
 source: zhc devices/ledvance.ts
 match:
   - model: {any: [PLUG EU EM T, "PLUG EU EM T, black"]}
-white_label: [{vendor: LEDVANCE, model: "4099854295256"}]
+white_label:
+  - {vendor: LEDVANCE, model: "4099854295256", model_id: ["PLUG EU EM T, black"]}
 x-partial: true

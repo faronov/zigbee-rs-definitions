@@ -3,14 +3,15 @@
 # Source: src/devices/philips.ts:4659
 zdef: 1
 id: philips/929003116601
-revision: 1
+revision: 2
 vendor: Philips
 model: "929003116601"
 description: Hue Perifo gradient light tube large (White)
 source: zhc devices/philips.ts
 match:
   - model: {any: ["929003116501", "929003116601"]}
-white_label: [{vendor: Philips, model: "929003116501"}]
+white_label:
+  - {vendor: Philips, model: "929003116501", model_id: ["929003116501"]}
 device: {ota: true}
 templates:
   - name: hue_light

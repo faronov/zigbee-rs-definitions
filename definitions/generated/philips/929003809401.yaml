@@ -3,14 +3,15 @@
 # Source: src/devices/philips.ts:248
 zdef: 1
 id: philips/929003809401
-revision: 1
+revision: 2
 vendor: Philips
 model: "929003809401"
 description: Hue White and Color Ambiance GU10 (Centura - Black)
 source: zhc devices/philips.ts
 match:
   - model: {any: ["929003809201", "929003809401"]}
-white_label: [{vendor: Philips, model: "929003809201"}]
+white_label:
+  - {vendor: Philips, model: "929003809201", model_id: ["929003809201"]}
 device: {ota: true}
 templates:
   - name: hue_light

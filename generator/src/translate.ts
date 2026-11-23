@@ -262,6 +262,7 @@ function matchClauses(d: any): {match: any[]; names: Set<string>; partial?: stri
             continue;
         }
         const c: any = {};
+        let skip: string | undefined;
         for (const k of keys) {
             const v = f[k];
             if (k === 'modelID') c.model = v;
@@ -289,11 +290,15 @@ function matchClauses(d: any): {match: any[]; names: Set<string>; partial?: stri
             } else if (k === 'type') {
                 const lt = LOGICAL_TYPES[v];
                 if (lt) c.logical_type = lt;
-                else partial = `fingerprint type ${v}`;
+                else skip = `fingerprint type ${v}`;
             }
-            else partial = `fingerprint field ${k}`;
+            else skip = `fingerprint field ${k}`;
         }
-        if (partial) continue;
+        if (skip) {
+            // Only this fingerprint is lost; the definition is reported partial.
+            partial ??= skip;
+            continue;
+        }
         const prio = c.priority;
         delete c.priority;
         if (prio !== undefined) c['x-priority'] = prio;
@@ -309,12 +314,34 @@ function matchClauses(d: any): {match: any[]; names: Set<string>; partial?: stri
 function whiteLabels(d: any, names: Set<string>, match: any[]): any[] | undefined {
     const out: any[] = [];
     const extra: string[] = [];
+    // Model IDs the definition is found by (zhc looks white labels up only
+    // after the definition was found by one of them).
+    const known = new Set<string>([...(d.zigbeeModel || []), ...(Array.isArray(d.fingerprint) ? d.fingerprint.map((f: any) => f.modelID).filter(Boolean) : [])]);
     for (const w of d.whiteLabel || []) {
-        const x: any = {vendor: String(w.vendor ?? d.vendor), model: String(w.model)};
-        const mfr: string[] = [...new Set<string>((w.fingerprint || []).map((f: any) => f.manufacturerName).filter((n: any) => typeof n === 'string'))];
-        for (const n of mfr) if (!names.has(n) && !extra.includes(n)) extra.push(n);
-        if (mfr.length) x.manufacturer = mfr;
-        out.push(x);
+        const base: any = {vendor: String(w.vendor ?? d.vendor), model: String(w.model)};
+        const fps: any[] = (w.fingerprint || []).filter((f: any) => typeof f.modelID === 'string' || typeof f.manufacturerName === 'string');
+        if (!fps.length) {
+            out.push(base);
+            continue;
+        }
+        // zhc selects a white label by its fingerprints (modelID and/or
+        // manufacturerName): one entry per model ID keeps the pairs exact.
+        const byModel = new Map<string, string[]>();
+        for (const f of fps) {
+            const mid = typeof f.modelID === 'string' ? f.modelID : '';
+            if (mid && !known.has(mid)) continue;
+            const l = byModel.get(mid) || [];
+            if (typeof f.manufacturerName === 'string' && !l.includes(f.manufacturerName)) l.push(f.manufacturerName);
+            byModel.set(mid, l);
+        }
+        for (const [mid, mfr] of byModel) {
+            if (!mid && !mfr.length) continue;
+            const x: any = {...base};
+            for (const n of mfr) if (!names.has(n) && !extra.includes(n)) extra.push(n);
+            if (mfr.length) x.manufacturer = mfr;
+            if (mid) x.model_id = [mid];
+            out.push(x);
+        }
     }
     if (extra.length) {
         // White-label names must be in the match name list (spec 8.4): add them

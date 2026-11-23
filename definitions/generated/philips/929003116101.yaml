@@ -3,14 +3,15 @@
 # Source: src/devices/philips.ts:4584
 zdef: 1
 id: philips/929003116101
-revision: 1
+revision: 2
 vendor: Philips
 model: "929003116101"
 description: Hue Perifo linear light bar (Black)
 source: zhc devices/philips.ts
 match:
   - model: {any: ["929003116101", "929003116201", "929003618201"]}
-white_label: [{vendor: Philips, model: "929003116201"}]
+white_label:
+  - {vendor: Philips, model: "929003116201", model_id: ["929003116201"]}
 device: {ota: true}
 templates:
   - name: hue_light

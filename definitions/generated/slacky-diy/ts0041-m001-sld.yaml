@@ -3,7 +3,7 @@
 # Source: src/devices/slacky_diy.ts:4149
 zdef: 1
 id: slacky-diy/ts0041-m001-sld
-revision: 1
+revision: 2
 vendor: Slacky-DIY
 model: TS0041-M001-SlD
 description: Tuya wireless switch with 1 buttons with custom firmware
@@ -13,8 +13,8 @@ match:
   - {model: TS0041-M002-SlD, manufacturer: Slacky-DIY}
   - {model: TS0041-M005-SlD, manufacturer: Slacky-DIY}
 white_label:
-  - {vendor: Slacky-DIY, model: TS0041-M002-SlD}
-  - {vendor: Slacky-DIY, model: TS0041-M005-SlD}
+  - {vendor: Slacky-DIY, model: TS0041-M002-SlD, model_id: [TS0041-M002-SlD]}
+  - {vendor: Slacky-DIY, model: TS0041-M005-SlD, model_id: [TS0041-M005-SlD]}
 device: {ota: true}
 generic:
   patch:

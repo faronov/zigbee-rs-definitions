@@ -3,7 +3,7 @@
 # Source: src/devices/philips.ts:4852
 zdef: 1
 id: philips/929003823501
-revision: 1
+revision: 2
 vendor: Philips
 model: "929003823501"
 description: "Hue Tento WCA 29,1cm (White)"
@@ -22,15 +22,15 @@ match:
         - "929003846601"
         - "929003846701"
 white_label:
-  - {vendor: Philips, model: "929003823701"}
-  - {vendor: Philips, model: "929003823901"}
-  - {vendor: Philips, model: "929003823601"}
-  - {vendor: Philips, model: "929003823801"}
-  - {vendor: Philips, model: "929003824001"}
-  - {vendor: Philips, model: "929003846201"}
-  - {vendor: Philips, model: "929003846301"}
-  - {vendor: Philips, model: "929003846601"}
-  - {vendor: Philips, model: "929003846701"}
+  - {vendor: Philips, model: "929003823701", model_id: ["929003823701"]}
+  - {vendor: Philips, model: "929003823901", model_id: ["929003823901"]}
+  - {vendor: Philips, model: "929003823601", model_id: ["929003823601"]}
+  - {vendor: Philips, model: "929003823801", model_id: ["929003823801"]}
+  - {vendor: Philips, model: "929003824001", model_id: ["929003824001"]}
+  - {vendor: Philips, model: "929003846201", model_id: ["929003846201"]}
+  - {vendor: Philips, model: "929003846301", model_id: ["929003846301"]}
+  - {vendor: Philips, model: "929003846601", model_id: ["929003846601"]}
+  - {vendor: Philips, model: "929003846701", model_id: ["929003846701"]}
 device: {ota: true}
 templates:
   - name: hue_light

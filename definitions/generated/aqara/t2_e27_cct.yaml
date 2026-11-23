@@ -3,7 +3,7 @@
 # Source: src/devices/lumi.ts:5433
 zdef: 1
 id: aqara/t2_e27_cct
-revision: 1
+revision: 2
 vendor: Aqara
 model: T2_E27_CCT
 description: E27 CCT led bulb
@@ -11,8 +11,9 @@ source: zhc devices/lumi.ts
 match:
   - model: {any: [lumi.light.agl002, lumi.light.agl004, lumi.light.agl006, lumi.light.agl008]}
 white_label:
-  - {vendor: Aqara, model: T2_GU10_CCT}
-  - {vendor: Aqara, model: T2_E26_CCT}
+  - {vendor: Aqara, model: T2_GU10_CCT, model_id: [lumi.light.agl006]}
+  - {vendor: Aqara, model: T2_GU10_CCT, model_id: [lumi.light.agl008]}
+  - {vendor: Aqara, model: T2_E26_CCT, model_id: [lumi.light.agl002]}
 device: {power: mains, ota: true}
 templates:
   - name: lumi

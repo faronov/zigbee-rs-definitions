@@ -3,7 +3,7 @@
 # Source: src/devices/third_reality.ts:1676
 zdef: 1
 id: third-reality/3rcb01057z
-revision: 1
+revision: 2
 vendor: Third Reality
 model: "3RCB01057Z"
 description: Smart Color Bulb ZL1
@@ -11,9 +11,9 @@ source: zhc devices/third_reality.ts
 match:
   - model: {any: ["3RCB01057Z", "3RCB02070Z", "3RCB1095Z", "3RCB1097Z"]}
 white_label:
-  - {vendor: Third Reality, model: "3RCB02070Z"}
-  - {vendor: Third Reality, model: "3RCB1095Z"}
-  - {vendor: Third Reality, model: "3RCB1097Z"}
+  - {vendor: Third Reality, model: "3RCB02070Z", model_id: ["3RCB02070Z"]}
+  - {vendor: Third Reality, model: "3RCB1095Z", model_id: ["3RCB1095Z"]}
+  - {vendor: Third Reality, model: "3RCB1097Z", model_id: ["3RCB1097Z"]}
 device: {ota: true}
 generic:
   patch:

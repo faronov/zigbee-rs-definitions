@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts
 zdef: 1
 id: tuya/ts0203
-revision: 2
+revision: 3
 vendor: Tuya
 model: TS0203
 description: Door/window sensor
@@ -35,7 +35,7 @@ white_label:
   - {vendor: Tuya, model: iH-F001}
   - {vendor: Tesla Smart, model: TSL-SEN-DOOR}
   - {vendor: Cleverio, model: SS100}
-  - {vendor: AOYAN, model: AY-101Z, manufacturer: ["AOYAN  "]}
+  - {vendor: AOYAN, model: AY-101Z, manufacturer: ["AOYAN  "], model_id: [AY-101Z]}
   - {vendor: Niceboy, model: ORBIS Windows & Door Sensor, manufacturer: [_TZ3000_qrldbmfn]}
   - {vendor: Tuya, model: ZD06, manufacturer: [_TZ3000_rcuyhwe3, _TZ3000_996rpfy6]}
   - {vendor: Tuya, model: ZD08, manufacturer: [_TZ3000_7d8yme6f]}

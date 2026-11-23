@@ -3,7 +3,7 @@
 # Source: src/devices/sonoff.ts:11505
 zdef: 1
 id: sonoff/zbminir2
-revision: 1
+revision: 2
 vendor: SONOFF
 model: ZBMINIR2
 description: Zigbee smart switch
@@ -13,7 +13,7 @@ match:
   - model: {any: [ZBMINIR2, MINI-ZBD]}
     manufacturer: SONOFF
 white_label:
-  - {vendor: SONOFF, model: MINI-ZBD, manufacturer: [SONOFF]}
+  - {vendor: SONOFF, model: MINI-ZBD, manufacturer: [SONOFF], model_id: [MINI-ZBD]}
 device: {ota: true}
 generic:
   patch: {switch: {report: "off"}}

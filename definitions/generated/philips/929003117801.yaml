@@ -3,14 +3,15 @@
 # Source: src/devices/philips.ts:4629
 zdef: 1
 id: philips/929003117801
-revision: 1
+revision: 2
 vendor: Philips
 model: "929003117801"
 description: "Hue Perifo Wall Light, 3 spotlights (White)"
 source: zhc devices/philips.ts
 match:
   - model: {any: ["929003117701", "929003117801"]}
-white_label: [{vendor: Philips, model: "929003117701"}]
+white_label:
+  - {vendor: Philips, model: "929003117701", model_id: ["929003117701"]}
 device: {ota: true}
 templates:
   - name: hue_light

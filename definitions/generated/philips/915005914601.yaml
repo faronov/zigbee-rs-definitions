@@ -3,14 +3,15 @@
 # Source: src/devices/philips.ts:2100
 zdef: 1
 id: philips/915005914601
-revision: 1
+revision: 2
 vendor: Philips
 model: "915005914601"
 description: Hue Being Pendant
 source: zhc devices/philips.ts
 match:
   - model: {any: ["915005914601", "915005914701"]}
-white_label: [{vendor: Philips, model: "915005914701"}]
+white_label:
+  - {vendor: Philips, model: "915005914701", model_id: ["915005914701"]}
 device: {ota: true}
 templates:
   - name: hue_light

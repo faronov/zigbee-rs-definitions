@@ -3,7 +3,7 @@
 # Source: src/devices/sonoff.ts:9654
 zdef: 1
 id: sonoff/snzb-03
-revision: 2
+revision: 3
 vendor: SONOFF
 model: SNZB-03
 description: Motion sensor
@@ -32,8 +32,11 @@ match:
 white_label:
   - {vendor: eWeLink, model: RHK09}
   - {vendor: eWeLink, model: SQ510A}
-  - {vendor: eWeLink, model: SNZB-03_eWeLink, manufacturer: [eWeLink]}
-  - {vendor: eWeLink, model: CK-TLSR8656-SS5-01(7002), manufacturer: [eWeLink]}
+  - {vendor: eWeLink, model: SNZB-03_eWeLink, manufacturer: [eWeLink], model_id: [SNZB-03]}
+  - vendor: eWeLink
+    model: CK-TLSR8656-SS5-01(7002)
+    manufacturer: [eWeLink]
+    model_id: [CK-TLSR8656-SS5-01(7002)]
 entities:
   - key: occupancy
     platform: binary_sensor

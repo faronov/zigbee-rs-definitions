@@ -3,7 +3,7 @@
 # Source: src/devices/shelly.ts:3123
 zdef: 1
 id: shelly/s4sn-0071a
-revision: 1
+revision: 2
 vendor: Shelly
 model: S4SN-0071A
 description: Flood Gen 4
@@ -12,7 +12,7 @@ match:
   - {model: Flood, manufacturer: Shelly}
   - {model: Flood S, manufacturer: Shelly}
 white_label:
-  - {vendor: Shelly, model: S4SN-0071Z, manufacturer: [Shelly]}
+  - {vendor: Shelly, model: S4SN-0071Z, manufacturer: [Shelly], model_id: [Flood S]}
 entities:
   - key: water_leak
     platform: binary_sensor

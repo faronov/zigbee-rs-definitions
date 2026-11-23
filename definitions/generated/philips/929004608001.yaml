@@ -3,7 +3,7 @@
 # Source: src/devices/philips.ts:3767
 zdef: 1
 id: philips/929004608001
-revision: 1
+revision: 2
 vendor: Philips
 model: "929004608001"
 description: Hue OmniGlow lightstrip (3m)
@@ -18,11 +18,11 @@ match:
         - "929004608103"
         - "929004608201"
 white_label:
-  - {vendor: Philips, model: "929004608003"}
-  - {vendor: Philips, model: "929004608004"}
-  - {vendor: Philips, model: "929004608101"}
-  - {vendor: Philips, model: "929004608103"}
-  - {vendor: Philips, model: "929004608201"}
+  - {vendor: Philips, model: "929004608003", model_id: ["929004608003"]}
+  - {vendor: Philips, model: "929004608004", model_id: ["929004608004"]}
+  - {vendor: Philips, model: "929004608101", model_id: ["929004608101"]}
+  - {vendor: Philips, model: "929004608103", model_id: ["929004608103"]}
+  - {vendor: Philips, model: "929004608201", model_id: ["929004608201"]}
 device: {ota: true}
 templates:
   - name: hue_light

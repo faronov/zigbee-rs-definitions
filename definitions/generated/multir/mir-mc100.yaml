@@ -3,14 +3,15 @@
 # Source: src/devices/multir.ts:117
 zdef: 1
 id: multir/mir-mc100
-revision: 1
+revision: 2
 vendor: MultIR
 model: MIR-MC100
 description: Door sensor
 source: zhc devices/multir.ts
 match:
   - model: {any: [MIR-MC100, MIR-MC100-E]}
-white_label: [{vendor: MultIR, model: MIR-MC100-E}]
+white_label:
+  - {vendor: MultIR, model: MIR-MC100-E, model_id: [MIR-MC100-E]}
 entities:
   - key: contact
     platform: binary_sensor

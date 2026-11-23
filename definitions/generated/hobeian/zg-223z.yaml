@@ -3,7 +3,7 @@
 # Source: src/devices/hobeian.ts:1516
 zdef: 1
 id: hobeian/zg-223z
-revision: 1
+revision: 2
 vendor: HOBEIAN
 model: ZG-223Z
 description: Rainwater detection sensor
@@ -21,8 +21,8 @@ match:
   - model: {any: [ZG-223Z, HS118Z, AY-223Z, TS0601]}
     manufacturer: {any: [HYSYIOT, AOYAN]}
 white_label:
-  - {vendor: HYSYIOT, model: HS118Z, manufacturer: [HYSYIOT]}
-  - {vendor: AOYAN, model: AY-223Z, manufacturer: [AOYAN]}
+  - {vendor: HYSYIOT, model: HS118Z, manufacturer: [HYSYIOT], model_id: [HS118Z]}
+  - {vendor: AOYAN, model: AY-223Z, manufacturer: [AOYAN], model_id: [AY-223Z]}
 generic: {disable: true}
 tuya: {magic_packet: true}
 entities:

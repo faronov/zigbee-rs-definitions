@@ -3,7 +3,7 @@
 # Source: src/devices/philips.ts:4794
 zdef: 1
 id: philips/929003822701
-revision: 1
+revision: 2
 vendor: Philips
 model: "929003822701"
 description: Hue Tento W 29.1 cm (White)
@@ -11,8 +11,8 @@ source: zhc devices/philips.ts
 match:
   - model: {any: ["929003822701", "929003822801", "929003845801", "929003845901"]}
 white_label:
-  - {vendor: Philips, model: "929003822801"}
-  - {vendor: Philips, model: "929003845801"}
-  - {vendor: Philips, model: "929003845901"}
+  - {vendor: Philips, model: "929003822801", model_id: ["929003822801"]}
+  - {vendor: Philips, model: "929003845801", model_id: ["929003845801"]}
+  - {vendor: Philips, model: "929003845901", model_id: ["929003845901"]}
 device: {ota: true}
 templates: [{name: hue_light}]

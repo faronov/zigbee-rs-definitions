@@ -3,14 +3,15 @@
 # Source: src/devices/third_reality.ts:1456
 zdef: 1
 id: third-reality/3rdp01072z
-revision: 1
+revision: 2
 vendor: Third Reality
 model: "3RDP01072Z"
 description: Smart Dual Plug ZP1
 source: zhc devices/third_reality.ts
 match:
   - model: {any: ["3RDP01072Z", "3RWP01073Z"]}
-white_label: [{vendor: Third Reality, model: "3RWP01073Z"}]
+white_label:
+  - {vendor: Third Reality, model: "3RWP01073Z", model_id: ["3RWP01073Z"]}
 device: {ota: true}
 generic:
   patch: {energy: {mul: 1, div: 1000}}

@@ -3,7 +3,7 @@
 # Source: src/devices/hobeian.ts:861
 zdef: 1
 id: hobeian/zg-204zh
-revision: 1
+revision: 2
 vendor: HOBEIAN
 model: ZG-204ZH
 description: PIR 24Ghz human presence sensor
@@ -15,7 +15,7 @@ match:
   - model: {any: [ZG-204ZH, AY208Z, TS0601]}
     manufacturer: AOYAN
 white_label:
-  - {vendor: AOYAN, model: AY208Z, manufacturer: [AOYAN]}
+  - {vendor: AOYAN, model: AY208Z, manufacturer: [AOYAN], model_id: [AY208Z]}
 generic: {disable: true}
 tuya: {magic_packet: true}
 entities:

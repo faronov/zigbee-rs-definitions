@@ -3,7 +3,7 @@
 # Source: src/devices/yokis.ts:3445
 zdef: 1
 id: yokis/tlm4-up
-revision: 1
+revision: 2
 vendor: YOKIS
 model: TLM4-UP
 description: Wall-mounted 4-button transmitter
@@ -11,9 +11,9 @@ source: zhc devices/yokis.ts
 match:
   - model: {any: [TLM4-UP, TLM4T503-UP, TLM4TNO-UP, TLM4TDK-UP]}
 white_label:
-  - {vendor: YOKIS, model: TLM4T503-UP}
-  - {vendor: YOKIS, model: TLM4TNO-UP}
-  - {vendor: YOKIS, model: TLM4TDK-UP}
+  - {vendor: YOKIS, model: TLM4T503-UP, model_id: [TLM4T503-UP]}
+  - {vendor: YOKIS, model: TLM4TNO-UP, model_id: [TLM4TNO-UP]}
+  - {vendor: YOKIS, model: TLM4TDK-UP, model_id: [TLM4TDK-UP]}
 generic:
   exclude: [battery]
   patch:

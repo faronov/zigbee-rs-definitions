@@ -3,7 +3,7 @@
 # Source: src/devices/schneider_electric.ts:3740
 zdef: 1
 id: schneider-electric/w599001
-revision: 1
+revision: 2
 vendor: Schneider Electric
 model: W599001
 description: Wiser smoke alarm
@@ -11,8 +11,8 @@ source: zhc devices/schneider_electric.ts
 match:
   - model: {any: [W599001, W599501, "755WSA"]}
 white_label:
-  - {vendor: Schneider Electric, model: W599501}
-  - {vendor: Schneider Electric, model: "755WSA"}
+  - {vendor: Schneider Electric, model: W599501, model_id: [W599501]}
+  - {vendor: Schneider Electric, model: "755WSA", model_id: ["755WSA"]}
 device: {ota: true}
 generic:
   patch: {battery_voltage: {enabled: true}}

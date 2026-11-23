@@ -3,7 +3,7 @@
 # Source: src/devices/hobeian.ts:1355
 zdef: 1
 id: coolo/cs-201z
-revision: 1
+revision: 2
 vendor: COOLO
 model: CS-201Z
 description: Soil moisture sensor
@@ -15,8 +15,8 @@ match:
   - model: {any: [ZG-303Z, AY-303Z, AY-302Z, TS0601]}
     manufacturer: "AOYAN  "
 white_label:
-  - {vendor: AOYAN, model: AY-303Z, manufacturer: ["AOYAN  "]}
-  - {vendor: AOYAN, model: AY-302Z, manufacturer: ["AOYAN  "]}
+  - {vendor: AOYAN, model: AY-303Z, manufacturer: ["AOYAN  "], model_id: [AY-303Z]}
+  - {vendor: AOYAN, model: AY-302Z, manufacturer: ["AOYAN  "], model_id: [AY-302Z]}
 tuya: {magic_packet: true}
 entities:
   - key: dry

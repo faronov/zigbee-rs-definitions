@@ -3,14 +3,15 @@
 # Source: src/devices/sonoff.ts:11684
 zdef: 1
 id: sonoff/zbm5-3c-120
-revision: 1
+revision: 2
 vendor: SONOFF
 model: ZBM5-3C-120
 description: Zigbee Smart three-channel wall switch (type 120)
 source: zhc devices/sonoff.ts
 match:
   - model: {any: [ZBM5-3C-120, ZBM5-3C-80/86]}
-white_label: [{vendor: SONOFF, model: ZBM5-3C-80/86}]
+white_label:
+  - {vendor: SONOFF, model: ZBM5-3C-80/86, model_id: [ZBM5-3C-80/86]}
 device: {ota: true}
 endpoints: {1: l1, 2: l2, 3: l3}
 configure:

@@ -3,7 +3,7 @@
 # Source: src/devices/imhotepcreation.ts
 zdef: 1
 id: imhotep-creation/e-ctrl
-revision: 1
+revision: 2
 vendor: Imhotep Creation
 model: E-Ctrl
 description: Heater thermostat PH25 and compliant
@@ -11,6 +11,6 @@ source: zhc devices/imhotepcreation.ts
 match:
   - model: {any: [E-Ctrl, RPH E-Ctrl, RSS E-Ctrl]}
 white_label:
-  - {vendor: Imhotep Creation, model: RSS E-Ctrl}
-  - {vendor: Imhotep Creation, model: RPH E-Ctrl}
+  - {vendor: Imhotep Creation, model: RSS E-Ctrl, model_id: [RSS E-Ctrl]}
+  - {vendor: Imhotep Creation, model: RPH E-Ctrl, model_id: [RPH E-Ctrl]}
 x-partial: true

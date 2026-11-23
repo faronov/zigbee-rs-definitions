@@ -3,7 +3,7 @@
 # Source: src/devices/paulmann.ts:386
 zdef: 1
 id: paulmann/291.48
-revision: 1
+revision: 2
 vendor: Paulmann
 model: "291.48"
 description: Smart Home Zigbee LED Reflector GU10 4.8W RGBWW
@@ -13,7 +13,7 @@ match:
   - {model: RGBWW, manufacturer: Paulmann Licht GmbH, sw_build: PIIC5405}
   - {model: RGBWW, manufacturer: Paulmann Licht GmbH, sw_build: PIIC540B}
 white_label:
-  - {vendor: Paulmann, model: "291.53", manufacturer: [Paulmann Licht GmbH]}
+  - {vendor: Paulmann, model: "291.53", manufacturer: [Paulmann Licht GmbH], model_id: [RGBWW]}
 generic:
   patch:
     light:
