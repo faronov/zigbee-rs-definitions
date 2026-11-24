@@ -3,14 +3,14 @@
 # Source: src/devices/tuya.ts:16832
 zdef: 1
 id: tuya/ts0052
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0052
 description: Zigbee dimmer module 1 channel
 source: zhc devices/tuya.ts
 match:
   - {model: TS0052}
-  - {model: TS0052, manufacturer: _TZ3000_mgusv51k}
+  - {model: TS0052, manufacturer: _TZ3000_mgusv51k, x-white-label: true}
 white_label:
   - {vendor: Tuya, model: FS-05R, manufacturer: [_TZ3000_mgusv51k]}
 templates:

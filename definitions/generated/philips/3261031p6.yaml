@@ -3,14 +3,15 @@
 # Source: src/devices/philips.ts:2065
 zdef: 1
 id: philips/3261031p6
-revision: 1
+revision: 2
 vendor: Philips
 model: "3261031P6"
 description: Hue Being white (EU)
 source: zhc devices/philips.ts
 match:
   - model: {any: ["3261031P6", "929003055001", "929003055101", "929003777201"]}
-white_label: [{vendor: Philips, model: "929003777201"}]
+white_label:
+  - {vendor: Philips, model: "929003777201", model_id: ["929003777201"]}
 device: {ota: true}
 templates:
   - name: hue_light

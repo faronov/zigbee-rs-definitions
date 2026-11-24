@@ -3,14 +3,15 @@
 # Source: src/devices/philips.ts:4574
 zdef: 1
 id: philips/929003115701
-revision: 1
+revision: 2
 vendor: Philips
 model: "929003115701"
 description: Hue Perifo cylinder spotlight (Black)
 source: zhc devices/philips.ts
 match:
   - model: {any: ["929003115701", "929003115801", "929003617901"]}
-white_label: [{vendor: Philips, model: "929003115801"}]
+white_label:
+  - {vendor: Philips, model: "929003115801", model_id: ["929003115801"]}
 device: {ota: true}
 templates:
   - name: hue_light

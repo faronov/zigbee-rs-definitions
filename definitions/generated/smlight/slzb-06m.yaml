@@ -3,7 +3,7 @@
 # Source: src/devices/smlight.ts:38
 zdef: 1
 id: smlight/slzb-06m
-revision: 1
+revision: 2
 vendor: SMLIGHT
 model: SLZB-06M
 description: Router
@@ -25,18 +25,18 @@ match:
         - SLZB-06Mg26U
         - SLZB-MR3 CC2674P10
 white_label:
-  - {vendor: SMLIGHT, model: SLZB-06}
-  - {vendor: SMLIGHT, model: SLZB-06P7}
-  - {vendor: SMLIGHT, model: SLZB-06p10}
-  - {vendor: SMLIGHT, model: SLZB-07}
-  - {vendor: SMLIGHT, model: SLZB-07P10}
-  - {vendor: SMLIGHT, model: SLZB-07P7}
-  - {vendor: SMLIGHT, model: SLZB-0xp7}
-  - {vendor: SMLIGHT, model: SLZB-07Mg24}
-  - {vendor: SMLIGHT, model: SLZB-06Mg24}
-  - {vendor: SMLIGHT, model: SLZB-06Mg26}
-  - {vendor: SMLIGHT, model: SLZB-06Mg26U}
-  - {vendor: SMLIGHT, model: SLZB-MR3}
+  - {vendor: SMLIGHT, model: SLZB-06, model_id: [SLZB-06]}
+  - {vendor: SMLIGHT, model: SLZB-06P7, model_id: [SLZB-06P7]}
+  - {vendor: SMLIGHT, model: SLZB-06p10, model_id: [SLZB-06P10]}
+  - {vendor: SMLIGHT, model: SLZB-07, model_id: [SLZB-07]}
+  - {vendor: SMLIGHT, model: SLZB-07P10, model_id: [SLZB-07P10]}
+  - {vendor: SMLIGHT, model: SLZB-07P7, model_id: [SLZB-07P7]}
+  - {vendor: SMLIGHT, model: SLZB-0xp7, model_id: [SLZB-0xp7]}
+  - {vendor: SMLIGHT, model: SLZB-07Mg24, model_id: [SLZB-07Mg24]}
+  - {vendor: SMLIGHT, model: SLZB-06Mg24, model_id: [SLZB-06Mg24]}
+  - {vendor: SMLIGHT, model: SLZB-06Mg26, model_id: [SLZB-06Mg26]}
+  - {vendor: SMLIGHT, model: SLZB-06Mg26U, model_id: [SLZB-06Mg26U]}
+  - {vendor: SMLIGHT, model: SLZB-MR3, model_id: [SLZB-MR3 CC2674P10]}
 device: {power: mains}
 generic: {exclude: [power_on_behavior]}
 x-partial: true

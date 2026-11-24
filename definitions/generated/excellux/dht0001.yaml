@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:29552
 zdef: 1
 id: excellux/dht0001
-revision: 1
+revision: 2
 vendor: Excellux
 model: DHT0001
 description: Temperature and humidity sensor
@@ -12,7 +12,7 @@ match:
   - model: Excellux
     manufacturer: {any: [DHT0001, DHTA001]}
 white_label:
-  - {vendor: Excellux, model: DHTA001, manufacturer: [DHTA001]}
+  - {vendor: Excellux, model: DHTA001, manufacturer: [DHTA001], model_id: [Excellux]}
 generic: {disable: true}
 tuya: {magic_packet: true}
 entities:

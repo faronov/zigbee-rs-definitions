@@ -3,7 +3,7 @@
 # Source: src/devices/shelly.ts:3423
 zdef: 1
 id: shelly/sbbt-104cus
-revision: 1
+revision: 2
 vendor: Shelly
 model: SBBT-104CUS
 description: BLU RC Button 4 ZB
@@ -11,7 +11,7 @@ source: zhc devices/shelly.ts
 match:
   - model: {any: [BLU RC Button 4 ZB, BLU Wall Switch 4 ZB, BLU Wall Switch 4 ZB DK]}
 white_label:
-  - {vendor: Shelly, model: SBBT-004CEU}
-  - {vendor: Shelly, model: SBBT-104CEU}
+  - {vendor: Shelly, model: SBBT-004CEU, model_id: [BLU Wall Switch 4 ZB]}
+  - {vendor: Shelly, model: SBBT-104CEU, model_id: [BLU Wall Switch 4 ZB DK]}
 endpoints: {1: "1", 2: "2", 3: "3", 4: "4"}
 x-partial: true

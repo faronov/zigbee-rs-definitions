@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:8794
 zdef: 1
 id: tuya/ts0044
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0044
 description: Wireless switch with 4 buttons
@@ -25,6 +25,7 @@ match:
         - _TZ3000_xwuveizv
         - _TZ3000_zgyzgdua
         - _TZ3000_1hypixdr
+    x-white-label: true
 white_label:
   - {vendor: Lonsonho, model: TS0044}
   - {vendor: Haozee, model: ESW-OZAA-EU}

@@ -3,7 +3,7 @@
 # Source: src/devices/bosch.ts:987
 zdef: 1
 id: bosch/bsp-fz2
-revision: 1
+revision: 2
 vendor: Bosch
 model: BSP-FZ2
 description: Smart plug compact (type F plug)
@@ -11,8 +11,8 @@ source: zhc devices/bosch.ts
 match:
   - model: {any: [RBSH-SP-ZB-EU, RBSH-SP-ZB-FR, RBSH-SP-ZB-GB]}
 white_label:
-  - {vendor: Bosch, model: BSP-EZ2}
-  - {vendor: Bosch, model: BSP-GZ2}
+  - {vendor: Bosch, model: BSP-EZ2, model_id: [RBSH-SP-ZB-FR]}
+  - {vendor: Bosch, model: BSP-GZ2, model_id: [RBSH-SP-ZB-GB]}
 device: {ota: true}
 generic:
   exclude: [current, voltage]

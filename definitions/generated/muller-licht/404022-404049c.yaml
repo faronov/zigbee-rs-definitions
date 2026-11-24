@@ -3,7 +3,7 @@
 # Source: src/devices/muller_licht.ts:295
 zdef: 1
 id: muller-licht/404022-404049c
-revision: 1
+revision: 2
 vendor: Müller Licht
 model: "404022/404049C"
 description: Tint dim remote control
@@ -12,6 +12,6 @@ match:
   - {model: tint-Remote-white}
   - {model: Remote Control, manufacturer: MLI}
 white_label:
-  - {vendor: Müller Licht, model: "404049D", manufacturer: [MLI]}
+  - {vendor: Müller Licht, model: "404049D", manufacturer: [MLI], model_id: [Remote Control]}
 device: {power: battery}
 x-partial: true

@@ -3,7 +3,7 @@
 # Source: src/devices/profalux.ts:27
 zdef: 1
 id: profalux/mot-c1zxxc-f
-revision: 1
+revision: 2
 vendor: Profalux
 model: MOT-C1ZxxC/F
 description: Cover
@@ -21,6 +21,9 @@ match:
         - "MOT-C1Z30F\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
         - "MOT-C2Z10\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
         - MOT-C2Z10
-white_label: [{vendor: Profalux, model: MOT-C2Z10}]
+white_label:
+  - vendor: Profalux
+    model: MOT-C2Z10
+    model_id: ["MOT-C2Z10\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"]
 configure:
   - read: {ep: 2, cluster: 0xFC21, attrs: [0x0000], mfr: 0x1110}

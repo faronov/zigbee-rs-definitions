@@ -3,7 +3,7 @@
 # Source: src/devices/hobeian.ts:1422
 zdef: 1
 id: hobeian/zg-102zm
-revision: 1
+revision: 3
 vendor: HOBEIAN
 model: ZG-102ZM
 description: Vibration sensor
@@ -12,9 +12,12 @@ match:
   - model: {any: [ZG-102ZM, AY02SZ]}
   - model: TS0601
     manufacturer: {any: [_TZE200_wzk0x7fq, _TZE200_jfw0a4aa, _TZE200_yjryxpot]}
+  - {model: AY02SZ, manufacturer: AOYAN, x-white-label: true}
   - model: {any: [ZG-102ZM, AY02SZ, TS0601]}
     manufacturer: AOYAN
+    x-white-label: true
 white_label:
+  - {vendor: AOYAN, model: AY02SZ, manufacturer: [AOYAN], model_id: [AY02SZ]}
   - {vendor: AOYAN, model: AY02SZ, manufacturer: [AOYAN]}
 generic: {disable: true}
 tuya: {magic_packet: true}

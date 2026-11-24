@@ -3,7 +3,7 @@
 # Source: src/devices/slacky_diy.ts:4709
 zdef: 1
 id: slacky-diy/ts0044-z-sld
-revision: 1
+revision: 2
 vendor: Slacky-DIY
 model: TS0044-z-SlD
 description: Tuya wireless switch with 4 buttons with custom firmware
@@ -11,7 +11,8 @@ source: zhc devices/slacky_diy.ts
 match:
   - {model: TS0044-z-SlD, manufacturer: Slacky-DIY}
   - {model: TS0044-M004-SlD, manufacturer: Slacky-DIY}
-white_label: [{vendor: Slacky-DIY, model: TS0044-M004-SlD}]
+white_label:
+  - {vendor: Slacky-DIY, model: TS0044-M004-SlD, model_id: [TS0044-M004-SlD]}
 device: {ota: true}
 generic:
   patch:

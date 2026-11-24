@@ -3,7 +3,7 @@
 # Source: src/devices/ewelink.ts:488
 zdef: 1
 id: ewelink/am25b-1-25-es-e-z
-revision: 1
+revision: 2
 vendor: eWeLink
 model: AM25B-1-25-ES-E-Z
 description: AK Curtain
@@ -11,8 +11,8 @@ source: zhc devices/ewelink.ts
 match:
   - model: {any: [AM25B-1-25-ES-E-Z, ZM25-EAZ, AM25C-1-25-ES-E-Z]}
 white_label:
-  - {vendor: eWeLink, model: ZM25-EAZ}
-  - {vendor: eWeLink, model: AM25C-1-25-ES-E-Z}
+  - {vendor: eWeLink, model: ZM25-EAZ, model_id: [ZM25-EAZ]}
+  - {vendor: eWeLink, model: AM25C-1-25-ES-E-Z, model_id: [AM25C-1-25-ES-E-Z]}
 device: {power: battery, ota: true}
 generic:
   patch: {cover: {invert: true}}

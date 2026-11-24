@@ -3,12 +3,17 @@
 # Source: src/devices/eurotronic.ts:31
 zdef: 1
 id: eurotronic/cozb0001
-revision: 1
+revision: 2
 vendor: Eurotronic
 model: COZB0001
 description: Comet Zigbee wireless heater thermostat
 source: zhc devices/eurotronic.ts
-match: [{model: COZB0001}]
+match:
+  - {model: SPZB0001, manufacturer: Eurotronic, date_code: "20221110"}
+  - {model: SPZB0001, manufacturer: Eurotronic, date_code: "20240821"}
+  - {model: SPZB0001, manufacturer: Eurotronic, date_code: "20241105"}
+  - {model: SPZB0001, manufacturer: Eurotronic, date_code: "20240315"}
+  - {model: SPZB0001, manufacturer: Eurotronic, date_code: "20231019"}
 device: {ota: true}
 configure:
   - report: {cluster: 0x0201, attr: 0x0014, type: i16, report: [0, 3600, 10]}

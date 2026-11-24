@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:9685
 zdef: 1
 id: tuya/ts0002
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0002
 description: "2-Gang switch with backlight, countdown and inching"
@@ -22,6 +22,7 @@ match:
         - _TZ3000_nuenzetq
         - _TZ3000_ruldv5dt
         - _TZ3210_nuenzetq
+    x-white-label: true
 white_label:
   - {vendor: Zemismart, model: TB26-2, manufacturer: [_TZ3000_ywubfuvt]}
   - {vendor: Zemismart, model: ZM-CSW002-D_switch}

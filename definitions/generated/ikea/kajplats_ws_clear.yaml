@@ -3,7 +3,7 @@
 # Source: src/devices/ikea.ts:749
 zdef: 1
 id: ikea/kajplats_ws_clear
-revision: 1
+revision: 2
 vendor: IKEA
 model: KAJPLATS_WS_clear
 description: "KAJPLATS bulb, white spectrum, clear (Matter)"
@@ -18,10 +18,12 @@ match:
         - KAJPLATS E27 470lm smart WS
         - KAJPLATS E12 WS B38 CL 450lm
 white_label:
-  - {vendor: IKEA, model: LED2402C3}
-  - {vendor: IKEA, model: LED2401G5}
-  - {vendor: IKEA, model: LED2411G3}
-  - {vendor: IKEA, model: LED2402C3NA}
+  - {vendor: IKEA, model: LED2402C3, model_id: [KAJPLATS E14 WS B38 CL 470lm]}
+  - {vendor: IKEA, model: LED2401G5, model_id: [KAJPLATS E27 WS G95 clear 806lm]}
+  - {vendor: IKEA, model: LED2401G5, model_id: [KAJPLATS E27 806lm 95mm smart WS]}
+  - {vendor: IKEA, model: LED2411G3, model_id: [KAJPLATS E27 WS G60 clear 470lm]}
+  - {vendor: IKEA, model: LED2411G3, model_id: [KAJPLATS E27 470lm smart WS]}
+  - {vendor: IKEA, model: LED2402C3NA, model_id: [KAJPLATS E12 WS B38 CL 450lm]}
 generic:
   patch:
     light:

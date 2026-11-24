@@ -3,7 +3,7 @@
 # Source: src/devices/philips.ts:4864
 zdef: 1
 id: philips/929003711201
-revision: 1
+revision: 2
 vendor: Philips
 model: "929003711201"
 description: Hue Twilight sleep and wake-up light white
@@ -11,8 +11,8 @@ source: zhc devices/philips.ts
 match:
   - model: {any: [LGT001, LGT002, LGT003]}
 white_label:
-  - {vendor: Philips, model: "929003711301"}
-  - {vendor: Philips, model: "929003711401"}
+  - {vendor: Philips, model: "929003711301", model_id: [LGT002]}
+  - {vendor: Philips, model: "929003711401", model_id: [LGT003]}
 device: {ota: true}
 endpoints: {1: switch, 11: back, 12: front}
 templates:

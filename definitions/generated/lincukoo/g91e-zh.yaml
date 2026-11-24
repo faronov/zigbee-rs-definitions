@@ -3,11 +3,12 @@
 # Source: src/devices/lincukoo.ts
 zdef: 1
 id: lincukoo/g91e-zh
-revision: 1
+revision: 2
 vendor: Lincukoo
 model: G91E-ZH
 description: Zigbee Router
 source: zhc devices/lincukoo.ts
 match:
   - model: {any: [G91E-ZH, G94E]}
-white_label: [{vendor: Lincukoo, model: G94E}]
+white_label:
+  - {vendor: Lincukoo, model: G94E, model_id: [G94E]}

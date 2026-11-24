@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts
 zdef: 1
 id: tuya/ts0201
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0201
 description: Temperature & humidity sensor with display
@@ -27,6 +27,7 @@ match:
         - _TZ3000_yupc0pb7
         - _TZ3000_bgsigers
         - _TZ3000_yujem9ee
+    x-white-label: true
 white_label:
   - {vendor: BlitzWolf, model: BW-IS4}
   - {vendor: Tuya, model: TS0201_1, manufacturer: [_TZ3210_alxkwn0h]}

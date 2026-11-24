@@ -3,7 +3,7 @@
 # Source: src/devices/yokis.ts:3391
 zdef: 1
 id: yokis/tlm2-up
-revision: 1
+revision: 2
 vendor: YOKIS
 model: TLM2-UP
 description: Wall-mounted 2-button transmitter
@@ -11,8 +11,8 @@ source: zhc devices/yokis.ts
 match:
   - model: {any: [TLM2-UP, TLM2T503-UP, TLM2TNO-UP]}
 white_label:
-  - {vendor: YOKIS, model: TLM2T503-UP}
-  - {vendor: YOKIS, model: TLM2TNO-UP}
+  - {vendor: YOKIS, model: TLM2T503-UP, model_id: [TLM2T503-UP]}
+  - {vendor: YOKIS, model: TLM2TNO-UP, model_id: [TLM2TNO-UP]}
 generic:
   exclude: [battery]
   patch:

@@ -3,14 +3,15 @@
 # Source: src/devices/salus_controls.ts:313
 zdef: 1
 id: salus-controls/fc600
-revision: 1
+revision: 2
 vendor: Salus Controls
 model: FC600
 description: Fan coil thermostat
 source: zhc devices/salus_controls.ts
 match:
   - model: {any: [FC600, FC600NH]}
-white_label: [{vendor: Salus Controls, model: FC600NH}]
+white_label:
+  - {vendor: Salus Controls, model: FC600NH, model_id: [FC600NH]}
 device: {ota: true}
 configure:
   - report: {ep: 9, cluster: 0x0201, attr: 0x001E, type: enum8, report: [10, 3600, 0]}

@@ -3,7 +3,7 @@
 # Source: src/devices/legrand.ts:569
 zdef: 1
 id: legrand/412015
-revision: 1
+revision: 2
 vendor: Legrand
 model: "412015"
 description: DIN power consumption module
@@ -15,7 +15,6 @@ match:
         - " DIN power consumption module"
         - Smart shedder module
 white_label:
-  - {vendor: Legrand, model: "412172"}
   - {vendor: BTicino, model: FC80GCS}
   - {vendor: BTicino, model: F20T60A}
 device: {ota: true}

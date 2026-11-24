@@ -3,7 +3,7 @@
 # Source: src/devices/philips.ts:388
 zdef: 1
 id: philips/929003853404
-revision: 1
+revision: 2
 vendor: Philips
 model: "929003853404"
 description: Hue white ambiance and color 810lm A60 E27
@@ -11,8 +11,8 @@ source: zhc devices/philips.ts
 match:
   - model: {any: [LCA010, LCA013, LCA014]}
 white_label:
-  - {vendor: Philips, model: "929003853701"}
-  - {vendor: Philips, model: "929003853803"}
+  - {vendor: Philips, model: "929003853701", model_id: [LCA013]}
+  - {vendor: Philips, model: "929003853803", model_id: [LCA014]}
 device: {ota: true}
 templates:
   - name: hue_light

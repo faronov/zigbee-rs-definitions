@@ -3,13 +3,13 @@
 # Source: src/devices/tuya.ts:7268
 zdef: 1
 id: tuya/ts0301
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0301
 description: Cover
 source: zhc devices/tuya.ts
 match:
   - {model: TS0301}
-  - {model: TS0301, manufacturer: _TZE200_9caxna4s}
+  - {model: TS0301, manufacturer: _TZE200_9caxna4s, x-white-label: true}
 white_label:
   - {vendor: Yookee, model: D10110_1, manufacturer: [_TZE200_9caxna4s]}

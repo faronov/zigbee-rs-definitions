@@ -3,7 +3,7 @@
 # Source: src/devices/enbrighten.ts:62
 zdef: 1
 id: enbrighten/43080
-revision: 1
+revision: 2
 vendor: Enbrighten
 model: "43080"
 description: Zigbee in-wall smart dimmer
@@ -11,7 +11,7 @@ source: zhc devices/enbrighten.ts
 match:
   - model: {any: ["43080", "43113", "43090", "43096"]}
 white_label:
-  - {vendor: Enbrighten, model: "43113"}
-  - {vendor: Enbrighten, model: "43090"}
-  - {vendor: Enbrighten, model: "43096"}
+  - {vendor: Enbrighten, model: "43113", model_id: ["43113"]}
+  - {vendor: Enbrighten, model: "43090", model_id: ["43090"]}
+  - {vendor: Enbrighten, model: "43096", model_id: ["43096"]}
 generic: {exclude: [power_on_behavior]}

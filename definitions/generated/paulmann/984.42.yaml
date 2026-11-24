@@ -3,14 +3,15 @@
 # Source: src/devices/paulmann.ts:467
 zdef: 1
 id: paulmann/984.42
-revision: 1
+revision: 2
 vendor: Paulmann
 model: "984.42"
 description: Azalena Smart Home Zigbee LED Light with motion detection (HF)
 source: zhc devices/paulmann.ts
 match:
   - model: {any: ["98442", "98443"]}
-white_label: [{vendor: Paulmann, model: "984.43"}]
+white_label:
+  - {vendor: Paulmann, model: "984.43", model_id: ["98443"]}
 generic:
   patch:
     light:

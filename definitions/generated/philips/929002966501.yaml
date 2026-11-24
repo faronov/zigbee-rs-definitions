@@ -3,7 +3,7 @@
 # Source: src/devices/philips.ts:4091
 zdef: 1
 id: philips/929002966501
-revision: 1
+revision: 2
 vendor: Philips
 model: "929002966501"
 description: Hue White and Color Ambiance Surimu rectangle panel 30x120 cm
@@ -20,13 +20,13 @@ match:
         - "929003598101"
         - "929003598102"
 white_label:
-  - {vendor: Philips, model: "929003598001"}
-  - {vendor: Philips, model: "929003598002"}
-  - {vendor: Philips, model: "929002966401"}
-  - {vendor: Philips, model: "929002966402"}
-  - {vendor: Philips, model: "929002966502"}
-  - {vendor: Philips, model: "929003598101"}
-  - {vendor: Philips, model: "929003598102"}
+  - {vendor: Philips, model: "929003598001", model_id: ["929003598001"]}
+  - {vendor: Philips, model: "929003598002", model_id: ["929003598002"]}
+  - {vendor: Philips, model: "929002966401", model_id: ["929002966401"]}
+  - {vendor: Philips, model: "929002966402", model_id: ["929002966402"]}
+  - {vendor: Philips, model: "929002966502", model_id: ["929002966502"]}
+  - {vendor: Philips, model: "929003598101", model_id: ["929003598101"]}
+  - {vendor: Philips, model: "929003598102", model_id: ["929003598102"]}
 device: {ota: true}
 templates:
   - name: hue_light

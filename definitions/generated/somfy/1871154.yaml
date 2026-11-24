@@ -3,12 +3,13 @@
 # Source: src/devices/somfy.ts:311
 zdef: 1
 id: somfy/1871154
-revision: 1
+revision: 2
 vendor: Somfy
 model: "1871154"
 description: Ysia 5 channel blinds remote
 source: zhc devices/somfy.ts
 match:
   - model: {any: [Ysia 5 HP Zigbee, Ysia 5 Zigbee Europe]}
-white_label: [{vendor: Somfy, model: "1871158"}]
+white_label:
+  - {vendor: Somfy, model: "1871158", model_id: [Ysia 5 Zigbee Europe]}
 endpoints: {1: "1", 2: "2", 3: "3", 4: "4", 5: "5", 232: "232"}

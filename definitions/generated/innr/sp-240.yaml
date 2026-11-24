@@ -3,7 +3,7 @@
 # Source: src/devices/innr.ts:1082
 zdef: 1
 id: innr/sp-240
-revision: 1
+revision: 2
 vendor: Innr
 model: SP 240
 description: Smart plug (EU)
@@ -11,6 +11,6 @@ source: zhc devices/innr.ts
 match:
   - model: {any: [SP 240, SP 242, SP 244]}
 white_label:
-  - {vendor: Innr, model: SP 242}
-  - {vendor: Innr, model: SP 244}
+  - {vendor: Innr, model: SP 242, model_id: [SP 242]}
+  - {vendor: Innr, model: SP 244, model_id: [SP 244]}
 device: {ota: true}

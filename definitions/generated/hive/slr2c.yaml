@@ -3,14 +3,15 @@
 # Source: src/devices/hive.ts
 zdef: 1
 id: hive/slr2c
-revision: 1
+revision: 2
 vendor: Hive
 model: SLR2c
 description: Dual channel heating and hot water thermostat
 source: zhc devices/hive.ts
 match:
   - model: {any: [SLR2c, SLR2d]}
-white_label: [{vendor: Hive, model: SLR2d}]
+white_label:
+  - {vendor: Hive, model: SLR2d, model_id: [SLR2d]}
 endpoints: {5: heat, 6: water}
 configure:
   - report: {ep: 5, cluster: 0x0201, attr: 0x0023, type: enum8, report: [0, 3600, 0]}

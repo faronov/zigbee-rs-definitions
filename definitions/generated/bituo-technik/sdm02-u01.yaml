@@ -3,13 +3,14 @@
 # Source: src/devices/bituo_technik.ts:195
 zdef: 1
 id: bituo-technik/sdm02-u01
-revision: 1
+revision: 2
 vendor: BITUO TECHNIK
 model: SDM02-U01
 description: Smart energy monitor for 2P+N system
 source: zhc devices/bituo_technik.ts
 match:
   - model: {any: [SDM02X, SDM02-2Z1]}
-white_label: [{vendor: Zemismart, model: SDM02-2Z1}]
+white_label:
+  - {vendor: Zemismart, model: SDM02-2Z1, model_id: [SDM02-2Z1]}
 generic: {exclude: [power_on_behavior]}
 x-partial: true

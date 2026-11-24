@@ -3,7 +3,7 @@
 # Source: src/devices/philips.ts:5177
 zdef: 1
 id: philips/929004276602
-revision: 1
+revision: 2
 vendor: Philips
 model: "929004276602"
 description: Hue White and Color Lightstrip Ultra Bright (3m)
@@ -11,8 +11,8 @@ source: zhc devices/philips.ts
 match:
   - model: {any: ["929004276602", "929004276603", "929004276702", "929004276802"]}
 white_label:
-  - {vendor: Philips, model: "929004276702"}
-  - {vendor: Philips, model: "929004276802"}
+  - {vendor: Philips, model: "929004276702", model_id: ["929004276702"]}
+  - {vendor: Philips, model: "929004276802", model_id: ["929004276802"]}
 device: {ota: true}
 templates:
   - name: hue_light

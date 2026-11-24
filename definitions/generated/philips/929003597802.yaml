@@ -3,14 +3,15 @@
 # Source: src/devices/philips.ts:2221
 zdef: 1
 id: philips/929003597802
-revision: 1
+revision: 2
 vendor: Philips
 model: "929003597802"
 description: Hue black ambiance Aurelle square panel light
 source: zhc devices/philips.ts
 match:
   - model: {any: ["929003597802", "929003597602"]}
-white_label: [{vendor: Philips, model: "929003597602"}]
+white_label:
+  - {vendor: Philips, model: "929003597602", model_id: ["929003597602"]}
 device: {ota: true}
 templates:
   - name: hue_light

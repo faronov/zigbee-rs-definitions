@@ -3,7 +3,7 @@
 # Source: src/devices/third_reality.ts:1351
 zdef: 1
 id: third-reality/3rsp02064z
-revision: 1
+revision: 2
 vendor: Third Reality
 model: "3RSP02064Z"
 description: Smart Plug Gen3
@@ -11,10 +11,10 @@ source: zhc devices/third_reality.ts
 match:
   - model: {any: ["3RSP02064Z", "3RSPU01080Z", "3RSPE02065Z", "3RSP0186Z", "3RSPJ0187Z"]}
 white_label:
-  - {vendor: Third Reality, model: "3RSPU01080Z"}
-  - {vendor: Third Reality, model: "3RSPE02065Z"}
-  - {vendor: Third Reality, model: "3RSP0186Z"}
-  - {vendor: Third Reality, model: "3RSPJ0187Z"}
+  - {vendor: Third Reality, model: "3RSPU01080Z", model_id: ["3RSPU01080Z"]}
+  - {vendor: Third Reality, model: "3RSPE02065Z", model_id: ["3RSPE02065Z"]}
+  - {vendor: Third Reality, model: "3RSP0186Z", model_id: ["3RSP0186Z"]}
+  - {vendor: Third Reality, model: "3RSPJ0187Z", model_id: ["3RSPJ0187Z"]}
 device: {ota: true}
 entities:
   - key: led_brightness

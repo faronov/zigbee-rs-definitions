@@ -3,7 +3,7 @@
 # Source: src/devices/ikea.ts:706
 zdef: 1
 id: ikea/kajplats_ws
-revision: 1
+revision: 2
 vendor: IKEA
 model: KAJPLATS_WS
 description: "KAJPLATS bulb, white spectrum (Matter)"
@@ -21,15 +21,15 @@ match:
         - KAJPLATS E26 WS globe 1600lm
         - KAJPLATS E12 WS globe 800lm
 white_label:
-  - {vendor: IKEA, model: LED2406G4}
-  - {vendor: IKEA, model: LED2407G8}
-  - {vendor: IKEA, model: LED2403R5/LED2403R5NA}
-  - {vendor: IKEA, model: LED2408G10}
-  - {vendor: IKEA, model: LED2404G6}
-  - {vendor: IKEA, model: LED2406G4NA}
-  - {vendor: IKEA, model: LED2407G8NA}
-  - {vendor: IKEA, model: LED2408G10NA}
-  - {vendor: IKEA, model: LED2404G6NA}
+  - {vendor: IKEA, model: LED2406G4, model_id: [KAJPLATS E27 WS globe 470lm]}
+  - {vendor: IKEA, model: LED2407G8, model_id: [KAJPLATS E27 WS globe 1055lm]}
+  - {vendor: IKEA, model: LED2403R5/LED2403R5NA, model_id: [KAJPLATS GU10 WS 575lm]}
+  - {vendor: IKEA, model: LED2408G10, model_id: [KAJPLATS E27 WS globe 1521lm]}
+  - {vendor: IKEA, model: LED2404G6, model_id: [KAJPLATS E14 WS globe 806lm]}
+  - {vendor: IKEA, model: LED2406G4NA, model_id: [KAJPLATS E26 WS globe 450lm]}
+  - {vendor: IKEA, model: LED2407G8NA, model_id: [KAJPLATS E26 WS globe 1100lm]}
+  - {vendor: IKEA, model: LED2408G10NA, model_id: [KAJPLATS E26 WS globe 1600lm]}
+  - {vendor: IKEA, model: LED2404G6NA, model_id: [KAJPLATS E12 WS globe 800lm]}
 generic:
   patch:
     light:

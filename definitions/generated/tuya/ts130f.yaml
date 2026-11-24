@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:7110
 zdef: 1
 id: tuya/ts130f
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS130F
 description: Curtain/blind switch
@@ -27,6 +27,7 @@ match:
         - _TZ3210_jrhczaaa
         - _TZ3000_vw8pawxa
         - _TZ3210_xbpt8ewc
+    x-white-label: true
 white_label:
   - {vendor: BSEED, model: EC-GL86ZPCRS31, manufacturer: [_TZ3000_bs93npae]}
   - {vendor: BSEED, model: S-PC86ZPCS11B, manufacturer: [_TZ3000_dojqjapa]}

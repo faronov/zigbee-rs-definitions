@@ -3,7 +3,7 @@
 # Source: src/devices/enbrighten.ts:10
 zdef: 1
 id: enbrighten/43076
-revision: 1
+revision: 2
 vendor: Enbrighten
 model: "43076"
 description: Zigbee in-wall smart switch
@@ -11,9 +11,9 @@ source: zhc devices/enbrighten.ts
 match:
   - model: {any: ["43076", "43109", "43102", "43100", "43094", "43084"]}
 white_label:
-  - {vendor: Enbrighten, model: "43109"}
-  - {vendor: Enbrighten, model: "43102"}
-  - {vendor: Enbrighten, model: "43100"}
-  - {vendor: Enbrighten, model: "43094"}
-  - {vendor: Enbrighten, model: "43084"}
+  - {vendor: Enbrighten, model: "43109", model_id: ["43109"]}
+  - {vendor: Enbrighten, model: "43102", model_id: ["43102"]}
+  - {vendor: Enbrighten, model: "43100", model_id: ["43100"]}
+  - {vendor: Enbrighten, model: "43094", model_id: ["43094"]}
+  - {vendor: Enbrighten, model: "43084", model_id: ["43084"]}
 generic: {exclude: [power_on_behavior]}

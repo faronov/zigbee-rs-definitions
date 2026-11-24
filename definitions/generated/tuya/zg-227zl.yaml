@@ -3,7 +3,7 @@
 # Source: src/devices/hobeian.ts:2191
 zdef: 1
 id: tuya/zg-227zl
-revision: 1
+revision: 2
 vendor: Tuya
 model: ZG-227ZL
 description: Temperature & humidity LCD sensor
@@ -23,6 +23,7 @@ match:
         - _TZE200_lhqtjwax
         - _TZE200_y8wkaq6w
 white_label:
+  - {vendor: HOBEIAN, model: ZG-227Z, model_id: [ZG-227Z]}
   - vendor: HOBEIAN
     model: ZG-227Z
     manufacturer:
@@ -32,7 +33,7 @@ white_label:
       - _TZE200_dikkika5
       - _TZE200_lhqtjwax
   - {vendor: KOJIMA, model: KOJIMA-THS-ZG-LCD, manufacturer: [_TZE200_dikkika5, _TZE200_y8wkaq6w]}
-  - {vendor: AOYAN, model: AY201Z}
+  - {vendor: AOYAN, model: AY201Z, model_id: [AY201Z]}
 generic: {disable: true}
 tuya: {magic_packet: true}
 entities:

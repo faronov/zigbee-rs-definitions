@@ -3,13 +3,14 @@
 # Source: src/devices/namron.ts
 zdef: 1
 id: namron/4512773
-revision: 1
+revision: 2
 vendor: Namron
 model: "4512773"
 description: Zigbee 8 channel switch black
 source: zhc devices/namron.ts
 match:
   - model: {any: ["4512772", "4512773"]}
-white_label: [{vendor: Namron, model: "4512772"}]
+white_label:
+  - {vendor: Namron, model: "4512772", model_id: ["4512772"]}
 device: {ota: true}
 endpoints: {1: l1, 2: l2, 3: l3, 4: l4}

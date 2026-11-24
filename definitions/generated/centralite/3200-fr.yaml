@@ -3,7 +3,7 @@
 # Source: src/devices/centralite.ts
 zdef: 1
 id: centralite/3200-fr
-revision: 1
+revision: 2
 vendor: Centralite
 model: "3200-fr"
 description: Smart outlet
@@ -11,5 +11,5 @@ source: zhc devices/centralite.ts
 match:
   - model: {any: ["3200-fr", "3200-de", "3200-gb"]}
 white_label:
-  - {vendor: Centralite, model: "3200-de"}
-  - {vendor: Centralite, model: "3200-gb"}
+  - {vendor: Centralite, model: "3200-de", model_id: ["3200-de"]}
+  - {vendor: Centralite, model: "3200-gb", model_id: ["3200-gb"]}

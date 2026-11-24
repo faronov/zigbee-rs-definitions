@@ -3,17 +3,19 @@
 # Source: src/devices/ewelink.ts:571
 zdef: 1
 id: ewelink/ck-tlsr8656-ss5-01-7035
-revision: 1
+revision: 3
 vendor: eWeLink
 model: CK-TLSR8656-SS5-01(7035)
 description: Zigbee smoke alarm
 source: zhc devices/ewelink.ts
 match:
   - model: {any: [CK-TLSR8656-SS5-01(7035), CK-TLSR8656-Z123SE22DY-01(7035)]}
-  - model: {any: [CK-TLSR8656-SS5-01(7035), CK-TLSR8656-Z123SE22DY-01(7035)]}
-    manufacturer: eWeLink
+  - {model: CK-TLSR8656-Z123SE22DY-01(7035), manufacturer: eWeLink, x-white-label: true}
 white_label:
-  - {vendor: eWeLink, model: CK-TLSR8656-Z123SE22DY-01(7035), manufacturer: [eWeLink]}
+  - vendor: eWeLink
+    model: CK-TLSR8656-Z123SE22DY-01(7035)
+    manufacturer: [eWeLink]
+    model_id: [CK-TLSR8656-Z123SE22DY-01(7035)]
 device: {ota: true}
 entities:
   - key: smoke

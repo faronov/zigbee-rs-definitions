@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:8480
 zdef: 1
 id: tuya/ts0502b
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0502B
 description: Light controller
@@ -32,6 +32,7 @@ match:
         - _TZ3210_tqwyiitv
         - _TZ3210_rnj5wxxg
         - _TZ3210_3632cjza
+    x-white-label: true
 white_label:
   - {vendor: Mercator Ikuü, model: SMI7040, manufacturer: [_TZ3000_zw7wr5uo]}
   - {vendor: Mercator Ikuü, model: SMD9300}

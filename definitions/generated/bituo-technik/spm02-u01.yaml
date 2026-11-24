@@ -3,13 +3,14 @@
 # Source: src/devices/bituo_technik.ts:236
 zdef: 1
 id: bituo-technik/spm02-u01
-revision: 1
+revision: 2
 vendor: BITUO TECHNIK
 model: SPM02-U01
 description: Smart energy monitor for 3P+N system
 source: zhc devices/bituo_technik.ts
 match:
   - model: {any: [SPM02X001, SPM02X, SPM02-3Z3]}
-white_label: [{vendor: Zemismart, model: SPM02-3Z3}]
+white_label:
+  - {vendor: Zemismart, model: SPM02-3Z3, model_id: [SPM02-3Z3]}
 generic: {exclude: [power_on_behavior]}
 x-partial: true

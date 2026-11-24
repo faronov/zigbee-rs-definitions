@@ -3,14 +3,15 @@
 # Source: src/devices/lumi.ts:5282
 zdef: 1
 id: aqara/cl-l02d
-revision: 1
+revision: 2
 vendor: Aqara
 model: CL-L02D
 description: Ceiling light T1M
 source: zhc devices/lumi.ts
 match:
   - model: {any: [lumi.light.acn032, lumi.light.acn031]}
-white_label: [{vendor: Aqara, model: HCXDD12LM}]
+white_label:
+  - {vendor: Aqara, model: HCXDD12LM, model_id: [lumi.light.acn031]}
 device: {power: mains, ota: true}
 endpoints: {1: white, 2: rgb}
 templates:

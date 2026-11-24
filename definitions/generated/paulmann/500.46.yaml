@@ -3,14 +3,15 @@
 # Source: src/devices/paulmann.ts:190
 zdef: 1
 id: paulmann/500.46
-revision: 1
+revision: 2
 vendor: Paulmann
 model: "500.46"
 description: SmartHome Zigbee MaxLED tunable white controller max. 144W / 24V DC
 source: zhc devices/paulmann.ts
-match: [{model: "500.46"}]
+match:
+  - {model: "500.46"}
+  - {model: CCT, manufacturer: Paulmann Licht GmbH, date_code: "20190515"}
 generic:
   patch:
     light:
       parts: {color_temp: {min: 153, max: 370}}
-x-partial: true

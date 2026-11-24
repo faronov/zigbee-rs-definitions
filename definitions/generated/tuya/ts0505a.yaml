@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:8519
 zdef: 1
 id: tuya/ts0505a
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0505A
 description: RGB+CCT light controller
@@ -20,6 +20,7 @@ match:
         - _TZ3000_gek6snaj
         - _TZ3000_evag0pvn
         - _TZ3000_riwp3k79
+    x-white-label: true
 white_label:
   - {vendor: Lidl, model: HG06106B, manufacturer: [_TZ3000_odygigth]}
   - {vendor: Lidl, model: HG06106A, manufacturer: [_TZ3000_kdpxju99]}

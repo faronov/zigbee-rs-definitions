@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts
 zdef: 1
 id: tuya/ts0202
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0202
 description: Motion sensor
@@ -24,6 +24,7 @@ match:
         - _TZ3040_o4mkahkc
         - _TZ3000_bsvqrxru
         - _TZ3000_nss8amz9
+    x-white-label: true
 white_label:
   - {vendor: Mercator Ikuü, model: SMA02P}
   - {vendor: Tuya, model: TY-ZPR06}

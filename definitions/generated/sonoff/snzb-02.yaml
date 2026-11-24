@@ -3,7 +3,7 @@
 # Source: src/devices/sonoff.ts
 zdef: 1
 id: sonoff/snzb-02
-revision: 2
+revision: 3
 vendor: SONOFF
 model: SNZB-02
 description: Temperature and humidity sensor
@@ -40,7 +40,10 @@ match:
   - {model: TH01, manufacturer: Zbeacon, logical_type: end_device}
 white_label:
   - {vendor: eWeLink, model: RHK08}
-  - {vendor: eWeLink, model: SNZB-02_eWeLink, manufacturer: [eWeLink]}
-  - {vendor: eWeLink, model: CK-TLSR8656-SS5-01(7014), manufacturer: [eWeLink]}
-  - {vendor: Zbeacon, model: TH01, manufacturer: [Zbeacon]}
+  - {vendor: eWeLink, model: SNZB-02_eWeLink, manufacturer: [eWeLink], model_id: [SNZB-02]}
+  - vendor: eWeLink
+    model: CK-TLSR8656-SS5-01(7014)
+    manufacturer: [eWeLink]
+    model_id: [CK-TLSR8656-SS5-01(7014)]
+  - {vendor: Zbeacon, model: TH01, manufacturer: [Zbeacon], model_id: [TH01]}
 x-partial: true

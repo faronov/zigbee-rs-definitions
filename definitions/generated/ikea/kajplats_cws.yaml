@@ -3,7 +3,7 @@
 # Source: src/devices/ikea.ts:618
 zdef: 1
 id: ikea/kajplats_cws
-revision: 1
+revision: 2
 vendor: IKEA
 model: KAJPLATS_CWS
 description: "KAJPLATS bulb, color/white spectrum (Matter)"
@@ -17,11 +17,11 @@ match:
         - KAJPLATS E26 CWS globe 1100lm
         - KAJPLATS E12 CWS globe 800lm
 white_label:
-  - {vendor: IKEA, model: LED2405G8}
-  - {vendor: IKEA, model: LED2409G6}
-  - {vendor: IKEA, model: LED2410R5/LED2410R5NA}
-  - {vendor: IKEA, model: LED2405G8NA}
-  - {vendor: IKEA, model: LED2409G6NA}
+  - {vendor: IKEA, model: LED2405G8, model_id: [KAJPLATS E27 CWS globe 1055lm]}
+  - {vendor: IKEA, model: LED2409G6, model_id: [KAJPLATS E14 CWS globe 806lm]}
+  - {vendor: IKEA, model: LED2410R5/LED2410R5NA, model_id: [KAJPLATS GU10 CWS 575lm]}
+  - {vendor: IKEA, model: LED2405G8NA, model_id: [KAJPLATS E26 CWS globe 1100lm]}
+  - {vendor: IKEA, model: LED2409G6NA, model_id: [KAJPLATS E12 CWS globe 800lm]}
 generic:
   patch:
     light:

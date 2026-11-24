@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts
 zdef: 1
 id: tuya/sm0202
-revision: 1
+revision: 2
 vendor: Tuya
 model: SM0202
 description: Motion sensor
@@ -12,6 +12,7 @@ match:
   - {model: SM0202}
   - model: SM0202
     manufacturer: {any: [_TYZB01_z2umiwvq, _TYZB01_yr95mpib]}
+    x-white-label: true
 white_label:
   - {vendor: Cleverio, model: SS200, manufacturer: [_TYZB01_z2umiwvq]}
   - {vendor: Marmitek, model: SM0202_1, manufacturer: [_TYZB01_yr95mpib]}

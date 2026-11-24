@@ -3,14 +3,15 @@
 # Source: src/devices/stelpro.ts:89
 zdef: 1
 id: stelpro/st218
-revision: 1
+revision: 2
 vendor: Stelpro
 model: ST218
 description: "Ki convector, line-voltage thermostat"
 source: zhc devices/stelpro.ts
 match:
   - model: {any: [ST218, SonomaStyle]}
-white_label: [{vendor: Stelpro, model: SonomaStyle}]
+white_label:
+  - {vendor: Stelpro, model: SonomaStyle, model_id: [SonomaStyle]}
 configure:
   - report: {ep: 25, cluster: 0x0204, attr: 0x0001, type: enum8, report: [10, 3600, 0]}
   - report: {ep: 25, cluster: 0x0201, attr: 0x401C, type: enum8, report: [60, 3600, 1]}

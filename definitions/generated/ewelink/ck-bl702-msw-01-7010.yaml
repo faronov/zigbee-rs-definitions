@@ -3,12 +3,13 @@
 # Source: src/devices/ewelink.ts:159
 zdef: 1
 id: ewelink/ck-bl702-msw-01-7010
-revision: 1
+revision: 2
 vendor: eWeLink
 model: CK-BL702-MSW-01(7010)
 description: CMARS Zigbee smart plug
 source: zhc devices/ewelink.ts
 match:
   - model: {any: [CK-BL702-MSW-01(7010), CK-BL702-MSW-01(7011)-1]}
-white_label: [{vendor: Mumubiz, model: CZV20}]
+white_label:
+  - {vendor: Mumubiz, model: CZV20, model_id: [CK-BL702-MSW-01(7010)]}
 x-partial: true

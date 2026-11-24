@@ -53,6 +53,7 @@ match:
         - _TZ3000_amdymr7l
         - _TZ3000_zloso4jk
         - _TZ3210_w0qqde0g
+    x-white-label: true
 white_label:
   - {vendor: LELLKI, model: TS011F_plug}
   - {vendor: BlitzWolf, model: BW-SHP15}

@@ -3,14 +3,15 @@
 # Source: src/devices/tuya.ts:14668
 zdef: 1
 id: aoyan/ay-601zl
-revision: 1
+revision: 2
 vendor: AOYAN
 model: AY-601ZL
 description: "1 gang switch module - without neutral wire"
 source: zhc devices/tuya.ts
 match:
   - model: {any: [AY-601ZL, AY-801ZL]}
-white_label: [{vendor: AOYAN, model: AY-801ZL}]
+white_label:
+  - {vendor: AOYAN, model: AY-801ZL, model_id: [AY-801ZL]}
 device: {power: mains}
 tuya: {magic_packet: true}
 templates:

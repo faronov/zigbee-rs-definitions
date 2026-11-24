@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:9493
 zdef: 1
 id: tuya/ts0001
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0001
 description: "1 gang switch"
@@ -19,6 +19,7 @@ match:
         - _TZ3000_udl7uyd2
         - _TZ3000_bzzgvet0
         - _TZ3000_cb3aangp
+    x-white-label: true
 white_label:
   - {vendor: CR Smart Home, model: TS0001}
   - {vendor: Lonsonho, model: X701}

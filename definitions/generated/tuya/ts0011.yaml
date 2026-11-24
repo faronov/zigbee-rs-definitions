@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:14486
 zdef: 1
 id: tuya/ts0011
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0011
 description: Smart light switch - 1 gang
@@ -13,6 +13,7 @@ match:
   - {model: TS0011, manufacturer: _TZ3000_l8fsgo6p}
   - model: {any: [TS0011, ZG-302Z1]}
     manufacturer: _TZ3000_abjodzas
+    x-white-label: true
 white_label:
   - {vendor: Vrey, model: VR-X712U-0013}
   - {vendor: TUYATEC, model: GDKES-01TZXD}

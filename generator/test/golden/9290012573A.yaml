@@ -9,7 +9,8 @@ description: Hue white and color ambiance E26/E27/E14
 source: zhc devices/philips.ts
 match:
   - model: {any: [LCT001, LCT007, LCT010, LCT012, LCT014, LCT015, LCT016, LCT021]}
-white_label: [{vendor: Philips, model: "9290012574"}]
+white_label:
+  - {vendor: Philips, model: "9290012574", model_id: [LCT010]}
 device: {ota: true}
 templates:
   - name: hue_light

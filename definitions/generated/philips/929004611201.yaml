@@ -3,7 +3,7 @@
 # Source: src/devices/philips.ts:4524
 zdef: 1
 id: philips/929004611201
-revision: 1
+revision: 2
 vendor: Philips
 model: "929004611201"
 description: Hue Xamento White and Color Ambiance Spot (White)
@@ -11,8 +11,8 @@ source: zhc devices/philips.ts
 match:
   - model: {any: ["929004611201", "929003812601", "929003812801"]}
 white_label:
-  - {vendor: Philips, model: "929003812601"}
-  - {vendor: Philips, model: "929003812801"}
+  - {vendor: Philips, model: "929003812601", model_id: ["929003812601"]}
+  - {vendor: Philips, model: "929003812801", model_id: ["929003812801"]}
 device: {ota: true}
 templates:
   - name: hue_light

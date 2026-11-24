@@ -3,14 +3,14 @@
 # Source: src/devices/tuya.ts:18624
 zdef: 1
 id: tuya/ts030f
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS030F
 description: Smart blind controller
 source: zhc devices/tuya.ts
 match:
   - {model: TS030F}
-  - {model: TS030F, manufacturer: _TZB000_42ha4rsc}
+  - {model: TS030F, manufacturer: _TZB000_42ha4rsc, x-white-label: true}
 white_label:
   - {vendor: Lidl, model: HG09648, manufacturer: [_TZB000_42ha4rsc]}
 tuya: {magic_packet: true}
