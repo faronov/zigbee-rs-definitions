@@ -5,7 +5,8 @@
 # Tuya case: four datapoints, the flags of
 # `tuyaBase({dp: true, queryOnDeviceAnnounce: true, queryOnConfigure: true,
 # timeStart: "1970"})`, and a long manufacturer-name list, which dominates the
-# encoded size.
+# encoded size. It replaces the generated definition (same model), so it
+# carries every white label herdsman has.
 zdef: 1
 id: tuya/ts0601-th-sensor-2
 revision: 1
@@ -21,13 +22,19 @@ match:
             _TZE204_jygvp6fk, _TZE204_cirvgep4, _TZE284_yjjdcqsq, _TZE200_d7lpruvi,
             _TZE284_hdyjyqjm, _TZE284_d7lpruvi, _TZE284_upagmta9, _TZE204_ksz749x8,
             _TZE204_1wnh8bqp, _TZE284_1wnh8bqp, _TZE284_ksz749x8, _TZE204_kwi6bbk4]
-white_label:   # two of herdsman's seven white labels
+white_label:   # herdsman's seven, in its order (the first match wins)
   - {vendor: Tuya, model: ZTH01, manufacturer: [_TZE200_yjjdcqsq, _TZE204_yjjdcqsq, _TZE284_yjjdcqsq]}
+  - {vendor: Tuya, model: SZTH02, manufacturer: [_TZE200_utkemkbs, _TZE204_utkemkbs, _TZE284_utkemkbs]}
+  - {vendor: Tuya, model: ZTH02, manufacturer: [_TZE200_9yapgbuv, _TZE204_9yapgbuv, _TZE284_ksz749x8]}
+  - {vendor: Tuya, model: ZTH05, manufacturer: [_TZE204_upagmta9, _TZE200_upagmta9, _TZE284_upagmta9]}
+  - {vendor: Tuya, model: ZTH08-E, manufacturer: [_TZE200_cirvgep4, _TZE204_cirvgep4]}
   - {vendor: Tuya, model: ZTH08, manufacturer: [_TZE204_d7lpruvi, _TZE284_d7lpruvi, _TZE284_hdyjyqjm]}
+  - {vendor: Tuya, model: ZTH13, manufacturer: [_TZE204_kwi6bbk4]}
 device:
   power: battery
 tuya:
   time_sync: 1970
+  magic_packet: true             # tuyaBase: read Basic attributes at configure
   query: [configure, announce]   # dataQuery (0x03) after configure and Device_annce
 generic:
   disable: true
