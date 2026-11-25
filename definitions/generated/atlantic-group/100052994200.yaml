@@ -3,7 +3,7 @@
 # Source: src/devices/atlantic.ts:88
 zdef: 1
 id: atlantic-group/100052994200
-revision: 2
+revision: 3
 vendor: Atlantic Group
 model: "100052994200"
 description: Nirvana+ connected radiator vertical 1500W
@@ -12,6 +12,7 @@ match:
   - model: {any: ["100052994200", "100052994300"]}
 white_label:
   - {vendor: Atlantic Group, model: "100052994300", model_id: ["100052994300"]}
+  - {vendor: Atlantic Group, model: "100052994300", model_id: ["100052994300\u0000"]}
 generic:
   exclude: [power]
   patch:

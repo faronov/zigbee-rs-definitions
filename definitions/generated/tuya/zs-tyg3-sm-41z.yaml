@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:20340
 zdef: 1
 id: tuya/zs-tyg3-sm-41z
-revision: 2
+revision: 3
 vendor: Tuya
 model: ZS-TYG3-SM-41Z
 description: "4 gang smart switch with backlight and neutral wire"
@@ -11,9 +11,7 @@ source: zhc devices/tuya.ts
 match:
   - model: TS0601
     manufacturer: {any: [_TZE200_k6jhsr0q, _TZE204_unsxl4ir]}
-  - {model: TS0601, manufacturer: TZE204_unsxl4ir, x-white-label: true}
-white_label:
-  - {vendor: Nova Digital, model: FZB-4, manufacturer: [TZE204_unsxl4ir]}
+white_label: [{vendor: Nova Digital, model: FZB-4}]
 generic: {disable: true}
 tuya: {magic_packet: true}
 entities:

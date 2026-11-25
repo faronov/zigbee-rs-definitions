@@ -3,7 +3,7 @@
 # Source: src/devices/immax.ts:308
 zdef: 1
 id: immax/07073l
-revision: 1
+revision: 2
 vendor: Immax
 model: "07073L"
 description: "Neo CANTO/HIPODROMO SMART, color temp, dimmable, Zigbee 3.0"
@@ -11,6 +11,7 @@ source: zhc devices/immax.ts
 match:
   - {model: ColorTemperature}
   - {model: "07073L", manufacturer: Seastar Intelligence}
+  - {model: "07073L"}
 generic:
   patch:
     light:

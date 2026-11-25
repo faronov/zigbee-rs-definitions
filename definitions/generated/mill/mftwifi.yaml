@@ -3,12 +3,14 @@
 # Source: src/devices/mill.ts:31
 zdef: 1
 id: mill/mftwifi
-revision: 1
+revision: 2
 vendor: Mill
 model: MFTWIFI
 description: Smart floor thermostat WiFi & Zigbee
 source: zhc devices/mill.ts
 match:
   - model: {any: ["Mill International\u0000Threa", Mill InternationalThrea]}
-  - {manufacturer: "Mill International\u0000Threa"}
-  - {manufacturer: Mill InternationalThrea}
+  - model: {any: ["Mill International\u0000Threa", Mill InternationalThrea]}
+    manufacturer: "Mill International\u0000Threa"
+  - model: {any: ["Mill International\u0000Threa", Mill InternationalThrea]}
+    manufacturer: Mill InternationalThrea

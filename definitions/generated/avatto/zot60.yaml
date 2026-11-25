@@ -3,7 +3,7 @@
 # Source: src/devices/avatto.ts:973
 zdef: 1
 id: avatto/zot60
-revision: 2
+revision: 3
 vendor: AVATTO
 model: ZOT60
 description: Smart Plug
@@ -11,9 +11,7 @@ source: zhc devices/avatto.ts
 match:
   - model: TS011F
     manufacturer: {any: [_TZ3218_pfnjjx6a, _TZ3218_fv20refe]}
-  - {model: TS011F, manufacturer: _TZ3218_o1slgs0r, x-white-label: true}
-white_label:
-  - {vendor: pcblab.io, model: ZOT60-RF, manufacturer: [_TZ3218_o1slgs0r]}
+white_label: [{vendor: pcblab.io, model: ZOT60-RF}]
 generic: {disable: true}
 tuya: {force_time_sync_s: 3600, magic_packet: true}
 entities:

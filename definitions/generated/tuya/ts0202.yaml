@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts
 zdef: 1
 id: tuya/ts0202
-revision: 2
+revision: 4
 vendor: Tuya
 model: TS0202
 description: Motion sensor
@@ -11,6 +11,7 @@ source: zhc devices/tuya.ts
 match:
   - {model: TS0202}
   - {model: WHD02, manufacturer: _TZ3000_hktqahrq}
+  - {model: WHD02}
   - model: {any: [TS0202, WHD02]}
     manufacturer:
       any:

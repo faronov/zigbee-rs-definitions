@@ -3,7 +3,7 @@
 # Source: src/devices/lidl.ts:238
 zdef: 1
 id: lidl/hg06337
-revision: 1
+revision: 2
 vendor: Lidl
 model: HG06337
 description: "Silvercrest smart plug (EU, CH, FR, BS, DK)"
@@ -11,8 +11,8 @@ source: zhc devices/lidl.ts
 match:
   - model: TS011F
     manufacturer: {any: [_TZ3000_plyvnuf5, _TZ3000_wamqdr3f, _TZ3000_00mk2xzy, _TZ3000_upjrsxh1]}
-  - {manufacturer: _TZ3000_kdi2o9m6}
-  - {manufacturer: _TZ3000_00mk2xzy}
+  - {model: TS011F, manufacturer: _TZ3000_kdi2o9m6}
+  - {model: TS011F, manufacturer: _TZ3000_00mk2xzy}
 generic: {exclude: [power_on_behavior]}
 tuya: {magic_packet: true}
 entities:

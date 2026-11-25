@@ -38,11 +38,16 @@ numbers.
    inline functions through the inspector's `[[FunctionLocation]]`).
 2. **Translation** (`src/translate.ts`), per definition:
    - identity: `zigbeeModel` / `fingerprint` → `match` (fingerprints grouped by
-     model; endpoints, versions, power source, manufacturer code kept);
+     model; endpoints, versions, power source, manufacturer code kept; a
+     fingerprint without a model ID gets the model IDs zhc indexes the
+     definition by; a fingerprint model ID that is the only candidate in
+     zhc's index of a definition with a `zigbeeModel` also matches alone,
+     as `findDefinition` returns such a candidate unchecked);
      `whiteLabel` → `white_label`, selected like zhc by its fingerprints'
      manufacturer names, model IDs, software build IDs, logical type,
-     hardware versions and endpoints (names missing from `match` are added
-     under the definition's models, spec 8.4);
+     hardware versions and endpoints (names missing from `match` are added,
+     spec 8.4, under the model IDs zhc finds the definition by whatever the
+     manufacturer; a name it can never see there is dropped);
    - extends: the outermost recorded call with a translator wins; an inner
      call is used only if the outer wrapper added nothing of its own;
    - named fz/tz converters: generic-tier semantics (`src/named.ts`), data

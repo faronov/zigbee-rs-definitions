@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:20593
 zdef: 1
 id: tuya/ts0601_light
-revision: 2
+revision: 3
 vendor: Tuya
 model: TS0601_light
 description: Light
@@ -17,13 +17,12 @@ match:
         - _TZE200_drs6j6m5
         - _TZE200_ywe90lt0
         - _TZE200_qyss8gjy
-  - {model: TS0601, manufacturer: _TZE204_drs6j6m5, x-white-label: true}
 white_label:
   - {vendor: Ltech, model: TY-12-100-400-W1Z, manufacturer: [_TZE200_86nbew0j]}
   - {vendor: Ltech, model: TY-75-24-G2Z2, manufacturer: [_TZE200_io0zdqh1]}
   - {vendor: Lifud, model: LF-AAZ012-0400-42, manufacturer: [_TZE200_drs6j6m5]}
   - {vendor: Lifud, model: LF-GAZ150A6250-24, manufacturer: [_TZE200_ywe90lt0]}
-  - {vendor: Lifud, model: LF-GAZ150B6250-24, manufacturer: [_TZE204_drs6j6m5]}
+  - {vendor: Lifud, model: LF-GAZ150B6250-24}
 generic: {disable: true}
 tuya: {magic_packet: true}
 entities:

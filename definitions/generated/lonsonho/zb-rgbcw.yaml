@@ -3,7 +3,7 @@
 # Source: src/devices/lonsonho.ts:281
 zdef: 1
 id: lonsonho/zb-rgbcw
-revision: 1
+revision: 2
 vendor: Lonsonho
 model: ZB-RGBCW
 description: "Zigbee 3.0 LED-bulb, RGBW LED"
@@ -14,6 +14,7 @@ match:
     manufacturer: {any: [eWeLight, eWeLink, "eWeLi\u0001\u0000\u0010"]}
   - {model: ZB-CL02, manufacturer: eWeLight}
   - {model: Z102LG03-1, manufacturer: eWeLink}
+  - model: {any: [ZB-CL02, Z102LG03-1]}
 generic:
   exclude: [power_on_behavior]
   patch:

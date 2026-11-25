@@ -36,8 +36,9 @@ function device(fp) {
       for (const w of def.whiteLabel || []) {
         for (const fp of w.fingerprint || []) {
           // zhc finds the definition by modelID first: a fingerprint without one
-          // stands for each zigbeeModel of the definition.
-          for (const b of fp.modelID ? [fp] : (def.zigbeeModel || []).map((z) => ({modelID: z, ...fp}))) {
+          // stands for each model ID of the definition.
+          const models = [...new Set([...(def.zigbeeModel || []), ...(def.fingerprint || []).map((f) => f.modelID).filter(Boolean)])];
+          for (const b of fp.modelID ? [fp] : models.map((z) => ({modelID: z, ...fp}))) {
             fps.push(['whiteLabel', b]);
             for (const [k, other] of Object.entries(VARIANT)) {
               if (b[k] === undefined) continue;

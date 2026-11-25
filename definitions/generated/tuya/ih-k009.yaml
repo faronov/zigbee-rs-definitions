@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:8607
 zdef: 1
 id: tuya/ih-k009
-revision: 1
+revision: 2
 vendor: Tuya
 model: IH-K009
 description: Temperature & humidity sensor
@@ -11,7 +11,7 @@ source: zhc devices/tuya.ts
 match:
   - model: TS0201
     manufacturer: {any: [_TZ3000_dowj6gyi, _TZ3000_8ybe88nf, _TZ3000_akqdg6g7]}
-  - {manufacturer: _TZ3000_zl1kmjqx}
+  - {model: TS0201, manufacturer: _TZ3000_zl1kmjqx}
 white_label:
   - {vendor: Tuya, model: RSH-HS06_1, manufacturer: [_TZ3000_zl1kmjqx]}
 tuya: {magic_packet: true}

@@ -3,7 +3,7 @@
 # Source: src/devices/javis.ts
 zdef: 1
 id: javis/js-slk2-zb
-revision: 1
+revision: 2
 vendor: JAVIS
 model: JS-SLK2-ZB
 description: Intelligent biometric digital lock
@@ -12,4 +12,5 @@ match:
   - {model: JAVISLOCK}
   - {model: doorlock_5001, manufacturer: Lmiot}
   - {model: E321V000A03, manufacturer: Vensi}
+  - model: {any: [doorlock_5001, E321V000A03]}
 x-partial: true

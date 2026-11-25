@@ -3,12 +3,13 @@
 # Source: src/devices/muller_licht.ts
 zdef: 1
 id: muller-licht/mli-404011-mli-404049
-revision: 1
+revision: 2
 vendor: Müller Licht
 model: MLI-404011/MLI-404049
 description: Tint remote control
 source: zhc devices/muller_licht.ts
 match:
   - model: {any: [ZBT-Remote-ALL-RGBW, TS1001]}
-  - {manufacturer: _TZ3000_bdbb0fon}
+  - model: {any: [ZBT-Remote-ALL-RGBW, TS1001]}
+    manufacturer: _TZ3000_bdbb0fon
 x-partial: true

@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:5259
 zdef: 1
 id: tuya/whd02
-revision: 3
+revision: 4
 vendor: Tuya
 model: WHD02
 description: Wall switch module
@@ -38,9 +38,7 @@ match:
         - _TZ3000_skueekg3
         - _TZ3000_dlhhrhs8
         - _TZ3000_fdxihpp7
-  - model: {any: [AY301Z, TS0001, TS000F]}
-    manufacturer: AOYAN
-    x-white-label: true
+  - {model: AY301Z, manufacturer: AOYAN, x-white-label: true}
 white_label:
   - {vendor: Tuya, model: iHSW02}
   - {vendor: AOYAN, model: AY301Z, model_id: [AY301Z]}

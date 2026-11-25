@@ -3,7 +3,7 @@
 # Source: src/devices/shelly.ts:2775
 zdef: 1
 id: shelly/s4sw-001x8eu
-revision: 2
+revision: 3
 vendor: Shelly
 model: S4SW-001X8EU
 description: "1 Mini Gen 4"
@@ -11,6 +11,7 @@ source: zhc devices/shelly.ts
 match:
   - model: {any: [Mini1, "1 Mini"]}
   - {model: "1", manufacturer: Shelly}
+  - {model: "1"}
 white_label:
   - {vendor: Shelly, model: S4SW-001X16EU, manufacturer: [Shelly], model_id: ["1"]}
 device: {ota: true}

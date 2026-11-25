@@ -3,7 +3,7 @@
 # Source: src/devices/heiman.ts
 zdef: 1
 id: heiman/hs1ca-m
-revision: 1
+revision: 2
 vendor: Heiman
 model: HS1CA-M
 description: Smart carbon monoxide alarm
@@ -11,6 +11,7 @@ source: zhc devices/heiman.ts
 match:
   - model: {any: [CO_V15, CO_YDLV10, CO_V16, "1ccaa94c49a84abaa9e38687913947ba", CO_CTPG]}
   - {model: TS0212, manufacturer: _TYZB01_wpmo3ja3}
+  - {model: TS0212}
 configure:
   - report: {cluster: 0x0001, attr: 0x003E, type: map32, report: [3600, 65000, 0]}
 entities:
