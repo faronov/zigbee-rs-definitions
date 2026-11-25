@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:8480
 zdef: 1
 id: tuya/ts0502b
-revision: 2
+revision: 3
 vendor: Tuya
 model: TS0502B
 description: Light controller
@@ -11,7 +11,7 @@ source: zhc devices/tuya.ts
 match:
   - {model: TS0502B}
   - {model: TS0503B, manufacturer: _TZB210_lmqquxus}
-  - model: {any: [TS0502B, TS0503B]}
+  - model: TS0502B
     manufacturer:
       any:
         - _TZ3000_zw7wr5uo

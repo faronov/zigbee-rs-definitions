@@ -3,10 +3,13 @@
 # Source: src/devices/namron.ts:3190
 zdef: 1
 id: namron/4512788
-revision: 1
+revision: 2
 vendor: Namron
 model: "4512788"
 description: Zigbee smart plug dimmer 150W
 source: zhc devices/namron.ts
-match: [{model: "4512788"}, {model: D726-ZG, manufacturer: HZC}]
+match:
+  - {model: "4512788"}
+  - {model: D726-ZG, manufacturer: HZC}
+  - {model: D726-ZG}
 generic: {exclude: [energy]}

@@ -3,7 +3,7 @@
 # Source: src/devices/paulmann.ts:269
 zdef: 1
 id: paulmann/93999
-revision: 1
+revision: 2
 vendor: Paulmann
 model: "93999"
 description: Plug Shine Zigbee controller
@@ -11,3 +11,4 @@ source: zhc devices/paulmann.ts
 match:
   - {model: H036-0001}
   - {model: Dimmable, manufacturer: Paulmann Licht GmbH}
+  - {model: Dimmable}

@@ -3,7 +3,7 @@
 # Source: src/devices/heiman.ts
 zdef: 1
 id: heiman/hs2sw2a-hs2sw2a-n
-revision: 1
+revision: 2
 vendor: Heiman
 model: HS2SW2A/HS2SW2A-N
 description: Smart switch - 2 gang with neutral wire
@@ -13,4 +13,5 @@ match:
       any: [HS2SW2L-EF-3.0, HS2SW2L-EFR-3.0, HS2SW2A-N, HS6SW2A-W-EF-3.0, HS5SW2A-W-EF-3.0, RT0102]
   - {model: HS2SW2A-EF-3.0, manufacturer: HEIMAN}
   - {model: HS2SW2A-EFR-3.0, manufacturer: HEIMAN}
+  - model: {any: [HS2SW2A-EF-3.0, HS2SW2A-EFR-3.0]}
 endpoints: {1: left, 2: right}

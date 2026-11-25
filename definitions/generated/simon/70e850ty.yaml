@@ -3,14 +3,14 @@
 # Source: src/devices/simon.ts:102
 zdef: 1
 id: simon/70e850ty
-revision: 1
+revision: 2
 vendor: SIMON
 model: "70E850TY"
 description: i7 1-gang smart switch (no neutral)
 source: zhc devices/simon.ts
 match:
   - {model: "70E850TY"}
-  - {manufacturer: _TZ2000_s93al43ewlu7wzwi}
+  - {model: "70E850TY", manufacturer: _TZ2000_s93al43ewlu7wzwi}
 generic:
   exclude: [power_on_behavior]
   patch: {switch: {report: "off"}}

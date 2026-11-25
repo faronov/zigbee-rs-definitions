@@ -1,4 +1,6 @@
 // Translation of one zhc definition into a zdef definition document.
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import type {Call, Zhc} from './zhc';
 import {Ctx, Untranslatable, slug} from './ctx';
 import {BATTERY_CURVES, MODERN, type ExtTranslator} from './modern';
@@ -259,7 +261,27 @@ function endpointsOf(v: any[]): any {
 // zhc white-label fingerprint fields the hub checks (zdef white_label).
 const WHITE_LABEL_FP = new Set(['modelID', 'manufacturerName', 'softwareBuildID', 'type', 'hardwareVersion', 'endpoints']);
 
-function matchClauses(d: any): {match: any[]; names: Set<string>; partial?: string} {
+// zhc's model index (lowercased zigbeeModel / fingerprint modelID ->
+// candidate definitions).
+let modelsIndex: Record<string, unknown[]> | undefined;
+function candidates(zhc: Zhc, model: string): number {
+    modelsIndex ??= JSON.parse(fs.readFileSync(path.join(zhc.dist, 'models-index.json'), 'utf8'));
+    return modelsIndex![model.toLowerCase()]?.length ?? 0;
+}
+
+/** Fingerprint model IDs zhc finds the definition by whatever the device's
+ * other fields: findDefinition returns the only candidate of a model ID if it
+ * has a zigbeeModel, without checking its fingerprints. */
+function onlyCandidateModels(zhc: Zhc, d: any): string[] {
+    const zm: string[] = (d.zigbeeModel || []).filter((x: any) => typeof x === 'string');
+    if (!zm.length) return [];
+    const lower = new Set(zm.map((m) => m.toLowerCase()));
+    const fps: any[] = Array.isArray(d.fingerprint) ? d.fingerprint : [];
+    const ids = fps.map((f) => f.modelID).filter((m) => typeof m === 'string' && !lower.has(m.toLowerCase()));
+    return [...new Set<string>(ids)].filter((m) => candidates(zhc, m) === 1);
+}
+
+function matchClauses(zhc: Zhc, d: any): {match: any[]; names: Set<string>; partial?: string} {
     const match: any[] = [];
     const names = new Set<string>();
     let partial: string | undefined;
@@ -268,6 +290,9 @@ function matchClauses(d: any): {match: any[]; names: Set<string>; partial?: stri
     else if (zm.length > 1) match.push({model: {any: zm}});
     const byModel = new Map<string, string[]>();
     const extra: any[] = [];
+    // zhc looks candidates up by the device's model ID: a fingerprint without
+    // one only matches devices with a model ID the definition is indexed by.
+    const indexed = [...new Set<string>([...zm, ...(Array.isArray(d.fingerprint) ? d.fingerprint : []).map((f: any) => f.modelID).filter((m: any) => typeof m === 'string' && m)])];
     for (const f of Array.isArray(d.fingerprint) ? d.fingerprint : []) {
         const keys = Object.keys(f).filter((k) => f[k] !== undefined);
         const simple = keys.every((k) => k === 'modelID' || k === 'manufacturerName');
@@ -307,6 +332,7 @@ function matchClauses(d: any): {match: any[]; names: Set<string>; partial?: stri
             partial ??= skip;
             continue;
         }
+        if (!f.modelID && indexed.length) c.model = indexed.length === 1 ? indexed[0] : {any: indexed};
         const prio = c.priority;
         delete c.priority;
         if (prio !== undefined) c['x-priority'] = prio;
@@ -316,17 +342,33 @@ function matchClauses(d: any): {match: any[]; names: Set<string>; partial?: stri
         match.push(mfrs.length === 1 ? {model, manufacturer: mfrs[0]} : {model, manufacturer: {any: mfrs}});
     }
     match.push(...extra);
+    const only = onlyCandidateModels(zhc, d);
+    if (only.length) match.push({model: only.length === 1 ? only[0] : {any: only}});
     return {match, names, partial};
 }
 
-function whiteLabels(d: any, names: Set<string>, match: any[]): any[] | undefined {
+function whiteLabels(zhc: Zhc, d: any, names: Set<string>, match: any[]): any[] | undefined {
     const out: any[] = [];
     const extra: string[] = [];
     // White-label names per model ID ('' = every model of the definition).
     const extraBy = new Map<string, string[]>();
     // Model IDs the definition is found by (zhc looks white labels up only
-    // after the definition was found by one of them).
-    const known = new Set<string>([...(d.zigbeeModel || []), ...(Array.isArray(d.fingerprint) ? d.fingerprint.map((f: any) => f.modelID).filter(Boolean) : [])]);
+    // after the definition was found by one of them), as zhc's index
+    // compares them (normalizeModelID, case-insensitive).
+    const norm = (m: string) => m.replace(/\0[\s\S]*$/, '').trim().toLowerCase();
+    const fpList: any[] = Array.isArray(d.fingerprint) ? d.fingerprint : [];
+    const known = new Set<string>([...(d.zigbeeModel || []), ...fpList.map((f: any) => f.modelID).filter(Boolean)]);
+    const knownNorm = new Set([...known].filter((m) => typeof m === 'string').map(norm));
+    // Model IDs it is found by whatever the manufacturer name: a white-label
+    // name outside the fingerprints' names reaches it only through these.
+    const anyMfr: string[] = [
+        ...new Set<string>([
+            ...(d.zigbeeModel || []),
+            ...fpList.filter((f: any) => f.modelID && !f.manufacturerName).map((f: any) => f.modelID),
+            ...onlyCandidateModels(zhc, d),
+        ]),
+    ];
+    const reach = (mid: string): string[] => (mid ? (anyMfr.some((m) => norm(m) === norm(mid)) ? [mid] : []) : anyMfr);
     for (const w of d.whiteLabel || []) {
         const base: any = {vendor: String(w.vendor ?? d.vendor), model: String(w.model)};
         const str = (v: any) => (typeof v === 'string' ? v : '');
@@ -346,7 +388,7 @@ function whiteLabels(d: any, names: Set<string>, match: any[]): any[] | undefine
         const byModel = new Map<string, Group>();
         for (const f of fps) {
             const mid = str(f.modelID);
-            if (mid && !known.has(mid)) continue;
+            if (mid && !knownNorm.has(norm(mid))) continue;
             const lt = f.type ? LOGICAL_TYPES[f.type] : '';
             if (f.type && !lt) continue;
             const sw = str(f.softwareBuildID);
@@ -364,7 +406,11 @@ function whiteLabels(d: any, names: Set<string>, match: any[]): any[] | undefine
             if (!m) merged.set(key, {...g, hw: [...g.hw]});
             else for (const v of g.hw) if (!m.hw.includes(v)) m.hw.push(v);
         }
-        for (const {mid, sw, lt, eps, mfr, hw} of merged.values()) {
+        const before = out.length;
+        for (const {mid, sw, lt, eps, mfr: names_, hw} of merged.values()) {
+            // A name zhc can never see with this definition is dropped.
+            const mfr = names_.filter((n) => names.has(n) || reach(mid).length);
+            if (names_.length && !mfr.length) continue;
             if (!mid && !sw && !lt && !eps && !hw.length && !mfr.length) continue;
             const x: any = {...base};
             for (const n of mfr) {
@@ -383,17 +429,19 @@ function whiteLabels(d: any, names: Set<string>, match: any[]): any[] | undefine
             if (eps) x.endpoints = eps;
             out.push(x);
         }
+        // Still listed when none of its fingerprints can select it.
+        if (out.length === before) out.push(base);
     }
     if (extra.length) {
         // White-label names must be in the match name list (spec 8.4): add them
-        // under the white label's model ID, or every model of the definition.
+        // under the white label's model ID, or every model the definition is
+        // found by whatever the manufacturer name.
         // `x-white-label` scores the clause as if it had no manufacturer: in
         // zhc white labels rename a definition, they do not select it.
-        const models: string[] = [...known];
-        const all = models.length === 1 ? models[0] : models.length ? {any: models} : String(d.model);
         for (const [mid, mfrs] of extraBy) {
+            const models = reach(mid);
             const manufacturer = mfrs.length === 1 ? mfrs[0] : {any: mfrs};
-            match.push({model: mid || all, manufacturer, 'x-white-label': true});
+            match.push({model: models.length === 1 ? models[0] : {any: models}, manufacturer, 'x-white-label': true});
         }
         for (const n of extra) names.add(n);
     }
@@ -468,7 +516,7 @@ export async function translate(zhc: Zhc, file: string, d: any): Promise<{doc: a
     if (ctx.dpMode && !ctx.flags.has('generic')) ctx.generic.disable = true;
 
     // ---- document ----
-    const {match, names, partial} = matchClauses(d);
+    const {match, names, partial} = matchClauses(zhc, d);
     if (partial) ctx.fail('fingerprint', partial);
     const doc: any = {zdef: 1, id: `${slug(d.vendor) || 'unknown'}/${slug(d.model) || 'model'}`, revision: 1, vendor: String(d.vendor), model: String(d.model)};
     if (d.description) doc.description = String(d.description);
@@ -478,7 +526,7 @@ export async function translate(zhc: Zhc, file: string, d: any): Promise<{doc: a
     doc.source = `zhc devices/${file}.ts`;
     const where = loc && loc.includes(`devices/${file}.ts`) ? loc : `src/devices/${file}.ts`;
     doc.match = match.length ? match : [{model: String(d.model)}];
-    const wl = whiteLabels(d, names, doc.match);
+    const wl = whiteLabels(zhc, d, names, doc.match);
     if (wl) doc.white_label = wl;
     if (Object.keys(ctx.device).length) doc.device = ctx.device;
     const g: any = {};

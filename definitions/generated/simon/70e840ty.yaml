@@ -3,14 +3,14 @@
 # Source: src/devices/simon.ts:144
 zdef: 1
 id: simon/70e840ty
-revision: 1
+revision: 2
 vendor: SIMON
 model: "70E840TY"
 description: i7 3-gang smart switch (neutral)
 source: zhc devices/simon.ts
 match:
   - {model: "70E840TY"}
-  - {manufacturer: _TZ2000_8auyu8pgbug5fzl5}
+  - {model: "70E840TY", manufacturer: _TZ2000_8auyu8pgbug5fzl5}
 generic: {exclude: [power_on_behavior]}
 endpoints: {1: left, 2: middle, 3: right}
 templates:

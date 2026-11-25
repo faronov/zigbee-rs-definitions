@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts
 zdef: 1
 id: tuya/ts0601_cover_1
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0601_cover_1
 description: Curtain motor/roller blind motor/window pusher/tubular motor
@@ -82,6 +82,7 @@ match:
         - _TZE200_2jwrgrro
   - {model: "zo2pocs\u0000", manufacturer: _TYST11_fzo2pocs}
   - {model: "dank5zs\u0000", manufacturer: _TYST11_udank5zs}
+  - model: {any: ["zo2pocs\u0000", "dank5zs\u0000"]}
 white_label:
   - {vendor: Yushun, model: YS-MT750}
   - vendor: Yushun

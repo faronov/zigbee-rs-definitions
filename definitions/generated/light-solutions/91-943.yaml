@@ -3,12 +3,15 @@
 # Source: src/devices/lightsolutions.ts:60
 zdef: 1
 id: light-solutions/91-943
-revision: 1
+revision: 2
 vendor: Light Solutions
 model: "91-943"
 description: LED Controller 12/24v
 source: zhc devices/lightsolutions.ts
-match: [{model: "91-943"}, {model: "01F", manufacturer: Light}]
+match:
+  - {model: "91-943"}
+  - {model: "01F", manufacturer: Light}
+  - {model: "01F"}
 generic:
   patch:
     light:
