@@ -242,6 +242,23 @@ function translateMeta(ctx: Ctx, meta: any) {
     }
 }
 
+function endpointsOf(v: any[]): any {
+    const eps: any = {};
+    for (const ep of v) {
+        const x: any = {};
+        if (ep.profileID !== undefined) x.profile = ep.profileID;
+        if (ep.deviceID !== undefined) x.device_id = ep.deviceID;
+        // an empty list is no constraint in zdef: omit it
+        if (ep.inputClusters?.length) x.in = ep.inputClusters;
+        if (ep.outputClusters?.length) x.out = ep.outputClusters;
+        eps[ep.ID] = x;
+    }
+    return eps;
+}
+
+// zhc white-label fingerprint fields the hub checks (zdef white_label).
+const WHITE_LABEL_FP = new Set(['modelID', 'manufacturerName', 'softwareBuildID', 'type', 'hardwareVersion', 'endpoints']);
+
 function matchClauses(d: any): {match: any[]; names: Set<string>; partial?: string} {
     const match: any[] = [];
     const names = new Set<string>();
@@ -277,18 +294,8 @@ function matchClauses(d: any): {match: any[]; names: Set<string>; partial?: stri
             else if (k === 'dateCode') c.date_code = v;
             else if (k === 'powerSource') c.power = /battery/i.test(v) ? 'battery' : 'mains';
             else if (k === 'priority') c.priority = v;
-            else if (k === 'endpoints') {
-                c.endpoints = {};
-                for (const ep of v) {
-                    const x: any = {};
-                    if (ep.profileID !== undefined) x.profile = ep.profileID;
-                    if (ep.deviceID !== undefined) x.device_id = ep.deviceID;
-                    // an empty list is no constraint in zdef (subset match): omit it
-                    if (ep.inputClusters?.length) x.in = ep.inputClusters;
-                    if (ep.outputClusters?.length) x.out = ep.outputClusters;
-                    c.endpoints[ep.ID] = x;
-                }
-            } else if (k === 'type') {
+            else if (k === 'endpoints') c.endpoints = endpointsOf(v);
+            else if (k === 'type') {
                 const lt = LOGICAL_TYPES[v];
                 if (lt) c.logical_type = lt;
                 else skip = `fingerprint type ${v}`;
@@ -323,26 +330,42 @@ function whiteLabels(d: any, names: Set<string>, match: any[]): any[] | undefine
     for (const w of d.whiteLabel || []) {
         const base: any = {vendor: String(w.vendor ?? d.vendor), model: String(w.model)};
         const str = (v: any) => (typeof v === 'string' ? v : '');
-        const fps: any[] = (w.fingerprint || []).filter((f: any) => str(f.modelID) || str(f.manufacturerName) || str(f.softwareBuildID));
+        const keys = (f: any) => Object.keys(f).filter((k) => f[k] !== undefined);
+        // A fingerprint with a field the hub cannot check would select more
+        // devices than in zhc: it is left out.
+        const fps: any[] = (w.fingerprint || []).filter((f: any) => keys(f).length && keys(f).every((k) => WHITE_LABEL_FP.has(k)));
         if (!fps.length) {
             out.push(base);
             continue;
         }
-        // zhc selects a white label by its fingerprints (modelID,
-        // manufacturerName and/or softwareBuildID): one entry per model ID
-        // and software build keeps the combinations exact.
-        const byModel = new Map<string, {mid: string; sw: string; mfr: string[]}>();
+        // zhc selects a white label by its fingerprints: one entry per
+        // combination of model ID, software build, logical type and endpoints
+        // keeps them exact; manufacturer names, then hardware versions of
+        // otherwise equal entries share one.
+        type Group = {mid: string; sw: string; lt: string; eps?: any; mfr: string[]; hw: number[]};
+        const byModel = new Map<string, Group>();
         for (const f of fps) {
             const mid = str(f.modelID);
             if (mid && !known.has(mid)) continue;
+            const lt = f.type ? LOGICAL_TYPES[f.type] : '';
+            if (f.type && !lt) continue;
             const sw = str(f.softwareBuildID);
-            const key = JSON.stringify([mid, sw]);
-            const g = byModel.get(key) || {mid, sw, mfr: []};
+            const eps = Array.isArray(f.endpoints) ? endpointsOf(f.endpoints) : undefined;
+            const hw = typeof f.hardwareVersion === 'number' ? [f.hardwareVersion] : [];
+            const key = JSON.stringify([mid, sw, lt, eps ?? null, hw]);
+            const g = byModel.get(key) || {mid, sw, lt, eps, mfr: [], hw};
             if (str(f.manufacturerName) && !g.mfr.includes(f.manufacturerName)) g.mfr.push(f.manufacturerName);
             byModel.set(key, g);
         }
-        for (const {mid, sw, mfr} of byModel.values()) {
-            if (!mid && !sw && !mfr.length) continue;
+        const merged = new Map<string, Group>();
+        for (const g of byModel.values()) {
+            const key = JSON.stringify([g.mid, g.sw, g.lt, g.eps ?? null, g.mfr, g.hw.length > 0]);
+            const m = merged.get(key);
+            if (!m) merged.set(key, {...g, hw: [...g.hw]});
+            else for (const v of g.hw) if (!m.hw.includes(v)) m.hw.push(v);
+        }
+        for (const {mid, sw, lt, eps, mfr, hw} of merged.values()) {
+            if (!mid && !sw && !lt && !eps && !hw.length && !mfr.length) continue;
             const x: any = {...base};
             for (const n of mfr) {
                 if (names.has(n)) continue;
@@ -353,8 +376,11 @@ function whiteLabels(d: any, names: Set<string>, match: any[]): any[] | undefine
             }
             if (mfr.length) x.manufacturer = mfr;
             if (mid) x.model_id = [mid];
-            // Hubs before white-label sw_build ignore it (zdef extension key).
+            // Hubs before a white-label constraint ignore it (zdef extension keys).
             if (sw) x.sw_build = [sw];
+            if (lt) x.logical_type = lt;
+            if (hw.length) x.hw_version = hw;
+            if (eps) x.endpoints = eps;
             out.push(x);
         }
     }

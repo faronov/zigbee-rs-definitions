@@ -3,7 +3,7 @@
 # Source: src/devices/ewelink.ts:278
 zdef: 1
 id: ewelink/snzb-05
-revision: 3
+revision: 4
 vendor: eWeLink
 model: SNZB-05
 description: Zigbee water sensor
@@ -16,10 +16,12 @@ white_label:
   - vendor: eWeLink
     model: CK-TLSR8656-SS5-01(7019)
     manufacturer: [eWeLink]
+    logical_type: end_device
     model_id: [CK-TLSR8656-SS5-01(7019)]
   - vendor: eWeLink
     model: CK-TLSR8656-Z23SE11HW-01(7019)
     manufacturer: [eWeLink]
+    logical_type: end_device
     model_id: [CK-TLSR8656-Z23SE11HW-01(7019)]
 entities:
   - key: water_leak

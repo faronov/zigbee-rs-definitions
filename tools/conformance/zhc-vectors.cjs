@@ -1,5 +1,7 @@
 // Expected zhc selections: for every fingerprint, zigbeeModel and white-label
-// fingerprint of zigbee-herdsman-converters, the definition findByDevice picks.
+// fingerprint of zigbee-herdsman-converters, the definition findByDevice picks
+// (with the white label), and for every white-label fingerprint with more than
+// names also the device without, or with another value of, each such field.
 const path = require('path');
 const fs = require('fs');
 const root = process.argv[2];
@@ -7,6 +9,13 @@ const zhc = require(path.join(root, 'node_modules/zigbee-herdsman-converters'));
 const devdir = path.join(root, 'node_modules/zigbee-herdsman-converters/dist/devices');
 const KEYS = ['modelID', 'manufacturerName', 'applicationVersion', 'stackVersion', 'hardwareVersion', 'softwareBuildID',
   'powerSource', 'type', 'dateCode', 'zclVersion', 'manufacturerID'];
+// White-label fingerprint fields beyond the Basic names, and another value of each.
+const VARIANT = {
+  softwareBuildID: (v) => `${v}X`,
+  type: (v) => (v === 'Router' ? 'EndDevice' : 'Router'),
+  hardwareVersion: (v) => v + 1,
+  endpoints: (v) => v.map((e, i) => (i ? e : {...e, inputClusters: [...(e.inputClusters || []), 0xfc00]})),
+};
 function device(fp) {
   const eps = (fp.endpoints || []).map((e) => ({ID: e.ID, profileID: e.profileID, deviceID: e.deviceID,
     inputClusters: e.inputClusters || [], outputClusters: e.outputClusters || []}));
@@ -24,7 +33,21 @@ function device(fp) {
       const fps = [];
       for (const fp of def.fingerprint || []) fps.push(['fingerprint', fp]);
       for (const z of def.zigbeeModel || []) fps.push(['zigbeeModel', {modelID: z}]);
-      for (const w of def.whiteLabel || []) for (const fp of w.fingerprint || []) fps.push(['whiteLabel', fp]);
+      for (const w of def.whiteLabel || []) {
+        for (const fp of w.fingerprint || []) {
+          // zhc finds the definition by modelID first: a fingerprint without one
+          // stands for each zigbeeModel of the definition.
+          for (const b of fp.modelID ? [fp] : (def.zigbeeModel || []).map((z) => ({modelID: z, ...fp}))) {
+            fps.push(['whiteLabel', b]);
+            for (const [k, other] of Object.entries(VARIANT)) {
+              if (b[k] === undefined) continue;
+              const without = {...b};
+              delete without[k];
+              fps.push(['whiteLabelVariant', without], ['whiteLabelVariant', {...b, [k]: other(b[k])}]);
+            }
+          }
+        }
+      }
       for (const [kind, fp] of fps) {
         if (!fp.modelID) continue; // findDefinition looks candidates up by modelID only
         const dev = device(fp);
@@ -41,6 +64,6 @@ function device(fp) {
     }
   }
   fs.writeFileSync(process.argv[3], JSON.stringify(out));
-  const shadow = out.filter((v) => v.expect && v.kind !== 'whiteLabel' && v.expect.model !== v.source).length;
+  const shadow = out.filter((v) => v.expect && !v.kind.startsWith('whiteLabel') && v.expect.model !== v.source).length;
   console.log(`vectors ${out.length}, unresolved ${out.filter((v) => !v.expect).length}, picked another definition than their source ${shadow}`);
 })();

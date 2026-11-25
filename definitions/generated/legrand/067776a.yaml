@@ -3,13 +3,14 @@
 # Source: src/devices/legrand.ts:247
 zdef: 1
 id: legrand/067776a
-revision: 1
+revision: 2
 vendor: Legrand
 model: "067776A"
 description: Netatmo wired shutter switch with level control (NLLV)
 source: zhc devices/legrand.ts
 match: [{model: " Shutter SW with level control\u0000"}]
-white_label: [{vendor: BTicino, model: K4027C/L4027C/N4027C/NT4027C}]
+white_label:
+  - {vendor: BTicino, model: K4027C/L4027C/N4027C/NT4027C, hw_version: [9, 13, 16]}
 device: {ota: true}
 configure:
   - report: {cluster: 0x0102, attr: 0x0008, type: u8, mfr: 0x1021, report: [1, 120, 1]}
