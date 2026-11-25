@@ -34,6 +34,8 @@ export const SAMPLE: Record<string, string> = {
     WSDCGQ11LM: 'C',
     // tier A: Paulmann bulb, white labels selected by softwareBuildID
     '291.46': 'A',
+    // partial: SONOFF motion sensor, white labels selected by type and endpoints
+    'SNZB-03': 'P',
     // partial: Tuya plug whose countdown needs a command-based number (v1 has none)
     TS011F_plug_1: 'P',
     // partial: IKEA remote (IKEA templates are not implemented yet)
