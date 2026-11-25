@@ -322,23 +322,27 @@ function whiteLabels(d: any, names: Set<string>, match: any[]): any[] | undefine
     const known = new Set<string>([...(d.zigbeeModel || []), ...(Array.isArray(d.fingerprint) ? d.fingerprint.map((f: any) => f.modelID).filter(Boolean) : [])]);
     for (const w of d.whiteLabel || []) {
         const base: any = {vendor: String(w.vendor ?? d.vendor), model: String(w.model)};
-        const fps: any[] = (w.fingerprint || []).filter((f: any) => typeof f.modelID === 'string' || typeof f.manufacturerName === 'string');
+        const str = (v: any) => (typeof v === 'string' ? v : '');
+        const fps: any[] = (w.fingerprint || []).filter((f: any) => str(f.modelID) || str(f.manufacturerName) || str(f.softwareBuildID));
         if (!fps.length) {
             out.push(base);
             continue;
         }
-        // zhc selects a white label by its fingerprints (modelID and/or
-        // manufacturerName): one entry per model ID keeps the pairs exact.
-        const byModel = new Map<string, string[]>();
+        // zhc selects a white label by its fingerprints (modelID,
+        // manufacturerName and/or softwareBuildID): one entry per model ID
+        // and software build keeps the combinations exact.
+        const byModel = new Map<string, {mid: string; sw: string; mfr: string[]}>();
         for (const f of fps) {
-            const mid = typeof f.modelID === 'string' ? f.modelID : '';
+            const mid = str(f.modelID);
             if (mid && !known.has(mid)) continue;
-            const l = byModel.get(mid) || [];
-            if (typeof f.manufacturerName === 'string' && !l.includes(f.manufacturerName)) l.push(f.manufacturerName);
-            byModel.set(mid, l);
+            const sw = str(f.softwareBuildID);
+            const key = JSON.stringify([mid, sw]);
+            const g = byModel.get(key) || {mid, sw, mfr: []};
+            if (str(f.manufacturerName) && !g.mfr.includes(f.manufacturerName)) g.mfr.push(f.manufacturerName);
+            byModel.set(key, g);
         }
-        for (const [mid, mfr] of byModel) {
-            if (!mid && !mfr.length) continue;
+        for (const {mid, sw, mfr} of byModel.values()) {
+            if (!mid && !sw && !mfr.length) continue;
             const x: any = {...base};
             for (const n of mfr) {
                 if (names.has(n)) continue;
@@ -349,6 +353,8 @@ function whiteLabels(d: any, names: Set<string>, match: any[]): any[] | undefine
             }
             if (mfr.length) x.manufacturer = mfr;
             if (mid) x.model_id = [mid];
+            // Hubs before white-label sw_build ignore it (zdef extension key).
+            if (sw) x.sw_build = [sw];
             out.push(x);
         }
     }

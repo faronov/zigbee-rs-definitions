@@ -32,6 +32,8 @@ export const SAMPLE: Record<string, string> = {
     '9290012573A': 'C',
     // tier C: Lumi template family
     WSDCGQ11LM: 'C',
+    // tier A: Paulmann bulb, white labels selected by softwareBuildID
+    '291.46': 'A',
     // partial: Tuya plug whose countdown needs a command-based number (v1 has none)
     TS011F_plug_1: 'P',
     // partial: IKEA remote (IKEA templates are not implemented yet)

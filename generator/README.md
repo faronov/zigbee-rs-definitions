@@ -39,8 +39,9 @@ numbers.
 2. **Translation** (`src/translate.ts`), per definition:
    - identity: `zigbeeModel` / `fingerprint` → `match` (fingerprints grouped by
      model; endpoints, versions, power source, manufacturer code kept);
-     `whiteLabel` → `white_label` (names missing from `match` are added under
-     the definition's models, spec 8.4);
+     `whiteLabel` → `white_label`, selected like zhc by its fingerprints'
+     manufacturer names, model IDs and software build IDs (names missing from
+     `match` are added under the definition's models, spec 8.4);
    - extends: the outermost recorded call with a translator wins; an inner
      call is used only if the outer wrapper added nothing of its own;
    - named fz/tz converters: generic-tier semantics (`src/named.ts`), data
