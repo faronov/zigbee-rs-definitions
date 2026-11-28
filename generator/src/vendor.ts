@@ -154,12 +154,15 @@ function literal(v: any, depth = 0): any {
     return untr(`template argument of type ${typeof v === 'object' ? v.constructor?.name : typeof v}`);
 }
 
-// Helper arguments that are device predicates (code) in zhc, taken as true:
-// the hub does for every device of the definition what zhc does for some
-// (electricityMeasurementPoll: one more read every 60 s where zhc would not
-// poll).
+// Helper arguments that are device predicates (code) in zhc and turn on
+// something for some devices only: left out (that part is not done; the
+// definition stays partial for it) rather than the whole helper.
+// electricityMeasurementPoll's `metering` (TS011F_plug_3: app versions 100,
+// 160, 192, sw build 1.0.5): the electrical measurement poll, which zhc does
+// for every device of the definition, stays. A predicate for
+// `electricalMeasurement` (TS0001_power: some manufacturers) stays code.
 const PREDICATE_ARGS: Record<string, string[]> = {
-    'tuya.modernExtend.electricityMeasurementPoll': ['electricalMeasurement', 'metering'],
+    'tuya.modernExtend.electricityMeasurementPoll': ['metering'],
 };
 
 export function addFeature(ctx: Ctx, fam: string, item: string, args?: any[]) {
@@ -169,10 +172,12 @@ export function addFeature(ctx: Ctx, fam: string, item: string, args?: any[]) {
         const pred = PREDICATE_ARGS[item];
         if (!pred || !x || typeof x !== 'object' || Array.isArray(x)) return x;
         const o = {...x};
+        // Another argument that is code: the helper is not translated anyway.
+        if (Object.entries(o).some(([k, v]) => typeof v === 'function' && !pred.includes(k))) return x;
         for (const k of pred) {
             if (typeof o[k] === 'function') {
-                o[k] = true;
-                ctx.note(`${item}: ${k} is a device predicate in zhc, taken as true`);
+                delete o[k];
+                ctx.fail(`${item} ${k}`, 'a device predicate (code): left out');
             }
         }
         return o;
