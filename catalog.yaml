@@ -13,5 +13,59 @@ local:
 # Vendor templates (C tier) the released hub firmware implements. Definitions
 # that need a template not listed here are not put into banks (a hub without
 # the template would skip them, spec 8.5); they are still in the shards.
-# Add a name here when the hub release that implements it is out.
-templates_available: []
+# Add a name here when the hub release that implements it is out. The family
+# templates `tuya` and `lumi` are listed by helper (`<name>.<helper>`, the
+# features of `params.features`): a definition is bank-eligible when every
+# helper it uses is listed (the hub checks their arguments and exposes too).
+templates_available:
+  # zigbee-rs-hub 0.4 (#95)
+  - tuya_metering_zero_debounce
+  # faronov/zigbee-rs-hub #114 (after 0.4.1)
+  - tuya.tuya_on_off
+  - tuya.operation_mode
+  - tuya.multi_action
+  - tuya.switch_scene
+  - tuya.tuya_led_indicator
+  - tuya.relay_din_led_indicator
+  - tuya.electricity_measurement_poll
+  # faronov/zigbee-rs-hub #115
+  - lumi.lumi_basic
+  - lumi.lumi_specific
+  - lumi.lumi_electricity_meter
+  - lumi.lumi_prevent_reset
+  - lumi.lumi_prevent_leave
+  - lumi.lumi_set_event_mode
+  - lumi.lumi_temperature
+  - lumi.lumi_on_off
+  - lumi.lumi_power
+  - lumi.lumi_contact
+  - lumi.lumi_illuminance
+  - lumi.lumi_occupancy
+  - lumi.lumi_occupancy_illuminance
+  - lumi.lumi_detection_interval
+  - lumi.lumi_motion_sensitivity
+  - lumi.lumi_trigger_indicator
+  - lumi.lumi_flip_indicator_light
+  - lumi.lumi_switch_power_outage_memory
+  - lumi.lumi_led_disabled_night
+  - lumi.lumi_auto_off
+  - lumi.lumi_socket_button_lock
+  - lumi.lumi_switch_mode_switch
+  - lumi.lumi_switch_type
+  - lumi.lumi_switch_click_mode
+  - lumi.lumi_overload_protection
+  - lumi.lumi_button_switch_mode
+  - lumi.lumi_operation_mode_opple
+  - lumi.lumi_switch_operation_mode_opple
+  - lumi.lumi_operation_mode_basic
+  - lumi.lumi_switch_operation_mode_basic
+  - lumi.lumi_action
+  - lumi.lumi_action_multistate
+  - lumi.lumi_action_wxkg01_lm
+  - lumi.lumi_action_on
+  - lumi.lumi_action_off
+  - lumi.lumi_action_step
+  - lumi.lumi_action_stop
+  - lumi.lumi_action_move
+  - lumi.lumi_action_step_color_temp
+  - lumi.lumi_action_move_color_temp

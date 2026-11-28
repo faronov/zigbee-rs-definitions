@@ -16,7 +16,7 @@ repository variable `ZDEFC_GIT_REF`.
 
 | Step | Tool |
 |---|---|
-| sources after overrides and hand-written replacements, bank eligibility (fully translated, templates in `catalog.yaml` `templates_available`), popularity order | `tools/catalog/build.py` → `out/plan.json` |
+| sources after overrides and hand-written replacements, bank eligibility (fully translated, templates in `catalog.yaml` `templates_available`: by name, or for the family templates `tuya` and `lumi` every helper they use as `<family>.<helper>`), popularity order | `tools/catalog/build.py` → `out/plan.json` |
 | compile (YAML → standalone CBOR), banks, shards, `manifest.cbor`, `catalog.json` | `zdefc catalog build --plan out/plan.json -o out` |
 | sign bank headers and the manifest (`manifest.cose`) | `zdefc catalog sign out` (release only, `ZDEF_SIGNING_KEY`) |
 | verify everything a hub checks, plus every shard definition | `zdefc catalog verify out --pubkey keys/zdef-catalog-ed25519.pub.pem` |

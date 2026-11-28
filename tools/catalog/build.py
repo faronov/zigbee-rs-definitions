@@ -245,7 +245,7 @@ def main(argv):
         cfg['templates_available'] = sorted(available) + ['(projection)']
     tier_rank = {'H': 0, 'A': 1, 'B': 2, 'C': 3}
     eligible = [did for did, d in docs.items()
-                if not d.get('x-partial') and {t['name'] for t in d.get('templates', [])} <= available]
+                if not d.get('x-partial') and all(template_runs(t, available) for t in d.get('templates', []))]
     eligible.sort(key=lambda did: (-score(did), tier_rank.get(tier(did), 9), did))
 
     plan = {
@@ -276,6 +276,18 @@ def main(argv):
     version = f'catalog-{date_s}' + (f'.{args.serial}' if args.serial else '')
     report = write_report(out, version, coverage, docs, origin, cat, cfg, replaced, overrides, eligible, score, assets)
     print(report)
+
+
+def template_runs(t, available):
+    """Whether the released hub runs template `t`: its name is listed, or
+    (a family template, `tuya`, `lumi`) every helper it uses is, as
+    `<name>.<helper>`. The hub also checks the helpers' arguments and the
+    exposes they give (spec 17.4) and skips what it lacks; such a
+    definition in a bank costs only its bytes."""
+    if t['name'] in available:
+        return True
+    feats = (t.get('params') or {}).get('features') or {}
+    return bool(feats) and all(f"{t['name']}.{f}" in available for f in feats)
 
 
 def kib(n):
