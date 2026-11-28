@@ -154,10 +154,34 @@ function literal(v: any, depth = 0): any {
     return untr(`template argument of type ${typeof v === 'object' ? v.constructor?.name : typeof v}`);
 }
 
+// Helper arguments that are device predicates (code) in zhc and turn on
+// something for some devices only: left out (that part is not done; the
+// definition stays partial for it) rather than the whole helper.
+// electricityMeasurementPoll's `metering` (TS011F_plug_3: app versions 100,
+// 160, 192, sw build 1.0.5): the electrical measurement poll, which zhc does
+// for every device of the definition, stays. A predicate for
+// `electricalMeasurement` (TS0001_power: some manufacturers) stays code.
+const PREDICATE_ARGS: Record<string, string[]> = {
+    'tuya.modernExtend.electricityMeasurementPoll': ['metering'],
+};
+
 export function addFeature(ctx: Ctx, fam: string, item: string, args?: any[]) {
     const feature = item.replace(/^[a-z]+\.(modernExtend|fromZigbee|toZigbee|fz|tz)\./, item.startsWith('legacy.') ? 'legacy_' : '').replace(/([a-z0-9])([A-Z])/g, '$1_$2').toLowerCase();
     let params: any = {};
-    const a = (args || []).filter((x) => x !== undefined);
+    const a = (args || []).filter((x) => x !== undefined).map((x) => {
+        const pred = PREDICATE_ARGS[item];
+        if (!pred || !x || typeof x !== 'object' || Array.isArray(x)) return x;
+        const o = {...x};
+        // Another argument that is code: the helper is not translated anyway.
+        if (Object.entries(o).some(([k, v]) => typeof v === 'function' && !pred.includes(k))) return x;
+        for (const k of pred) {
+            if (typeof o[k] === 'function') {
+                delete o[k];
+                ctx.fail(`${item} ${k}`, 'a device predicate (code): left out');
+            }
+        }
+        return o;
+    });
     if (a.length === 1 && a[0] && typeof a[0] === 'object' && !Array.isArray(a[0])) params = literal(a[0]);
     else if (a.length) params = {args: literal(a)};
     let t = ctx.templates.find((x) => x.name === fam);
