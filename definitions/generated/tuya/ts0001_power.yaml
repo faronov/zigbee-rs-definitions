@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:9400
 zdef: 1
 id: tuya/ts0001_power
-revision: 1
+revision: 2
 vendor: Tuya
 model: TS0001_power
 description: Switch with power monitoring
@@ -46,6 +46,10 @@ white_label:
 device: {ota: true}
 generic: {exclude: [power_on_behavior]}
 tuya: {magic_packet: true}
+templates:
+  - name: tuya
+    params:
+      features: {electricity_measurement_poll: {electricalMeasurement: true, metering: true}}
 entities:
   - key: power_outage_memory
     platform: select
@@ -62,4 +66,3 @@ entities:
     category: config
     zcl: {cluster: 0x0006, attr: 0x8002, type: enum8}
     map: {0: "off", 1: "on", 2: previous}
-x-partial: true

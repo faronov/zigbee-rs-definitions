@@ -7,9 +7,9 @@ Generated from zigbee-herdsman-converters **26.130.0** (4664 definitions). Regen
 |---|---:|---:|
 | A generic declarative (fully translated) | 1863 | 39.9 % |
 | B Tuya declarative (fully translated) | 421 | 9.0 % |
-| C vendor template (fully translated, needs a hub template) | 917 | 19.7 % |
-| P partial (some items untranslated; on demand only) | 1463 | 31.4 % |
-| **Fully translated (A + B + C)** | **3201** | **68.6 %** |
+| C vendor template (fully translated, needs a hub template) | 919 | 19.7 % |
+| P partial (some items untranslated; on demand only) | 1461 | 31.3 % |
+| **Fully translated (A + B + C)** | **3203** | **68.7 %** |
 | Fully translated without templates (A + B) | 2284 | 49.0 % |
 
 - Partial definitions whose only gap is an expose without a translated converter: 71.
@@ -21,7 +21,7 @@ Generated from zigbee-herdsman-converters **26.130.0** (4664 definitions). Regen
 | Template | Definitions |
 |---|---:|
 | `hue_light` | 582 |
-| `tuya` | 174 |
+| `tuya` | 176 |
 | `lumi` | 161 |
 
 ## Top untranslated items
@@ -101,14 +101,14 @@ translated if only this item is implemented. Locations are zhc source lines from
 | `effect` | 177 |
 | `battery` | 106 |
 | `power_on_behavior` | 102 |
-| `voltage` | 74 |
+| `voltage` | 73 |
 | `battery_low` | 67 |
-| `switch` | 59 |
 | `climate` | 58 |
-| `power` | 58 |
-| `child_lock` | 56 |
-| `energy` | 54 |
-| `current` | 53 |
+| `switch` | 58 |
+| `power` | 57 |
+| `child_lock` | 55 |
+| `energy` | 53 |
+| `current` | 52 |
 | `pin_code` | 45 |
 | `action_user` | 44 |
 | `color_options` | 44 |
@@ -127,7 +127,7 @@ translated if only this item is implemented. Locations are zhc source lines from
 | File | A | B | C | P | Full |
 |---|---:|---:|---:|---:|---:|
 | philips | 6 | 0 | 582 | 20 | 96.7 % |
-| tuya | 26 | 266 | 93 | 198 | 66.0 % |
+| tuya | 26 | 266 | 95 | 196 | 66.4 % |
 | lumi | 8 | 0 | 161 | 16 | 91.4 % |
 | innr | 118 | 0 | 0 | 1 | 99.2 % |
 | ikea | 11 | 0 | 0 | 90 | 10.9 % |

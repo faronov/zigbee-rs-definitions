@@ -154,10 +154,29 @@ function literal(v: any, depth = 0): any {
     return untr(`template argument of type ${typeof v === 'object' ? v.constructor?.name : typeof v}`);
 }
 
+// Helper arguments that are device predicates (code) in zhc, taken as true:
+// the hub does for every device of the definition what zhc does for some
+// (electricityMeasurementPoll: one more read every 60 s where zhc would not
+// poll).
+const PREDICATE_ARGS: Record<string, string[]> = {
+    'tuya.modernExtend.electricityMeasurementPoll': ['electricalMeasurement', 'metering'],
+};
+
 export function addFeature(ctx: Ctx, fam: string, item: string, args?: any[]) {
     const feature = item.replace(/^[a-z]+\.(modernExtend|fromZigbee|toZigbee|fz|tz)\./, item.startsWith('legacy.') ? 'legacy_' : '').replace(/([a-z0-9])([A-Z])/g, '$1_$2').toLowerCase();
     let params: any = {};
-    const a = (args || []).filter((x) => x !== undefined);
+    const a = (args || []).filter((x) => x !== undefined).map((x) => {
+        const pred = PREDICATE_ARGS[item];
+        if (!pred || !x || typeof x !== 'object' || Array.isArray(x)) return x;
+        const o = {...x};
+        for (const k of pred) {
+            if (typeof o[k] === 'function') {
+                o[k] = true;
+                ctx.note(`${item}: ${k} is a device predicate in zhc, taken as true`);
+            }
+        }
+        return o;
+    });
     if (a.length === 1 && a[0] && typeof a[0] === 'object' && !Array.isArray(a[0])) params = literal(a[0]);
     else if (a.length) params = {args: literal(a)};
     let t = ctx.templates.find((x) => x.name === fam);

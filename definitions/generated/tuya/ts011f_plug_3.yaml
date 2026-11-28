@@ -3,7 +3,7 @@
 # Source: src/devices/tuya.ts:13450
 zdef: 1
 id: tuya/ts011f_plug_3
-revision: 2
+revision: 3
 vendor: Tuya
 model: TS011F_plug_3
 description: Smart plug (with power monitoring by polling)
@@ -39,10 +39,20 @@ templates:
   - name: tuya
     params:
       features:
+        electricity_measurement_poll: {metering: true}
         tuya_on_off:
           childLock: true
           electricalMeasurements: true
           indicatorMode: true
           onOffCountdown: true
           powerOutageMemory: true
-x-partial: true
+      keys:
+        - child_lock
+        - countdown
+        - current
+        - energy
+        - indicator_mode
+        - power
+        - power_outage_memory
+        - switch
+        - voltage
